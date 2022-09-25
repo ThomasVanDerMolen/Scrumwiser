@@ -75,7 +75,6 @@ public class guiComponents
 
     private void setMenu(){
 
-    
         //keep code organized
         themeMenu.getItems().add(darkMode);
         themeMenu.getItems().add(lightMode);    
