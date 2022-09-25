@@ -8,7 +8,6 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 
 public class guiComponents 
 {
@@ -70,7 +69,6 @@ public class guiComponents
         backlogGridsArray.add(0,big);
         gp.add(big,0,0);
 
-
     }
 
     private void setMenu(){
@@ -122,6 +120,7 @@ public class guiComponents
 
     public void setScene(Scene inputScene){
         guiComponentScene = inputScene;
+        guiComponentScene.getStylesheets().add("dark-theme.css");
     }
 
     private void setNewBIGButtonAction(){

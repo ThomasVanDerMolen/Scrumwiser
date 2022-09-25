@@ -12,7 +12,7 @@ public class mainClass extends Application{
     }
     
     public void start(Stage primaryStage){
-        Scene scene = new Scene(guiComponents.getBorderPane(),500,400);
+        Scene scene = new Scene(guiComponents.getBorderPane(),1000,400);
         guiComponents.setScene(scene);        
 
         primaryStage.setScene(scene);
