@@ -170,6 +170,11 @@ public class guiComponents
                 //also remove the last backlog item in the backlog item arraylist
                 gp.getChildren().remove(backlogGridsArray.get(backlogGridsArray.size()-1));
                 backlogGridsArray.remove(backlogGridsArray.get(backlogGridsArray.size()-1));
+                gp.getChildren().remove(deleteBIGbutton);
+                gp.getChildren().remove(newBIGbutton);
+                gp.add(newBIGbutton,1,backlogGridsArray.size());
+                gp.add(deleteBIGbutton,1,backlogGridsArray.size()-1);
+
             }
 
         });
