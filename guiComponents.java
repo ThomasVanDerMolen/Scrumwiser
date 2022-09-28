@@ -36,7 +36,10 @@ public class guiComponents
  
     private Button newBIGbutton = new Button("New Item");
     private Button deleteBIGbutton = new Button("Delete");
-    private backlogItemGrid big = new backlogItemGrid();
+
+    private ArrayList<sprints> availableSprints = new ArrayList<sprints>();
+
+    private backlogItemGrid big = new backlogItemGrid(1,availableSprints);
     private ArrayList<backlogItemGrid> backlogGridsArray = new ArrayList<backlogItemGrid>();
     
 
@@ -50,6 +53,28 @@ public class guiComponents
         setMenu();
         setNewBIGButtonAction();
         setDeleteBIGButtonAction();
+        testSprintsFeature();
+    }
+
+    public void testSprintsFeature(){
+        sprints sprint1 = new sprints("sprint1");
+        sprints sprint2 = new sprints("Sprint 2");
+        availableSprints.add(sprint1);
+        availableSprints.add(sprint2);
+        updateAllBacklogSprints();
+    }
+
+    /*
+     * public void initializeSprints(){
+     *  
+     * }
+     */
+
+    //this is used when the list of sprints is changed.
+    private void updateAllBacklogSprints(){
+        for(backlogItemGrid x : backlogGridsArray){
+            x.setSprints(availableSprints);
+        }
     }
 
     public BorderPane getBorderPane(){
@@ -69,7 +94,6 @@ public class guiComponents
         gp.add(big,0,0);
         
         backlogGridsArray.add(0,big);//add the initial backlog item to the gridpane. this code might be moved elsewhere
-        
 
     }
 
@@ -142,7 +166,7 @@ public class guiComponents
         {
             //create a new backlog item 
             //Order matters in this function
-            backlogItemGrid newBackLogItem = new backlogItemGrid();
+            backlogItemGrid newBackLogItem = new backlogItemGrid(backlogGridsArray.size(),availableSprints);
             //add the new backlog item to the backlog item arraylist
             backlogGridsArray.add(newBackLogItem);
             //remove the delete button so that is can be replaced in the correct spot
@@ -163,7 +187,6 @@ public class guiComponents
     private void setDeleteBIGButtonAction(){
         deleteBIGbutton.setOnAction(e -> 
         {
-
             if(backlogGridsArray.size() > 1)
             {
                 //if the number of backlog items is greater than one, remove the last backlog item in the grid
@@ -174,9 +197,7 @@ public class guiComponents
                 gp.getChildren().remove(newBIGbutton);
                 gp.add(newBIGbutton,1,backlogGridsArray.size());
                 gp.add(deleteBIGbutton,1,backlogGridsArray.size()-1);
-
             }
-
         });
     }
 }
