@@ -19,17 +19,20 @@ public class backlogItemGrid extends GridPane
     private ComboBox sprintSelector = new ComboBox<>(FXCollections.observableArrayList(sprintsNames)); //may want to research how to resolve these cautions
     private Button btUp = new Button("");
     private Button btDn = new Button("");
+    private guiComponents parentComponentsObject;
 
-    public backlogItemGrid(int initialValue, ArrayList<sprints> inputSprints){
+    public backlogItemGrid(int initialValue, ArrayList<sprints> inputSprints, guiComponents inputParentGuiComponents){
         this.add(desc,0,0);
         this.add(points,1,0);
         this.add(sprintSelector,3,0);
         this.add(btUp,2,0);
         this.add(btDn,2,1);
+        parentComponentsObject = inputParentGuiComponents;
         setSprints(inputSprints);
-
+        setUpDownFunctions();
         
     }
+
 
     public void setSprints(ArrayList<sprints> input){
         for(sprints x : input){
@@ -43,6 +46,20 @@ public class backlogItemGrid extends GridPane
         sprintSelector.setItems(FXCollections.observableArrayList(sprintsNames));
     }
 
+    public void moveUp(GridPane inputGP, ArrayList<backlogItemGrid> inputBacklogItems,backlogItemGrid callingBacklogItem){
+        int callingBacklogItemIndex = inputBacklogItems.indexOf(callingBacklogItem);
+        backlogItemGrid temporary = inputBacklogItems.get(callingBacklogItemIndex);
+        inputBacklogItems.set(callingBacklogItemIndex,inputBacklogItems.get(callingBacklogItemIndex-1));
+        inputBacklogItems.set(callingBacklogItemIndex-1,temporary);
+        parentComponentsObject.setBacklogItemsArray(inputBacklogItems);
+        parentComponentsObject.redrawAllBacklogItems();
+        //now all that remains is the return this arraylist to the guicomponents obeject and redraw the grid accordingly
+    }
 
+    private void setUpDownFunctions(){
+        btUp.setOnAction(e -> {
+            moveUp(parentComponentsObject.getGP(), parentComponentsObject.getBacklogItems(), this);
+        });
+    }
 
 }

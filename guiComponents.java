@@ -39,7 +39,7 @@ public class guiComponents
 
     private ArrayList<sprints> availableSprints = new ArrayList<sprints>();
 
-    private backlogItemGrid big = new backlogItemGrid(1,availableSprints);
+    private backlogItemGrid big = new backlogItemGrid(1,availableSprints,this);
     private ArrayList<backlogItemGrid> backlogGridsArray = new ArrayList<backlogItemGrid>();
     
 
@@ -54,6 +54,18 @@ public class guiComponents
         setNewBIGButtonAction();
         setDeleteBIGButtonAction();
         testSprintsFeature();
+    }
+
+    public GridPane getGP(){
+        return gp;
+    }
+
+    public ArrayList<sprints> getSprints(){
+        return availableSprints;
+    }
+
+    public ArrayList<backlogItemGrid> getBacklogItems(){
+        return backlogGridsArray;
     }
 
     public void testSprintsFeature(){
@@ -95,6 +107,19 @@ public class guiComponents
         
         backlogGridsArray.add(0,big);//add the initial backlog item to the gridpane. this code might be moved elsewhere
 
+    }
+
+    public void setBacklogItemsArray(ArrayList<backlogItemGrid> inputBacklogItems){
+        backlogGridsArray = inputBacklogItems;
+    }
+
+    public void redrawAllBacklogItems(){
+        for(backlogItemGrid x : backlogGridsArray){
+            gp.getChildren().remove(x);
+        }
+        for(backlogItemGrid x : backlogGridsArray){
+            gp.add((x), 0, backlogGridsArray.indexOf(x));
+        }
     }
 
     private void setMenu(){
@@ -166,7 +191,7 @@ public class guiComponents
         {
             //create a new backlog item 
             //Order matters in this function
-            backlogItemGrid newBackLogItem = new backlogItemGrid(backlogGridsArray.size(),availableSprints);
+            backlogItemGrid newBackLogItem = new backlogItemGrid(backlogGridsArray.size(),availableSprints,this);
             //add the new backlog item to the backlog item arraylist
             backlogGridsArray.add(newBackLogItem);
             //remove the delete button so that is can be replaced in the correct spot
