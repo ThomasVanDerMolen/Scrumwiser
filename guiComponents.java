@@ -35,7 +35,7 @@ public class guiComponents
     private MenuBar mb = new MenuBar();
  
     private Button newBIGbutton = new Button("New Item");
-    private Button deleteBIGbutton = new Button("Delete");
+    //private Button deleteBIGbutton = new Button("Delete");
 
     private ArrayList<sprints> availableSprints = new ArrayList<sprints>();
 
@@ -52,8 +52,8 @@ public class guiComponents
         setGridPane();
         setMenu();
         setNewBIGButtonAction();
-        setDeleteBIGButtonAction();
-        testSprintsFeature();
+        //setDeleteBIGButtonAction();
+        testSprintsFeature();//this may be important
     }
 
     public GridPane getGP(){
@@ -156,8 +156,6 @@ public class guiComponents
 
     }
 
-    
-    //what is this
     public void transitionToOverview(){
 
     }
@@ -195,20 +193,31 @@ public class guiComponents
             //add the new backlog item to the backlog item arraylist
             backlogGridsArray.add(newBackLogItem);
             //remove the delete button so that is can be replaced in the correct spot
-            gp.getChildren().remove(deleteBIGbutton);
+            ////////////////////////////////////////UNCOMMENT THISgp.getChildren().remove(deleteBIGbutton);
             //add the delete button back in the correct spot
-            gp.add(deleteBIGbutton,1,backlogGridsArray.size()-1);
+            ////////////////////////////////////////UNCOMMENT THISgp.add(deleteBIGbutton,1,backlogGridsArray.size()-1);
             //add the newest backlog item in the backlog array list to the grid
             gp.add(backlogGridsArray.get(backlogGridsArray.size()-1),0,backlogGridsArray.size()-1);
             //remove the add button 
             gp.getChildren().remove(newBIGbutton);
             //add the add button back in the correct spot.
-            gp.add(newBIGbutton,1,backlogGridsArray.size());
+            gp.add(newBIGbutton,1,backlogGridsArray.size()-1);
 
         });
     }
 
+    public void delete(backlogItemGrid DeletedBacklogItem){
+        if(backlogGridsArray.size() > 1){
+            gp.getChildren().remove(DeletedBacklogItem);
+            backlogGridsArray.remove(DeletedBacklogItem);
+            redrawAllBacklogItems();
+            gp.getChildren().remove(newBIGbutton);
+            gp.add(newBIGbutton,1,backlogGridsArray.size()-1);
+        }
+    }
+
     //set the action for the delete button on the backlog item page
+    /* 
     private void setDeleteBIGButtonAction(){
         deleteBIGbutton.setOnAction(e -> 
         {
@@ -225,4 +234,5 @@ public class guiComponents
             }
         });
     }
+    */
 }

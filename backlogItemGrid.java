@@ -4,7 +4,10 @@ import javafx.collections.FXCollections;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 
 //I believe that it is not required to extend the grid pane functionality to this class
@@ -12,13 +15,17 @@ import javafx.scene.layout.GridPane;
 //there, is would be added as a backlog item grid pane to the main gridpane 
 public class backlogItemGrid extends GridPane
 {
-    private TextField desc = new TextField("Description");
-    private TextField points = new TextField("Points");
+    private TextField desc = new TextField("Name");
+    private TextField points = new TextField("Estimate Points");
     private ArrayList<String> sprintsNames = new ArrayList<String>();
     private ComboBox sprintSelector = new ComboBox<>(FXCollections.observableArrayList(sprintsNames)); //may want to research how to resolve these cautions
     private Button btUp = new Button("");
     private Button btDn = new Button("");
     private guiComponents parentComponentsObject;
+    private MenuItem MIopen = new MenuItem("open");
+    private MenuItem MIDelete = new MenuItem("delete");
+    private MenuItem MIMarkComplete = new MenuItem("Mark Complete");
+    private ContextMenu rightClickMenu = new ContextMenu();
 
 
     public backlogItemGrid(int initialValue, ArrayList<sprints> inputSprints, guiComponents inputParentGuiComponents){
@@ -27,12 +34,37 @@ public class backlogItemGrid extends GridPane
         this.add(sprintSelector,3,0);
         this.add(btUp,2,0);
         this.add(btDn,2,1);
+        points.setPrefWidth(125);
         parentComponentsObject = inputParentGuiComponents;
         setSprints(inputSprints);
         setUpDownFunctions();
+        setRightClickAction();
         
     }
 
+    public void setRightClickAction(){
+        buildContextmenu();
+        desc.setOnMouseClicked(e -> {
+            if(e.getButton() == MouseButton.SECONDARY){
+                desc.setContextMenu(rightClickMenu);
+            }
+        });
+    }
+
+    private void buildContextmenu(){
+        //some credit is owed to https://www.geeksforgeeks.org/javafx-contextmenu-with-examples/#:~:text=ContextMenu%20is%20a%20part%20of,several%20menuitems%20or%20sub%20menu.
+        //where I read how to achieve this
+        rightClickMenu.getItems().add(MIopen);
+        rightClickMenu.getItems().add(MIDelete);
+        rightClickMenu.getItems().add(MIMarkComplete);
+        MIDelete.setOnAction(e -> {
+            parentComponentsObject.delete(this);
+        });
+        MIMarkComplete.setOnAction(e -> {
+            this.getStylesheets().add("mark-complete.css");
+            this.setStyle("-fx-background-color:#33f561");
+        });
+    }
 
     public void setSprints(ArrayList<sprints> input){
         for(sprints x : input){
