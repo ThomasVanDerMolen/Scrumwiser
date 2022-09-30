@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
@@ -20,6 +19,7 @@ public class backlogItemGrid extends GridPane
     private Button btUp = new Button("");
     private Button btDn = new Button("");
     private guiComponents parentComponentsObject;
+
 
     public backlogItemGrid(int initialValue, ArrayList<sprints> inputSprints, guiComponents inputParentGuiComponents){
         this.add(desc,0,0);
@@ -56,9 +56,22 @@ public class backlogItemGrid extends GridPane
         //now all that remains is the return this arraylist to the guicomponents obeject and redraw the grid accordingly
     }
 
+    public void moveDown(GridPane inputGP, ArrayList<backlogItemGrid> inputBacklogItems, backlogItemGrid callingBacklogItem){
+        int callingBacklogItemIndex = inputBacklogItems.indexOf(callingBacklogItem);
+        backlogItemGrid temporary = inputBacklogItems.get(callingBacklogItemIndex);
+        inputBacklogItems.set(callingBacklogItemIndex,inputBacklogItems.get(callingBacklogItemIndex+1));
+        inputBacklogItems.set(callingBacklogItemIndex+1,temporary);
+        parentComponentsObject.setBacklogItemsArray(inputBacklogItems);
+        parentComponentsObject.redrawAllBacklogItems();
+    }
+
     private void setUpDownFunctions(){
         btUp.setOnAction(e -> {
             moveUp(parentComponentsObject.getGP(), parentComponentsObject.getBacklogItems(), this);
+        });
+
+        btDn.setOnAction(e -> {
+            moveDown(parentComponentsObject.getGP(), parentComponentsObject.getBacklogItems(), this);
         });
     }
 
