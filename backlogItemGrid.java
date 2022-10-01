@@ -6,9 +6,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
+
+/*
+ * Credit owed to https://www.geeksforgeeks.org/javafx-progressbar/#:~:text=ProgressBar%20is%20a%20part%20of,of%20completion%20of%20a%20task%20.
+ * 
+ */
 
 //I believe that it is not required to extend the grid pane functionality to this class
 //We could instead create a gridpane which contains the other elements, and return that gridpane to the components class
@@ -26,6 +32,7 @@ public class backlogItemGrid extends GridPane
     private MenuItem MIDelete = new MenuItem("delete");
     private MenuItem MIMarkComplete = new MenuItem("Mark Complete");
     private ContextMenu rightClickMenu = new ContextMenu();
+    private ProgressBar backlogProgress = new ProgressBar(0);
 
 
     public backlogItemGrid(int initialValue, ArrayList<sprints> inputSprints, guiComponents inputParentGuiComponents){
@@ -34,12 +41,12 @@ public class backlogItemGrid extends GridPane
         this.add(sprintSelector,3,0);
         this.add(btUp,2,0);
         this.add(btDn,2,1);
+        this.add(backlogProgress,3,0);
         points.setPrefWidth(125);
         parentComponentsObject = inputParentGuiComponents;
         setSprints(inputSprints);
         setUpDownFunctions();
         setRightClickAction();
-        
     }
 
     public void setRightClickAction(){
