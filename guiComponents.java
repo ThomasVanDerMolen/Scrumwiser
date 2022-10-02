@@ -32,10 +32,25 @@ public class guiComponents
     private MenuItem backlogItemNumber = new MenuItem("Show item number on backlog items");
     private MenuItem additionalBacklogItems = new MenuItem("Add additional task in backlog items in some cases");
 
+    //test variables to switch between panes via upper menu
+    private MenuItem testOverview = new MenuItem("test");
+    private MenuItem testProjects = new MenuItem("test");
+    private MenuItem testPeople = new MenuItem("test");
+    private MenuItem testBacklog = new MenuItem("test");
+    private MenuItem testSprint = new MenuItem("test");
+    private MenuItem testTaskboard = new MenuItem("test");
+    private MenuItem testBurndown = new MenuItem("test");
+    private MenuItem testSettings = new MenuItem("test");
+
     private MenuBar mb = new MenuBar();
  
     private Button newBIGbutton = new Button("New Item");
     private Button deleteBIGbutton = new Button("Delete");
+
+    //test buttons for visual confirmation of panes switching
+    private Button testButton = new Button("Test Button");
+    private Button testButton2 = new Button("Test Button 2");
+
     private backlogItemGrid big = new backlogItemGrid();
     private ArrayList<backlogItemGrid> backlogGridsArray = new ArrayList<backlogItemGrid>();
     
@@ -52,6 +67,7 @@ public class guiComponents
         setDeleteBIGButtonAction();
     }
 
+    //setters and getters for all the panes accessible via top menu
     public BorderPane getBorderPane(){
         return bp;
     }
@@ -71,6 +87,63 @@ public class guiComponents
         backlogGridsArray.add(0,big);//add the initial backlog item to the gridpane. this code might be moved elsewhere
         
 
+    }
+
+    private void setOverviewPane(){
+        gp.setAlignment(Pos.CENTER);
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.add(testButton,1,0);
+        gp.add(big,0,0);
+    }
+    private void setProjectsPane(){
+        gp.setAlignment(Pos.CENTER);
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.add(testButton,1,0);
+        gp.add(big,0,0);
+    }
+    private void setPeoplePane(){
+        gp.setAlignment(Pos.CENTER);
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.add(testButton2,1,0);
+        gp.add(big,0,0);
+    }
+    private void setBacklogPane(){
+        gp.setAlignment(Pos.CENTER);
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.add(testButton,1,0);
+        gp.add(big,0,0);
+    }
+    private void setSprintPane(){
+        gp.setAlignment(Pos.CENTER);
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.add(testButton,1,0);
+        gp.add(big,0,0);
+    }
+    private void setTaskboardPane(){
+        gp.setAlignment(Pos.CENTER);
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.add(testButton,1,0);
+        gp.add(big,0,0);
+    }
+    private void setBurndownPane(){
+        gp.setAlignment(Pos.CENTER);
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.add(testButton,1,0);
+        gp.add(big,0,0);
+    }
+    private void setSettingsPane(){
+        gp.setAlignment(Pos.CENTER);
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.add(testButton,1,0);
+        gp.add(big,0,0);
     }
 
     private void setMenu(){
@@ -103,14 +176,51 @@ public class guiComponents
 
         setMenuFunction();//enable the theme menu items to be clicked
 
-        overview.setOnAction( e -> transitionToOverview() );//what is this
+        //functionality of the test panes
+        overview.getItems().add(testOverview);
+        projects.getItems().add(testProjects);
+        people.getItems().add(testPeople);
+        backlog.getItems().add(testBacklog);
+        sprints.getItems().add(testSprint);
+        taskboard.getItems().add(testTaskboard);
+        burndown.getItems().add(testBurndown);
+        settings.getItems().add(testSettings);
+
+        //switches panes when menuItem is clicked
+        overview.setOnAction( e -> transitionToOverviewPane() );
+        testProjects.setOnAction(( e -> transitionToProjectsPane()) );
+        testPeople.setOnAction(( e -> transitionToPeoplePane()) );
+        testBacklog.setOnAction(( e -> transitionToBacklogPane()) );
+        testSprint.setOnAction(( e -> transitionToSprintPane()) );
+        testTaskboard.setOnAction(( e -> transitionToTaskboardPane()) );
+        testBurndown.setOnAction(( e -> transitionToBurndownPane()) );
+        testSettings.setOnAction(( e -> transitionToSettingsPane()) );
 
     }
 
-    
-    //what is this
-    public void transitionToOverview(){
-
+    //makes the transition between panes (will be modified in the future)
+    public void transitionToOverviewPane(){
+        setOverviewPane();
+    }public void transitionToProjectsPane(){
+        setProjectsPane();
+    }
+    public void transitionToPeoplePane(){
+        setPeoplePane();
+    }
+    public void transitionToBacklogPane(){
+        setBacklogPane();
+    }
+    public void transitionToSprintPane(){
+        setSprintPane();
+    }
+    public void transitionToTaskboardPane(){
+        setTaskboardPane();
+    }
+    public void transitionToBurndownPane(){
+        setBurndownPane();
+    }
+    public void transitionToSettingsPane(){
+        setSettingsPane();
     }
 
     //set the functions for the menu items
