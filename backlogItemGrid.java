@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
-
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
@@ -9,7 +9,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 /*
  * Credit owed to https://www.geeksforgeeks.org/javafx-progressbar/#:~:text=ProgressBar%20is%20a%20part%20of,of%20completion%20of%20a%20task%20.
@@ -33,6 +35,7 @@ public class backlogItemGrid extends GridPane
     private MenuItem MIMarkComplete = new MenuItem("Mark Complete");
     private ContextMenu rightClickMenu = new ContextMenu();
     private ProgressBar backlogProgress = new ProgressBar(0);
+    private backlogItemPopupWindow popup = new backlogItemPopupWindow();
 
 
     public backlogItemGrid(int initialValue, ArrayList<sprints> inputSprints, guiComponents inputParentGuiComponents){
@@ -70,6 +73,9 @@ public class backlogItemGrid extends GridPane
         MIMarkComplete.setOnAction(e -> {
             this.getStylesheets().add("mark-complete.css");
             this.setStyle("-fx-background-color:#33f561");
+        });
+        MIopen.setOnAction(e -> {
+            popup.popup();
         });
     }
 
