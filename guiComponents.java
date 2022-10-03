@@ -14,6 +14,7 @@ public class guiComponents
 
     private BorderPane bp = new BorderPane();
     private GridPane gp = new GridPane();
+    SprintOption sprint_option= new SprintOption();
 
     private Menu themeMenu = new Menu("Theme");
     private Menu overview = new Menu("Overview");
@@ -31,6 +32,12 @@ public class guiComponents
     private MenuItem teamOverlay = new MenuItem("Show overlay over teams that are left behind");
     private MenuItem backlogItemNumber = new MenuItem("Show item number on backlog items");
     private MenuItem additionalBacklogItems = new MenuItem("Add additional task in backlog items in some cases");
+    private MenuItem sprint_1= new MenuItem("Sprint 1");
+    private MenuItem sprint_2= new MenuItem("Sprint 2");
+    private MenuItem sprint_3= new MenuItem("Sprint 3");
+    private MenuItem sprint_4= new MenuItem("Sprint 4");
+    private MenuItem sprint_5= new MenuItem("Sprint 5");
+    private MenuItem sprint_6= new MenuItem("Sprint 6");
 
     private MenuBar mb = new MenuBar();
  
@@ -54,6 +61,7 @@ public class guiComponents
         setNewBIGButtonAction();
         //setDeleteBIGButtonAction();
         testSprintsFeature();//this may be important
+        setSprintAction();
     }
 
     public GridPane getGP(){
@@ -150,6 +158,13 @@ public class guiComponents
         mb.getMenus().add(burndown);
         mb.getMenus().add(settings);
 
+        sprints.getItems().add(sprint_1);
+        sprints.getItems().add(sprint_2);
+        sprints.getItems().add(sprint_3);
+        sprints.getItems().add(sprint_4);
+        sprints.getItems().add(sprint_5);
+        sprints.getItems().add(sprint_6);
+
         setMenuFunction();//enable the theme menu items to be clicked
 
         overview.setOnAction( e -> transitionToOverview() );//what is this
@@ -214,6 +229,39 @@ public class guiComponents
             gp.getChildren().remove(newBIGbutton);
             gp.add(newBIGbutton,1,backlogGridsArray.size()-1);
         }
+    }
+
+    private void setSprintAction() {
+        sprint_1.setOnAction(e -> {
+            bp.setCenter(sprint_option.get_sprint1());
+            sprint_option.sprint_1();
+    
+        });
+        sprint_2.setOnAction(e -> {
+            bp.setCenter(sprint_option.get_sprint2());
+            sprint_option.sprint_2();
+    
+        });
+        sprint_3.setOnAction(e -> {
+            bp.setCenter(sprint_option.get_sprint3());
+            sprint_option.sprint_3();
+    
+        });
+        sprint_4.setOnAction(e -> {
+            bp.setCenter(sprint_option.get_sprint4());
+            sprint_option.sprint_4();
+    
+        });
+        sprint_5.setOnAction(e -> {
+            bp.setCenter(sprint_option.get_sprint5());
+            sprint_option.sprint_5();
+    
+        });
+        sprint_6.setOnAction(e -> {
+            bp.setCenter(sprint_option.get_sprint6());
+            sprint_option.sprint_6();
+    
+        });
     }
 
     //set the action for the delete button on the backlog item page
