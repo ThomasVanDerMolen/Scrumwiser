@@ -13,7 +13,6 @@ public class backlogItemPopupWindow extends Application
     private Button btn = new Button("test");
     private Stage newStage = new Stage();
     public backlogItemPopupWindow(){
-        //this.getStylesheets().add(theme);
         borderPane.setCenter(gp);
         gp.add(btn,0,0);
         newStage.setScene(newScene);
