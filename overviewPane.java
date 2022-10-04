@@ -15,22 +15,19 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 
-public class overviewPane extends Application{
+public class overviewPane extends GridPane {
     
     private BorderPane borderPane = new BorderPane();
     private GridPane gp = new GridPane();
     private Scene newScene = new Scene(borderPane);
     private overviewPane op = new overviewPane();
+    private Button btn = new Button("test");
     private Stage newStage = new Stage();
-    public overviewPane(){
-       
-}
+    overviewPane(){
 
 
-public void start(Stage unusedStage){
+    }
+        
     
 }
-        
-    }
-
 

@@ -128,29 +128,80 @@ public class guiComponents
 
     }
 
+    private Button testButton = new Button("test");
+    
+    //sets up each individual pane. Will be changed so this long code is in separate classes.
     private void setOverviewPane(){
-       
+        bp.setCenter(gp);
+        bp.setTop(mb);
+        gp.setAlignment(Pos.BOTTOM_RIGHT);
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.add(newBIGbutton,1,0);
+        gp.add(big,0,0);
     }
     private void setProjectsPane(){
-        
+        bp.setCenter(gp);
+        bp.setTop(mb);
+        gp.setAlignment(Pos.CENTER);
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.add(newBIGbutton,1,0);
+        gp.add(big,0,0);
     }
     private void setPeoplePane(){
-      
+        bp.setCenter(gp);
+        bp.setTop(mb);
+        gp.setAlignment(Pos.CENTER);
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.add(newBIGbutton,1,0);
+        gp.add(big,0,0);
     }
     private void setBacklogPane(){
-       
+        bp.setCenter(gp);
+        bp.setTop(mb);
+        gp.setAlignment(Pos.CENTER);
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.add(newBIGbutton,1,0);
+        gp.add(big,0,0);
     }
     private void setSprintPane(){
-        
+        bp.setCenter(gp);
+        bp.setTop(mb);
+        gp.setAlignment(Pos.CENTER);
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.add(newBIGbutton,1,0);
+        gp.add(big,0,0);
     }
     private void setTaskboardPane(){
-       
+        bp.setCenter(gp);
+        bp.setTop(mb);
+        gp.setAlignment(Pos.CENTER);
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.add(newBIGbutton,1,0);
+        gp.add(big,0,0);
     }
     private void setBurndownPane(){
-        
+        bp.setCenter(gp);
+        bp.setTop(mb);
+        gp.setAlignment(Pos.CENTER);
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.add(newBIGbutton,1,0);
+        gp.add(big,0,0);
     }
     private void setSettingsPane(){
-       
+        bp.setCenter(gp);
+        bp.setTop(mb);
+        gp.setAlignment(Pos.CENTER);
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.add(newBIGbutton,1,0);
+        gp.add(big,0,0);
     }
     public void setBacklogItemsArray(ArrayList<backlogItemGrid> inputBacklogItems){
         backlogGridsArray = inputBacklogItems;
