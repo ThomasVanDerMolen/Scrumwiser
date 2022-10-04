@@ -20,19 +20,11 @@ import javafx.scene.control.TableColumn;
 
 
 
-public class overviewPane{
-    Pane overview = new Pane();
+public class peoplePane {
+    Pane people = new Pane();
 
 
-    public Pane getOverview() {
-        return overview;
+    public Pane getPeople() {
+        return people;
     }
-
-
-
-    }
-
-   
-
-
-
+}

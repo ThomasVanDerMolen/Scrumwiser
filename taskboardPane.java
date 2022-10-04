@@ -18,21 +18,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TableColumn;
 
+public class taskboardPane {
+    Pane taskboard = new Pane();
 
 
-public class overviewPane{
-    Pane overview = new Pane();
-
-
-    public Pane getOverview() {
-        return overview;
+    public Pane getTaskboard() {
+        return taskboard;
     }
-
-
-
-    }
-
-   
-
-
-
+}

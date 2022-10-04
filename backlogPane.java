@@ -19,20 +19,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TableColumn;
 
 
+public class backlogPane {
+    Pane backlog = new Pane();
 
-public class overviewPane{
-    Pane overview = new Pane();
 
-
-    public Pane getOverview() {
-        return overview;
+    public Pane getBacklog() {
+        return backlog;
     }
-
-
-
-    }
-
-   
-
-
-
+}
