@@ -9,7 +9,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
-public class guiComponents 
+public class guiComponents
 {
 
     private BorderPane bp = new BorderPane();
@@ -58,9 +58,7 @@ public class guiComponents
 
     private backlogItemGrid big = new backlogItemGrid(1,availableSprints,this);
     private ArrayList<backlogItemGrid> backlogGridsArray = new ArrayList<backlogItemGrid>();
-    
-    private Button testButton = new Button("Test Button");
-    private Button testButton2 = new Button("Test Button 2");
+
 
     private Scene guiComponentScene;
 
@@ -131,60 +129,28 @@ public class guiComponents
     }
 
     private void setOverviewPane(){
-        gp.setAlignment(Pos.CENTER);
-        gp.setHgap(10);
-        gp.setVgap(10);
-        gp.add(testButton,1,0);
-        gp.add(big,0,0);
+       
     }
     private void setProjectsPane(){
-        gp.setAlignment(Pos.CENTER);
-        gp.setHgap(10);
-        gp.setVgap(10);
-        gp.add(testButton,1,0);
-        gp.add(big,0,0);
+        
     }
     private void setPeoplePane(){
-        gp.setAlignment(Pos.CENTER);
-        gp.setHgap(10);
-        gp.setVgap(10);
-        gp.add(testButton2,1,0);
-        gp.add(big,0,0);
+      
     }
     private void setBacklogPane(){
-        gp.setAlignment(Pos.CENTER);
-        gp.setHgap(10);
-        gp.setVgap(10);
-        gp.add(testButton,1,0);
-        gp.add(big,0,0);
+       
     }
     private void setSprintPane(){
-        gp.setAlignment(Pos.CENTER);
-        gp.setHgap(10);
-        gp.setVgap(10);
-        gp.add(testButton,1,0);
-        gp.add(big,0,0);
+        
     }
     private void setTaskboardPane(){
-        gp.setAlignment(Pos.CENTER);
-        gp.setHgap(10);
-        gp.setVgap(10);
-        gp.add(testButton,1,0);
-        gp.add(big,0,0);
+       
     }
     private void setBurndownPane(){
-        gp.setAlignment(Pos.CENTER);
-        gp.setHgap(10);
-        gp.setVgap(10);
-        gp.add(testButton,1,0);
-        gp.add(big,0,0);
+        
     }
     private void setSettingsPane(){
-        gp.setAlignment(Pos.CENTER);
-        gp.setHgap(10);
-        gp.setVgap(10);
-        gp.add(testButton,1,0);
-        gp.add(big,0,0);
+       
     }
     public void setBacklogItemsArray(ArrayList<backlogItemGrid> inputBacklogItems){
         backlogGridsArray = inputBacklogItems;

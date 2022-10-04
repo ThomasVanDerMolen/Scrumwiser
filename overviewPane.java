@@ -9,21 +9,28 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 
-public class overviewPane extends guiComponents {
+public class overviewPane extends Application{
     
-    private BorderPane bp = new BorderPane();
+    private BorderPane borderPane = new BorderPane();
     private GridPane gp = new GridPane();
-    private Label testLabel = new Label("This is a label on the Overview Pane");
-    private Button buttonTwo = new Button("Button");
-    private Button testButton = new Button("Button");
-    private TextField testTF = new TextField("Enter info");
-    private Scene guiComponentScene;
-
-
-
+    private Scene newScene = new Scene(borderPane);
+    private overviewPane op = new overviewPane();
+    private Stage newStage = new Stage();
+    public overviewPane(){
+       
 }
 
+
+public void start(Stage unusedStage){
+    
+}
+        
+    }
 
 
