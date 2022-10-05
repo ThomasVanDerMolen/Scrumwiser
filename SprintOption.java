@@ -41,13 +41,26 @@ public class SprintOption {
 
     TableView<Backlog> table;
 
-    public SprintOption() {
+    private String sprintName;
+    private ArrayList<backlogItemGrid> backlogItems = new ArrayList<backlogItemGrid>();
+
+    public SprintOption(String inputSprintName) {
         sprint_1.getChildren().addAll(sprint_1l, unassigned_backlog1);
         sprint_2.getChildren().addAll(sprint_2l, unassigned_backlog2);
         sprint_3.getChildren().addAll(sprint_3l, unassigned_backlog3);
         sprint_4.getChildren().addAll(sprint_4l, unassigned_backlog4);
         sprint_5.getChildren().addAll(sprint_5l, unassigned_backlog5);
         sprint_6.getChildren().addAll(sprint_6l, unassigned_backlog6);
+        sprintName = inputSprintName;
+    }
+
+    public void addBacklogItem(backlogItemGrid inputBacklogItem){
+        backlogItems.add(inputBacklogItem);
+        System.out.println(backlogItems);
+    }
+
+    public String getSprintName(){
+        return sprintName;
     }
 
     public void sprint_1() {

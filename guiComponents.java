@@ -11,17 +11,18 @@ import javafx.scene.layout.GridPane;
 
 public class guiComponents
 {
-
     private BorderPane bp = new BorderPane();
     private GridPane gp = new GridPane();
-    SprintOption sprint_option= new SprintOption();
-    overviewPane op = new overviewPane();
-    projectPane prp = new projectPane();
-    peoplePane pep = new peoplePane();
-    backlogPane bap = new backlogPane();
-    taskboardPane tp = new taskboardPane();
-    burndownPane bup = new burndownPane();
-    settingsPane sp = new settingsPane();
+    private SprintOption sprint_option= new SprintOption("test sprint");//will not be needed
+    
+    private  overviewPane op = new overviewPane();
+    private projectPane prp = new projectPane();
+    private peoplePane pep = new peoplePane();
+    private taskboardPane tp = new taskboardPane();
+    private backlogPane bap = new backlogPane();
+    private burndownPane bup = new burndownPane();
+    private settingsPane sp = new settingsPane();
+
 
     private Menu themeMenu = new Menu("Theme");
     private Menu overview = new Menu("Overview");
@@ -61,9 +62,9 @@ public class guiComponents
     private Button newBIGbutton = new Button("New Item");
     //private Button deleteBIGbutton = new Button("Delete");
 
-    private ArrayList<sprints> availableSprints = new ArrayList<sprints>();
+    private ArrayList<SprintOption> availableSprints = new ArrayList<SprintOption>();
 
-    private backlogItemGrid big = new backlogItemGrid(1,availableSprints,this);
+    private backlogItemGrid big = new backlogItemGrid(1,this);
     private ArrayList<backlogItemGrid> backlogGridsArray = new ArrayList<backlogItemGrid>();
 
 
@@ -85,7 +86,7 @@ public class guiComponents
         return gp;
     }
 
-    public ArrayList<sprints> getSprints(){
+    public ArrayList<SprintOption> getSprints(){
         return availableSprints;
     }
 
@@ -94,11 +95,11 @@ public class guiComponents
     }
 
     public void testSprintsFeature(){
-        sprints sprint1 = new sprints("sprint1");
-        sprints sprint2 = new sprints("Sprint 2");
-        availableSprints.add(sprint1);
-        availableSprints.add(sprint2);
-        updateAllBacklogSprints();
+        SprintOption so1 = new SprintOption("so1");
+        SprintOption so2 = new SprintOption("so2");
+        availableSprints.add(so1);
+        availableSprints.add(so2);
+       updateAllBacklogSprints();
     }
 
     /*
@@ -110,7 +111,8 @@ public class guiComponents
     //this is used when the list of sprints is changed.
     private void updateAllBacklogSprints(){
         for(backlogItemGrid x : backlogGridsArray){
-            x.setSprints(availableSprints);
+            ;
+            //x.setSprints(availableSprints);
         }
     }
 
@@ -134,8 +136,6 @@ public class guiComponents
         backlogGridsArray.add(0,big);//add the initial backlog item to the gridpane. this code might be moved elsewhere
 
     }
-
-    private Button testButton = new Button("test");
     
    
     private void setOverviewPane() {
@@ -285,12 +285,13 @@ public class guiComponents
     }
 
     //set the action for the add button on the backlog page
+    //this function could possibly be in the backlogitem grid class
     private void setNewBIGButtonAction(){
         newBIGbutton.setOnAction(e -> 
         {
             //create a new backlog item 
             //Order matters in this function
-            backlogItemGrid newBackLogItem = new backlogItemGrid(backlogGridsArray.size(),availableSprints,this);
+            backlogItemGrid newBackLogItem = new backlogItemGrid(backlogGridsArray.size(),this);
             //add the new backlog item to the backlog item arraylist
             backlogGridsArray.add(newBackLogItem);
             //remove the delete button so that is can be replaced in the correct spot
@@ -307,6 +308,7 @@ public class guiComponents
         });
     }
 
+    //this function should ideally be in the backlogitemgrid class
     public void delete(backlogItemGrid DeletedBacklogItem){
         if(backlogGridsArray.size() > 1){
             gp.getChildren().remove(DeletedBacklogItem);
@@ -317,6 +319,8 @@ public class guiComponents
         }
     }
 
+
+    //this function should be in the sprint option class
     private void setSprintAction() {
         sprint_1.setOnAction(e -> {
             bp.setCenter(sprint_option.get_sprint1());
