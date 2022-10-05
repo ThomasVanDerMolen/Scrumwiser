@@ -18,7 +18,7 @@ public class backlogItemPopupWindow extends Application
     private Button addBtn = new Button("add");
     private Stage newStage = new Stage();
     private ComboBox sprints = new ComboBox<>();
-    private ArrayList<SprintOption> listOfSprints = new ArrayList<>();
+    //private ArrayList<SprintOption> listOfSprints = new ArrayList<>();
     private HashMap<String,SprintOption> unideal = new HashMap<>();
     private backlogItemGrid parentBacklogItem;
 
@@ -47,11 +47,11 @@ public class backlogItemPopupWindow extends Application
             sprintNames.add(so.getSprintName());
             unideal.put(so.getSprintName(),so);
         }
-        sprints.setItems(FXCollections.observableArrayList(sprintNames));
+        sprints.setItems(FXCollections.observableList(sprintNames));
     }
 
     public void popup(ArrayList<SprintOption> sprintsFromGUI){
-        listOfSprints = sprintsFromGUI;
+        //listOfSprints = sprintsFromGUI;
         setScene();
         newStage.show();
         setSprints(sprintsFromGUI);

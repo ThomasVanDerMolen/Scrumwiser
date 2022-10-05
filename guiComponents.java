@@ -99,7 +99,7 @@ public class guiComponents
         SprintOption so2 = new SprintOption("so2");
         availableSprints.add(so1);
         availableSprints.add(so2);
-       updateAllBacklogSprints();
+        //updateAllBacklogSprints();
     }
 
     /*
@@ -109,12 +109,15 @@ public class guiComponents
      */
 
     //this is used when the list of sprints is changed.
+
+    /* 
     private void updateAllBacklogSprints(){
         for(backlogItemGrid x : backlogGridsArray){
             ;
             //x.setSprints(availableSprints);
         }
     }
+    */
 
     //setters and getters for all the panes accessible via top menu
     public BorderPane getBorderPane(){
