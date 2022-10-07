@@ -41,7 +41,8 @@ public class guiComponents
     private MenuItem backlogItemNumber = new MenuItem("Show item number on backlog items");
     private MenuItem additionalBacklogItems = new MenuItem("Add additional task in backlog items in some cases");
 
-    private MenuItem sprintView= new MenuItem("Sprints");
+    private MenuItem sprintView = new MenuItem("Sprints");
+    private MenuItem backlogView = new MenuItem("backlog Items");
 
     //test variables to switch between panes via upper menu
     private MenuItem testOverview = new MenuItem("test");
@@ -71,7 +72,7 @@ public class guiComponents
         //object constructor
         //initialization functions.
         setBorderPane();
-        setGridPane();
+        setGridPane();//not ideal, maybe
         setMenu();
         setNewBIGButtonAction();
         //setDeleteBIGButtonAction();
@@ -91,26 +92,14 @@ public class guiComponents
     }
 
     public void setupSprints(){
+        sprintsGP.setAlignment(Pos.CENTER);
+        sprintsGP.setHgap(10);
+        sprintsGP.setVgap(10);
+        sprintsGP.add(so,0,0);
         availableSprints.add(so);
         //updateAllBacklogSprints();
     }
 
-    /*
-     * public void initializeSprints(){
-     *  
-     * }
-     */
-
-    //this is used when the list of sprints is changed.
-
-    /* 
-    private void updateAllBacklogSprints(){
-        for(backlogItemGrid x : backlogGridsArray){
-            ;
-            //x.setSprints(availableSprints);
-        }
-    }
-    */
 
     //setters and getters for all the panes accessible via top menu
     public BorderPane getBorderPane(){
@@ -225,6 +214,7 @@ public class guiComponents
         mb.getMenus().add(settings);
 
         sprints.getItems().add(sprintView);
+        backlog.getItems().add(backlogView);
         setMenuFunction();//enable the theme menu items to be clicked
 
         //functionality of the test panes
@@ -266,11 +256,17 @@ public class guiComponents
         sprintView.setOnAction(e -> {
             switchToSprintView();
         });
+
+        backlogView.setOnAction(e -> {
+            switchToBacklogView();
+        });
     }
 
     private void switchToSprintView(){
         bp.setCenter(sprintsGP);
-
+    }
+    private void switchToBacklogView(){
+        bp.setCenter(gp);
     }
 
     //this is a test
@@ -315,23 +311,4 @@ public class guiComponents
         }
     }
 
-    //set the action for the delete button on the backlog item page
-    /* 
-    private void setDeleteBIGButtonAction(){
-        deleteBIGbutton.setOnAction(e -> 
-        {
-            if(backlogGridsArray.size() > 1)
-            {
-                //if the number of backlog items is greater than one, remove the last backlog item in the grid
-                //also remove the last backlog item in the backlog item arraylist
-                gp.getChildren().remove(backlogGridsArray.get(backlogGridsArray.size()-1));
-                backlogGridsArray.remove(backlogGridsArray.get(backlogGridsArray.size()-1));
-                gp.getChildren().remove(deleteBIGbutton);
-                gp.getChildren().remove(newBIGbutton);
-                gp.add(newBIGbutton,1,backlogGridsArray.size());
-                gp.add(deleteBIGbutton,1,backlogGridsArray.size()-1);
-            }
-        });
-    }
-    */
 }

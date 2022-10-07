@@ -16,12 +16,12 @@ public class SprintOption extends GridPane{
     public SprintOption(String inputSprintName) {
         sprintName = inputSprintName;
         this.add(sprintLabel,0,0);
-        this.add(table,0,1);
     }
 
     //this method is used exclusively by other classes
     public void addBacklogItem(backlogItemGrid inputBacklogItem){
         backlogItems.add(inputBacklogItem);
+        this.add(inputBacklogItem,0,backlogItems.size()-1);
         //System.out.println(backlogItems);
     }
 
