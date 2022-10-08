@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import javafx.scene.layout.GridPane;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,12 +7,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 
+/*
+ * Some credit is owed to https://www.youtube.com/watch?v=vego72w5kPU for the table feature.(as it is currently implemented)
+ */
 
 public class SprintOption extends GridPane{
     Label sprintLabel= new Label("Sprint");
-
-    
-
 
     TableView<Backlog> table;
 
@@ -40,20 +39,6 @@ public class SprintOption extends GridPane{
         backlogTable.setColumnResizePolicy(backlogTable.CONSTRAINED_RESIZE_POLICY);
         backlogTable.getItems().addAll(backlogObservableList);
     }
-
-    /*
-     * private void setTable(){
-     *  for(backlogItemGrid BI : backlogITems){
-     *      BI.getDesc();
-     *      BI.getPoints();
-     *      BI.getName();
-     *  }
-     * 
-     * 
-     * }
-     * 
-     * 
-     */
 
 
     //this method is used exclusively by other classes
