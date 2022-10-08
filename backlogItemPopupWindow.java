@@ -17,7 +17,7 @@ public class backlogItemPopupWindow extends Application
     private Scene newScene = new Scene(borderPane);
     private Button addBtn = new Button("add");
     private Stage newStage = new Stage();
-    private ComboBox sprints = new ComboBox<>();
+    private ComboBox<String> sprints = new ComboBox<>();
     //private ArrayList<SprintOption> listOfSprints = new ArrayList<>();
     private HashMap<String,SprintOption> unideal = new HashMap<>();
     private backlogItemGrid parentBacklogItem;
@@ -30,8 +30,6 @@ public class backlogItemPopupWindow extends Application
         borderPane.setCenter(gp);
         gp.add(addBtn,0,0);
         gp.add(sprints,1,0);
-
-
         newStage.setScene(newScene);
     }
 
