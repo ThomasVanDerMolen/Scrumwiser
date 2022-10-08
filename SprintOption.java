@@ -18,6 +18,13 @@ public class SprintOption extends GridPane{
         this.add(sprintLabel,0,0);
     }
 
+    /*
+     * 
+     * 
+     * 
+     */
+
+
     //this method is used exclusively by other classes
     public void addBacklogItem(backlogItemGrid inputBacklogItem){
         //basically, we need to add the backlog items to the list but not show them on the screen until the view is switched
