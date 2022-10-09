@@ -1,24 +1,3 @@
-import java.util.ArrayList;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.control.Label;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.application.Application;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.TableColumn;
-
-
 public class SprintOption {
     Pane sprint_1= new Pane();
     Pane sprint_2= new Pane();
@@ -26,10 +5,11 @@ public class SprintOption {
     Pane sprint_4= new Pane();
     Pane sprint_5= new Pane();
     Pane sprint_6= new Pane();
+    Pane sprint= new Pane();
     Label sprint_1l= new Label("Sprint 1");
     Label sprint_2l= new Label("Sprint 2");
     Label sprint_3l= new Label("Sprint 3");
-    Label sprint_4l= new Label("Sprint 4");
+@ -33,11 +28,6 @@ public class SprintOption {
     Label sprint_5l= new Label("Sprint 5");
     Label sprint_6l= new Label("Sprint 6");
     Label unassigned_backlog1= new Label("Remaining backlog items not yet assigned to a sprint");
@@ -41,7 +21,7 @@ public class SprintOption {
 
     TableView<Backlog> table;
 
-    private String sprintName;
+@ -45,12 +35,7 @@ public class SprintOption {
     private ArrayList<backlogItemGrid> backlogItems = new ArrayList<backlogItemGrid>();
 
     public SprintOption(String inputSprintName) {
@@ -51,40 +31,20 @@ public class SprintOption {
         sprint_4.getChildren().addAll(sprint_4l, unassigned_backlog4);
         sprint_5.getChildren().addAll(sprint_5l, unassigned_backlog5);
         sprint_6.getChildren().addAll(sprint_6l, unassigned_backlog6);
+        sprint.getChildren().addAll(sprint_1l, unassigned_backlog1);
         sprintName = inputSprintName;
     }
 
-    public void addBacklogItem(backlogItemGrid inputBacklogItem){
-        backlogItems.add(inputBacklogItem);
-        System.out.println(backlogItems);
-    }
-
-    public String getSprintName(){
-        return sprintName;
-    }
-
-    public void sprint_1() {
-        unassigned_backlog1.setLayoutX(80);
-        TableColumn<Backlog, String> nameColumn = new TableColumn<>("Backlog Item");
-        nameColumn.setMinWidth(200);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("backlog_item"));
-
-        TableColumn<Backlog, Double> pointsColumn = new TableColumn<>("Points");
-        pointsColumn.setMinWidth(200);
-        pointsColumn.setCellValueFactory(new PropertyValueFactory<>("points"));
-
-        table = new TableView<>();
+@ -77,7 +62,7 @@ public class SprintOption {
         table.setItems(getbacklog());
         table.getColumns().addAll(nameColumn, pointsColumn);
         table.setLayoutY(25);
         sprint_1.getChildren().add(table);
+        sprint.getChildren().add(table);
     }
 
     public ObservableList<Backlog> getbacklog() {
-        ObservableList<Backlog> backlogs= FXCollections.observableArrayList();
-        backlogs.add(new Backlog("Test", 1.0));
-        backlogs.add(new Backlog("Test2", 2.0));
-        backlogs.add(new Backlog("Test3", 3.0));
+@ -88,51 +73,5 @@ public class SprintOption {
         return backlogs;
     }
 
@@ -135,4 +95,3 @@ public class SprintOption {
         return sprint_6;
     }
 }
-
