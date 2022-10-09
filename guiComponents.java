@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
@@ -14,6 +16,7 @@ public class guiComponents
     private BorderPane bp = new BorderPane();
     private GridPane gp = new GridPane();//these really need to be moved to their own class somehow.
     private GridPane sprintsGP = new GridPane();//these really need to be moved to their own class somehow.
+    private ScrollPane backlogScroll = new ScrollPane();
     
     private  overviewPane op = new overviewPane();
     private projectPane prp = new projectPane();
@@ -72,11 +75,20 @@ public class guiComponents
         //object constructor
         //initialization functions.
         setBorderPane();
+        setScrollPane();
         setGridPane();//not ideal, maybe
         setMenu();
         setNewBIGButtonAction();
         //setDeleteBIGButtonAction();
         setupSprints();//not ideal
+    }
+
+    //credit to http://www.java2s.com/Tutorials/Java/JavaFX/0350__JavaFX_ScrollPane.htm for scroll pane help
+    private void setScrollPane(){
+        backlogScroll.setContent(gp);
+        backlogScroll.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+        backlogScroll.setHbarPolicy(ScrollBarPolicy.NEVER);
+        backlogScroll.setFitToWidth(true);
     }
 
     public GridPane getGP(){
@@ -107,7 +119,7 @@ public class guiComponents
     }
     
     private void setBorderPane(){
-        bp.setCenter(gp);
+        bp.setCenter(backlogScroll);
         bp.setTop(mb);
     }
 
