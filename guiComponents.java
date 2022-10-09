@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -26,11 +27,13 @@ public class guiComponents
     private burndownPane bup = new burndownPane();
     private settingsPane sp = new settingsPane();
 
+    private Label yourProjects = new Label("Your Projects");
+
 
     private Menu themeMenu = new Menu("Theme");
-    private Menu overview = new Menu("Overview");
+    /*private Menu overview = new Menu("Overview");
     private Menu projects = new Menu("Projects");
-    private Menu people = new Menu("People");
+    private Menu people = new Menu("People");*/
     private Menu backlog = new Menu("Backlog");
     private Menu sprints = new Menu("Sprints");
     private Menu taskboard = new Menu( "Task Board");
@@ -62,7 +65,13 @@ public class guiComponents
     private Button newBIGbutton = new Button("New Item");
     //private Button deleteBIGbutton = new Button("Delete");
 
+
     private SprintOption so = new SprintOption("test sprint");
+
+    private Label backlogTitle = new Label("Backlog Page");
+    
+
+
     private ArrayList<SprintOption> availableSprints = new ArrayList<SprintOption>();
 
     private backlogItemGrid big = new backlogItemGrid(1,this);
@@ -135,10 +144,13 @@ public class guiComponents
     }
     
    
-    private void setOverviewPane() {
+   
+    /*private void setOverviewPane() {
         overview.setOnAction(e -> {
             bp.setCenter(op.getOverview());
             op.getOverview();
+            gp.add(yourProjects,1,1);
+            
     
         });
     }
@@ -155,11 +167,14 @@ public class guiComponents
             pep.getPeople();
     
         });
-    }
+    }*/
     private void setBacklogPane(){
         backlog.setOnAction(e -> {
             bp.setCenter(bap.getBacklog());
-            bap.getBacklog();
+            bap.setup();
+            //bap.getBacklog();
+            
+            
     
         });
         
@@ -168,20 +183,20 @@ public class guiComponents
     private void setTaskboardPane(){
         taskboard.setOnAction(e -> {
             bp.setCenter(tp.getTaskboard());
-            tp.getTaskboard();
+            tp.setup();
     
         });
     }
     private void setBurndownPane(){
         burndown.setOnAction(e -> {
             bp.setCenter(bup.getBurndown());
-            bup.getBurndown();
+            bup.setup();
         });
     }
     private void setSettingsPane(){
         settings.setOnAction(e -> {
             bp.setCenter(sp.getSettings());
-            sp.getSettings();
+            sp.setup();
         });
     }
     public void setBacklogItemsArray(ArrayList<backlogItemGrid> inputBacklogItems){
@@ -202,9 +217,9 @@ public class guiComponents
         //keep code organized
         themeMenu.getItems().add(darkMode);
         themeMenu.getItems().add(lightMode);    
-        overview.getItems();
+        /*overview.getItems();
         projects.getItems();
-        people.getItems();
+        people.getItems();*/
         backlog.getItems();
         sprints.getItems();
         taskboard.getItems();
@@ -216,9 +231,9 @@ public class guiComponents
         settings.getItems().add(additionalBacklogItems);
         
         mb.getMenus().add(themeMenu);
-        mb.getMenus().add(overview);
+        /*mb.getMenus().add(overview);
         mb.getMenus().add(projects);
-        mb.getMenus().add(people);
+        mb.getMenus().add(people);*/
         mb.getMenus().add(backlog);
         mb.getMenus().add(sprints);
         mb.getMenus().add(taskboard);
@@ -230,9 +245,9 @@ public class guiComponents
         setMenuFunction();//enable the theme menu items to be clicked
 
         //functionality of the test panes
-        overview.getItems().add(testOverview);
+        /*overview.getItems().add(testOverview);
         projects.getItems().add(testProjects);
-        people.getItems().add(testPeople);
+        people.getItems().add(testPeople);*/
         backlog.getItems().add(testBacklog);
         sprints.getItems().add(testSprint);
         taskboard.getItems().add(testTaskboard);
@@ -240,9 +255,9 @@ public class guiComponents
         settings.getItems().add(testSettings);
 
         //switches panes when menuItem is clicked
-        overview.setOnAction( e -> setOverviewPane() );
+        /*overview.setOnAction( e -> setOverviewPane() );
         testProjects.setOnAction(( e -> setProjectsPane()) );
-        testPeople.setOnAction(( e -> setPeoplePane()) );
+        testPeople.setOnAction(( e -> setPeoplePane()) );*/
         testBacklog.setOnAction(( e -> setBacklogPane()) );
         testTaskboard.setOnAction(( e -> setTaskboardPane()) );
         testBurndown.setOnAction(( e -> setBurndownPane()) );

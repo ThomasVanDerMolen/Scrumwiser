@@ -20,7 +20,8 @@ public class SprintOption extends GridPane{
     //private ArrayList<backlogItemGrid> backlogItems = new ArrayList<backlogItemGrid>();
     private ObservableList<backlogItemGrid> backlogObservableList = FXCollections.observableArrayList();
     private TableView<backlogItemGrid> backlogTable= new TableView<backlogItemGrid>();
-    private TableColumn<backlogItemGrid,String> backlogName = new TableColumn<backlogItemGrid,String>("Backlog Item");
+
+    private TableColumn<backlogItemGrid,String> backlogName = new TableColumn<backlogItemGrid,String>("Backlog Items");
     private TableColumn<backlogItemGrid,String> backlogPoints = new TableColumn<backlogItemGrid,String>("Points");
 
 
