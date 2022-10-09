@@ -85,7 +85,6 @@ public class guiComponents
         setNewBIGButtonAction();
         //setDeleteBIGButtonAction();
         testSprintsFeature();//this may be important
-        setSprintAction();
     }
 
     public GridPane getGP(){
@@ -334,58 +333,4 @@ public class guiComponents
         }
     }
 
-
-    //this function should be in the sprint option class
-    private void setSprintAction() {
-        sprint_1.setOnAction(e -> {
-            bp.setCenter(sprint_option.get_sprint1());
-            sprint_option.sprint_1();
-    
-        });
-        sprint_2.setOnAction(e -> {
-            bp.setCenter(sprint_option.get_sprint2());
-            sprint_option.sprint_2();
-    
-        });
-        sprint_3.setOnAction(e -> {
-            bp.setCenter(sprint_option.get_sprint3());
-            sprint_option.sprint_3();
-    
-        });
-        sprint_4.setOnAction(e -> {
-            bp.setCenter(sprint_option.get_sprint4());
-            sprint_option.sprint_4();
-    
-        });
-        sprint_5.setOnAction(e -> {
-            bp.setCenter(sprint_option.get_sprint5());
-            sprint_option.sprint_5();
-    
-        });
-        sprint_6.setOnAction(e -> {
-            bp.setCenter(sprint_option.get_sprint6());
-            sprint_option.sprint_6();
-    
-        });
-    }
-
-    //set the action for the delete button on the backlog item page
-    /* 
-    private void setDeleteBIGButtonAction(){
-        deleteBIGbutton.setOnAction(e -> 
-        {
-            if(backlogGridsArray.size() > 1)
-            {
-                //if the number of backlog items is greater than one, remove the last backlog item in the grid
-                //also remove the last backlog item in the backlog item arraylist
-                gp.getChildren().remove(backlogGridsArray.get(backlogGridsArray.size()-1));
-                backlogGridsArray.remove(backlogGridsArray.get(backlogGridsArray.size()-1));
-                gp.getChildren().remove(deleteBIGbutton);
-                gp.getChildren().remove(newBIGbutton);
-                gp.add(newBIGbutton,1,backlogGridsArray.size());
-                gp.add(deleteBIGbutton,1,backlogGridsArray.size()-1);
-            }
-        });
-    }
-    */
 }
