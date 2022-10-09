@@ -20,9 +20,8 @@ public class SprintOption extends GridPane{
     //private ArrayList<backlogItemGrid> backlogItems = new ArrayList<backlogItemGrid>();
     private ObservableList<backlogItemGrid> backlogObservableList = FXCollections.observableArrayList();
     private TableView<backlogItemGrid> backlogTable= new TableView<backlogItemGrid>();
-    private TableColumn<backlogItemGrid,String> backlogName = new TableColumn<backlogItemGrid,String>("Backlog Items");
+    private TableColumn<backlogItemGrid,String> backlogName = new TableColumn<backlogItemGrid,String>("Backlog Item");
     private TableColumn<backlogItemGrid,String> backlogPoints = new TableColumn<backlogItemGrid,String>("Points");
-
 
     public SprintOption(String inputSprintName) {
         sprintName = inputSprintName;
@@ -32,6 +31,8 @@ public class SprintOption extends GridPane{
     }
 
     private void setValueFactories(){
+        backlogName.setMinWidth(200);
+        backlogPoints.setMinWidth(100);
         backlogName.setCellValueFactory(new PropertyValueFactory<backlogItemGrid,String>("nameFieldValue"));
         backlogPoints.setCellValueFactory(new PropertyValueFactory<backlogItemGrid,String>("pointsFieldValue"));
         backlogTable.getColumns().add(backlogName);

@@ -3,6 +3,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
@@ -17,6 +18,8 @@ import javafx.scene.layout.GridPane;
 //there, is would be added as a backlog item grid pane to the main gridpane 
 public class backlogItemGrid extends GridPane
 {
+    private String nameFieldValue;
+    private String pointsFieldValue;
     private TextField desc = new TextField("Name");
     private TextField points = new TextField("Estimate Points");
     private Button btUp = new Button("");
@@ -98,6 +101,16 @@ public class backlogItemGrid extends GridPane
         btDn.setOnAction(e -> {
             moveDown(parentComponentsObject.getGP(), parentComponentsObject.getBacklogItems(), this);
         });
+    }
+
+    public String getNameFieldValue(){
+        nameFieldValue = desc.getText();
+        return nameFieldValue;
+    }
+
+    public String getPointsFieldValue(){
+        pointsFieldValue = points.getText();
+        return pointsFieldValue;
     }
 
 }
