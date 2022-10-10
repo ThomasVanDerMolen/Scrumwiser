@@ -47,7 +47,7 @@ public class SprintOption extends GridPane{
         u_assigned_backlog.getColumns().add(unassigned_points);
         backlogTable.setColumnResizePolicy(backlogTable.CONSTRAINED_RESIZE_POLICY);
         backlogTable.getItems().addAll(backlogObservableList);
-        System.out.println("5");
+        
     }
 
 
