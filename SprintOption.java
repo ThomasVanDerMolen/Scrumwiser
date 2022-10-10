@@ -15,13 +15,18 @@ public class SprintOption extends GridPane{
     Label sprintLabel= new Label("Sprint");
 
     TableView<Backlog> table;
+    TableView<Backlog> backlog_table;
 
     private String sprintName;
     //private ArrayList<backlogItemGrid> backlogItems = new ArrayList<backlogItemGrid>();
     private ObservableList<backlogItemGrid> backlogObservableList = FXCollections.observableArrayList();
     private TableView<backlogItemGrid> backlogTable= new TableView<backlogItemGrid>();
+    private TableView<backlogItemGrid> u_assigned_backlog= new TableView<backlogItemGrid>();
     private TableColumn<backlogItemGrid,String> backlogName = new TableColumn<backlogItemGrid,String>("Backlog Item");
     private TableColumn<backlogItemGrid,String> backlogPoints = new TableColumn<backlogItemGrid,String>("Points");
+    private TableColumn<backlogItemGrid,String> unassigned_backlog= new TableColumn<backlogItemGrid,String>("Unassigned Backlog");
+    private TableColumn<backlogItemGrid,String> unassigned_points= new TableColumn<backlogItemGrid,String>("Points");
+
 
     public SprintOption(String inputSprintName) {
         sprintName = inputSprintName;
@@ -33,12 +38,16 @@ public class SprintOption extends GridPane{
     private void setValueFactories(){
         backlogName.setMinWidth(200);
         backlogPoints.setMinWidth(100);
+        unassigned_backlog.setCellValueFactory(new PropertyValueFactory<backlogItemGrid, String>("nameFieldValue"));
         backlogName.setCellValueFactory(new PropertyValueFactory<backlogItemGrid,String>("nameFieldValue"));
         backlogPoints.setCellValueFactory(new PropertyValueFactory<backlogItemGrid,String>("pointsFieldValue"));
         backlogTable.getColumns().add(backlogName);
         backlogTable.getColumns().add(backlogPoints);
+        u_assigned_backlog.getColumns().add(unassigned_backlog);
+        u_assigned_backlog.getColumns().add(unassigned_points);
         backlogTable.setColumnResizePolicy(backlogTable.CONSTRAINED_RESIZE_POLICY);
         backlogTable.getItems().addAll(backlogObservableList);
+        System.out.println("5");
     }
 
 
