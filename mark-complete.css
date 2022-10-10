@@ -1,0 +1,51 @@
+/*
+This CSS file was modified from https://stackoverflow.com/questions/49159286/make-a-dark-mode-with-javafx
+Credit is also due to https://stackoverflow.com/questions/19343531/javafx-combobox-styling
+for the combo box styling
+*/
+
+
+
+.label{
+    -fx-text-fill: lightgray;
+}
+
+.combo-Box .list-cell{
+    -fx-background-color:#26a343;
+}
+
+.text-field {
+    -fx-prompt-text-fill: #000000;
+    -fx-background-color: #26a343;
+    -fx-font-color:#000000;
+}
+
+.titulo{
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+}
+
+.button{
+    -fx-focus-traversable: false;
+    -fx-background-color: #26a343;
+}
+
+.button:hover{
+    -fx-text-fill: white;
+}
+
+.separator *.line { 
+    -fx-background-color: #000000;
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+}
+
+
+
+.combo-box-base  
+{
+    -fx-background-color: #26a343, #26a343, #26a343, #26a343;
+    -fx-background-radius: 5, 5, 4, 3;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-padding: 0;
+}
