@@ -1,6 +1,10 @@
+/* 
+
+This class is no longer being used, it only exists for reference.
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
@@ -9,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
 public class backlogItemPopupWindow extends Application
 {
     //private BorderPane borderPane = new BorderPane();
@@ -21,11 +24,10 @@ public class backlogItemPopupWindow extends Application
     //private ArrayList<SprintOption> listOfSprints = new ArrayList<>();
     private HashMap<String,SprintOption> unideal = new HashMap<>();
     private backlogItemGrid parentBacklogItem;
-
     public backlogItemPopupWindow(backlogItemGrid callingBacklogItem){
+        //launch();
         parentBacklogItem = callingBacklogItem;
     }
-
     private void setScene(){
         //borderPane.setCenter(gp);
         gp.setAlignment(Pos.CENTER);
@@ -35,13 +37,11 @@ public class backlogItemPopupWindow extends Application
         gp.add(sprints,1,0);
         newStage.setScene(newScene);
     }
-
     private void setButtonAction(){
         addBtn.setOnAction(e -> {
             unideal.get(sprints.getValue()).addBacklogItem(parentBacklogItem);
         });
     }
-
     public void setSprints(ArrayList<SprintOption> inputSprints){
         ArrayList<String> sprintNames = new ArrayList<>();
         for(SprintOption so : inputSprints){
@@ -50,17 +50,16 @@ public class backlogItemPopupWindow extends Application
         }
         sprints.setItems(FXCollections.observableList(sprintNames));
     }
-
     public void popup(ArrayList<SprintOption> sprintsFromGUI){
         //listOfSprints = sprintsFromGUI;
         setScene();
-        newStage.show();
+        //newStage.show();
         setSprints(sprintsFromGUI);
         setButtonAction();
     }
+    public void start(Stage popupStage){
+        popupStage.setScene(newScene);
 
-    public void start(Stage unusedStage){
-        
     }
-
 }
+ */

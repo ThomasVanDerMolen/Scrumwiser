@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
@@ -18,33 +18,38 @@ import javafx.scene.layout.GridPane;
 //there, is would be added as a backlog item grid pane to the main gridpane 
 public class backlogItemGrid extends GridPane
 {
+    private double pointsUsed = 0;
+    private double totalpoints = 0;
     private String nameFieldValue;
     private String pointsFieldValue;
+    private Label pointsLabel = new Label("");
     private TextField desc = new TextField("Name");
-    private TextField points = new TextField("Estimate Points");
+    private TextField points = new TextField();
     private Button btUp = new Button("");
     private Button btDn = new Button("");
     private guiComponents parentComponentsObject;
     private MenuItem MIopen = new MenuItem("open");
     private MenuItem MIDelete = new MenuItem("delete");
     private MenuItem MIMarkComplete = new MenuItem("Mark Complete");
+    private MenuItem MIMarkIncomplete = new MenuItem("Mark Incomplete");
     private ContextMenu rightClickMenu = new ContextMenu();
     private ProgressBar backlogProgress = new ProgressBar(0);
-    private backlogItemPopupWindow popup = new backlogItemPopupWindow(this);
+    private popupWindow popupWindow = new popupWindow(this);
 
 
-    public backlogItemGrid(int initialValue, guiComponents inputParentGuiComponents){
+    public backlogItemGrid(guiComponents inputParentGuiComponents){
         this.add(desc,0,0);
         this.add(points,1,0);
-        //this.add(sprintSelector,3,0);
         this.add(btUp,2,0);
         this.add(btDn,2,1);
         this.add(backlogProgress,3,0);
+        this.add(pointsLabel,3,0);
         points.setPrefWidth(125);
+        points.setPromptText("points");
         parentComponentsObject = inputParentGuiComponents;
-        //setSprints(inputSprints);
         setUpDownFunctions();
         setRightClickAction();
+        setTotalPoints();
     }
 
     public void setRightClickAction(){
@@ -68,9 +73,19 @@ public class backlogItemGrid extends GridPane
         MIMarkComplete.setOnAction(e -> {
             this.getStylesheets().add("mark-complete.css");
             this.setStyle("-fx-background-color:#33f561");
+            rightClickMenu.getItems().remove(MIMarkComplete);
+            rightClickMenu.getItems().add(MIMarkIncomplete);
+            //honestly, quite incredible
+        });
+        MIMarkIncomplete.setOnAction(e -> {
+            this.getStylesheets().remove("mark-complete.css");
+            this.setStyle(null);
+            rightClickMenu.getItems().remove(MIMarkIncomplete);
+            rightClickMenu.getItems().add(MIMarkComplete);
         });
         MIopen.setOnAction(e -> {
-            popup.popup(parentComponentsObject.getSprints());
+            popupWindow.setSprints(this.parentComponentsObject.getSprints());
+            popupWindow.show(this, 500, 400);
         });
     }
 
@@ -111,6 +126,20 @@ public class backlogItemGrid extends GridPane
     public String getPointsFieldValue(){
         pointsFieldValue = points.getText();
         return pointsFieldValue;
+    }
+
+    public void addPoints(double inputPoints){
+        pointsUsed += (inputPoints/totalpoints);
+        pointsLabel.setText(String.valueOf(pointsUsed*100) + "%");
+        backlogProgress.setProgress(pointsUsed);
+    }
+
+    private void setTotalPoints(){
+        //credit to https://stackoverflow.com/questions/30160899/value-change-listener-for-javafxs-textfield
+        points.textProperty().addListener(e -> {
+            totalpoints = Integer.valueOf(points.getText());
+            addPoints(0);
+        });
     }
 
 }

@@ -55,7 +55,7 @@ public class guiComponents
     private SprintOption so = new SprintOption("test sprint");
     private ArrayList<SprintOption> availableSprints = new ArrayList<SprintOption>();
 
-    private backlogItemGrid big = new backlogItemGrid(1,this);
+    private backlogItemGrid big = new backlogItemGrid(this);
     private ArrayList<backlogItemGrid> backlogGridsArray = new ArrayList<backlogItemGrid>();
 
 
@@ -252,7 +252,7 @@ public class guiComponents
         {
             //create a new backlog item 
             //Order matters in this function
-            backlogItemGrid newBackLogItem = new backlogItemGrid(backlogGridsArray.size(),this);
+            backlogItemGrid newBackLogItem = new backlogItemGrid(this);
             //add the new backlog item to the backlog item arraylist
             backlogGridsArray.add(newBackLogItem);
             //remove the delete button so that is can be replaced in the correct spot
