@@ -134,11 +134,16 @@ public class backlogItemGrid extends GridPane
         backlogProgress.setProgress(pointsUsed);
     }
 
+    private void recalculatePoints(){
+        pointsLabel.setText(String.valueOf(pointsUsed*100/totalpoints) + "%");
+        backlogProgress.setProgress(pointsUsed/totalpoints);
+    }
+
     private void setTotalPoints(){
         //credit to https://stackoverflow.com/questions/30160899/value-change-listener-for-javafxs-textfield
         points.textProperty().addListener(e -> {
             totalpoints = Integer.valueOf(points.getText());
-            addPoints(0);
+            recalculatePoints();
         });
     }
 
