@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
@@ -16,25 +17,25 @@ import javafx.scene.layout.GridPane;
 //I believe that it is not required to extend the grid pane functionality to this class
 //We could instead create a gridpane which contains the other elements, and return that gridpane to the components class
 //there, is would be added as a backlog item grid pane to the main gridpane 
-public class backlogItemGrid extends GridPane
+public class backlogItemGrid extends GridPane implements java.io.Serializable
 {
     private double pointsUsed = 0;
     private double totalpoints = 0;
     private String nameFieldValue;
     private String pointsFieldValue;
-    private Label pointsLabel = new Label("");
-    private TextField desc = new TextField("Name");
-    private TextField points = new TextField();
-    private Button btUp = new Button("");
-    private Button btDn = new Button("");
-    private guiComponents parentComponentsObject;
-    private MenuItem MIopen = new MenuItem("open");
-    private MenuItem MIDelete = new MenuItem("delete");
-    private MenuItem MIMarkComplete = new MenuItem("Mark Complete");
-    private MenuItem MIMarkIncomplete = new MenuItem("Mark Incomplete");
-    private ContextMenu rightClickMenu = new ContextMenu();
-    private ProgressBar backlogProgress = new ProgressBar(0);
-    private popupWindow popupWindow = new popupWindow(this);
+    private transient Label pointsLabel = new Label("");
+    private transient TextField desc = new TextField("Name");
+    private transient TextField points = new TextField();
+    private transient Button btUp = new Button("");
+    private transient Button btDn = new Button("");
+    private transient guiComponents parentComponentsObject;
+    private transient MenuItem MIopen = new MenuItem("open");
+    private transient MenuItem MIDelete = new MenuItem("delete");
+    private transient MenuItem MIMarkComplete = new MenuItem("Mark Complete");
+    private transient MenuItem MIMarkIncomplete = new MenuItem("Mark Incomplete");
+    private transient ContextMenu rightClickMenu = new ContextMenu();
+    private transient ProgressBar backlogProgress = new ProgressBar(0);
+    private transient popupWindow popupWindow = new popupWindow(this);
 
 
     public backlogItemGrid(guiComponents inputParentGuiComponents){
@@ -145,6 +146,11 @@ public class backlogItemGrid extends GridPane
             totalpoints = Integer.valueOf(points.getText());
             recalculatePoints();
         });
+    }
+
+    public void prepareForSerialization(){
+        nameFieldValue = desc.getText();
+        pointsFieldValue = points.getText();
     }
 
 }

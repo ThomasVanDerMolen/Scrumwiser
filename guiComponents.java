@@ -242,8 +242,6 @@ public class guiComponents
         primaryBorderPane.setBottom(backlogBottomMenu);
     }
 
-    //this is a test
-
     //set the scene based on the main class
     public void setScene(Scene inputScene){
         guiComponentScene = inputScene;
