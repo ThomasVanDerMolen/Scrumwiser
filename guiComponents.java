@@ -16,7 +16,6 @@ public class guiComponents
     private GridPane gp = new GridPane();//these really need to be moved to their own class somehow.
     private GridPane sprintsGP = new GridPane();//these really need to be moved to their own class somehow.
     private ScrollPane backlogScroll = new ScrollPane();
-    
     private taskboardPane tp = new taskboardPane();
     private backlogPane bap = new backlogPane();
     private burndownPane bup = new burndownPane();

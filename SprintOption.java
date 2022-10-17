@@ -14,9 +14,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class SprintOption extends GridPane{
     Label sprintLabel= new Label("Sprint");
 
-    TableView<Backlog> table;
-    TableView<Backlog> backlog_table;
-
     private String sprintName;
     //private ArrayList<backlogItemGrid> backlogItems = new ArrayList<backlogItemGrid>();
     private ObservableList<backlogItemGrid> backlogObservableList = FXCollections.observableArrayList();
@@ -33,12 +30,17 @@ public class SprintOption extends GridPane{
         //this.add(sprintLabel,0,0);
         setValueFactories();
         this.add(backlogTable,0,0);
+        this.add(u_assigned_backlog, 0, 0);
+        GridPane.setColumnIndex(u_assigned_backlog, 2);
     }
 
     private void setValueFactories(){
         backlogName.setMinWidth(200);
         backlogPoints.setMinWidth(100);
+        unassigned_backlog.setMinWidth(200);
+        unassigned_points.setMinWidth(100);
         unassigned_backlog.setCellValueFactory(new PropertyValueFactory<backlogItemGrid, String>("nameFieldValue"));
+        unassigned_points.setCellValueFactory(new PropertyValueFactory<backlogItemGrid,String>("pointsFieldValue"));
         backlogName.setCellValueFactory(new PropertyValueFactory<backlogItemGrid,String>("nameFieldValue"));
         backlogPoints.setCellValueFactory(new PropertyValueFactory<backlogItemGrid,String>("pointsFieldValue"));
         backlogTable.getColumns().add(backlogName);
