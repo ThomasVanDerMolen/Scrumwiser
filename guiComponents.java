@@ -15,7 +15,9 @@ public class guiComponents
     private BorderPane bp = new BorderPane();
     private GridPane gp = new GridPane();//these really need to be moved to their own class somehow.
     private GridPane sprintsGP = new GridPane();//these really need to be moved to their own class somehow.
+    private GridPane sprintscrollGP= new GridPane();
     private ScrollPane backlogScroll = new ScrollPane();
+    private ScrollPane sprintScroll= new ScrollPane();
     private taskboardPane tp = new taskboardPane();
     private backlogPane bap = new backlogPane();
     private burndownPane bup = new burndownPane();
@@ -51,7 +53,9 @@ public class guiComponents
     private Button newBIGbutton = new Button("New Item");
     
 
-    private SprintOption so = new SprintOption("test sprint");
+    private SprintOption so = new SprintOption("Sprint 1");
+    private SprintOption s1 = new SprintOption("sprint 2");
+    private SprintOption unassigned_sp= new SprintOption("Undetermined");
     private ArrayList<SprintOption> availableSprints = new ArrayList<SprintOption>();
 
     private backlogItemGrid big = new backlogItemGrid(1,this);
@@ -98,6 +102,8 @@ public class guiComponents
         sprintsGP.setVgap(10);
         sprintsGP.add(so,0,0);
         availableSprints.add(so);
+        
+        availableSprints.add(unassigned_sp);
         //updateAllBacklogSprints();
     }
 
@@ -230,6 +236,11 @@ public class guiComponents
 
     private void switchToSprintView(){
         bp.setCenter(sprintsGP);
+        sprintScroll.setContent(sprintscrollGP);
+        sprintsGP.add(sprintScroll, 0, 0);
+        sprintscrollGP.add(so,0,0);//automate this
+        sprintscrollGP.add(s1,0,1);//automate this
+        sprintsGP.add(unassigned_sp, 1, 0);
     }
     private void switchToBacklogView(){
         bp.setCenter(gp);
