@@ -17,10 +17,13 @@ public class SprintOption extends GridPane{
     private String sprintName;
     //private ArrayList<backlogItemGrid> backlogItems = new ArrayList<backlogItemGrid>();
     private ObservableList<backlogItemGrid> backlogObservableList = FXCollections.observableArrayList();
-    private TableView<backlogItemGrid> backlogTable= new TableView<backlogItemGrid>();
+    private TableView<backlogItemGrid> sp1_table= new TableView<backlogItemGrid>();
     private TableView<backlogItemGrid> u_assigned_backlog= new TableView<backlogItemGrid>();
-    private TableColumn<backlogItemGrid,String> backlogName = new TableColumn<backlogItemGrid,String>("Backlog Item");
-    private TableColumn<backlogItemGrid,String> backlogPoints = new TableColumn<backlogItemGrid,String>("Points");
+    private TableView<backlogItemGrid> sp2_table= new TableView<backlogItemGrid>();
+    private TableColumn<backlogItemGrid,String> sp1_backlog = new TableColumn<backlogItemGrid,String>("Backlog Item");
+    private TableColumn<backlogItemGrid,String> sp1_points = new TableColumn<backlogItemGrid,String>("Points");
+    private TableColumn<backlogItemGrid,String> sp2_backlog = new TableColumn<backlogItemGrid,String>("Backlog Item ");
+    private TableColumn<backlogItemGrid,String> sp2_points = new TableColumn<backlogItemGrid,String>("Points");
     private TableColumn<backlogItemGrid,String> unassigned_backlog= new TableColumn<backlogItemGrid,String>("Unassigned Backlog");
     private TableColumn<backlogItemGrid,String> unassigned_points= new TableColumn<backlogItemGrid,String>("Points");
 
@@ -29,26 +32,33 @@ public class SprintOption extends GridPane{
         sprintName = inputSprintName;
         //this.add(sprintLabel,0,0);
         setValueFactories();
-        this.add(backlogTable,0,0);
-        this.add(u_assigned_backlog, 0, 0);
-        GridPane.setColumnIndex(u_assigned_backlog, 2);
+        this.add(sp1_table,0,0);
+        this.add(u_assigned_backlog, 1, 0);
+        this.add(sp2_table,0,1);
+        
     }
 
     private void setValueFactories(){
-        backlogName.setMinWidth(200);
-        backlogPoints.setMinWidth(100);
+        sp1_backlog.setMinWidth(200);
+        sp1_points.setMinWidth(100);
         unassigned_backlog.setMinWidth(200);
         unassigned_points.setMinWidth(100);
+        sp2_backlog.setMinWidth(200);
+        sp2_points.setMinWidth(100);
         unassigned_backlog.setCellValueFactory(new PropertyValueFactory<backlogItemGrid, String>("nameFieldValue"));
         unassigned_points.setCellValueFactory(new PropertyValueFactory<backlogItemGrid,String>("pointsFieldValue"));
-        backlogName.setCellValueFactory(new PropertyValueFactory<backlogItemGrid,String>("nameFieldValue"));
-        backlogPoints.setCellValueFactory(new PropertyValueFactory<backlogItemGrid,String>("pointsFieldValue"));
-        backlogTable.getColumns().add(backlogName);
-        backlogTable.getColumns().add(backlogPoints);
+        sp1_backlog.setCellValueFactory(new PropertyValueFactory<backlogItemGrid,String>("nameFieldValue"));
+        sp1_points.setCellValueFactory(new PropertyValueFactory<backlogItemGrid,String>("pointsFieldValue"));
+        sp2_backlog.setCellValueFactory(new PropertyValueFactory<backlogItemGrid,String>("nameFieldValue"));
+        sp2_points.setCellValueFactory(new PropertyValueFactory<backlogItemGrid,String>("pointsFieldValue"));
+        sp1_table.getColumns().add(sp1_backlog);
+        sp1_table.getColumns().add(sp1_points);
+        sp2_table.getColumns().add(sp2_backlog);
+        sp2_table.getColumns().add(sp2_points);
         u_assigned_backlog.getColumns().add(unassigned_backlog);
         u_assigned_backlog.getColumns().add(unassigned_points);
-        backlogTable.setColumnResizePolicy(backlogTable.CONSTRAINED_RESIZE_POLICY);
-        backlogTable.getItems().addAll(backlogObservableList);
+        sp1_table.setColumnResizePolicy(sp1_table.CONSTRAINED_RESIZE_POLICY);
+        sp1_table.getItems().addAll(backlogObservableList);
         
     }
 
@@ -59,7 +69,7 @@ public class SprintOption extends GridPane{
         backlogObservableList.add(inputBacklogItem);
         //this.add(inputBacklogItem,0,backlogItems.size());//important but not now
         //System.out.println(backlogItems);
-        backlogTable.getItems().add(inputBacklogItem);
+        sp1_table.getItems().add(inputBacklogItem);
     }
 
     //this method is used exclusively by other classes
