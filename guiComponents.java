@@ -40,6 +40,7 @@ public class guiComponents
 
     private MenuItem sprintView = new MenuItem("Sprints");
     private MenuItem backlogView = new MenuItem("backlog Items");
+    private MenuItem burndownView = new MenuItem("burndown chart");
 
     //test variables to switch between panes via upper menu
     private MenuItem testBacklog = new MenuItem("test");
@@ -61,6 +62,8 @@ public class guiComponents
     private ArrayList<backlogItemGrid> backlogGridsArray = new ArrayList<backlogItemGrid>();
 
     private DatePicker datePicker = new DatePicker();
+
+    private burndown burndownObject = new burndown();
 
     private Scene guiComponentScene;
 
@@ -121,10 +124,11 @@ public class guiComponents
         backlogGridPane.setAlignment(Pos.CENTER);
         backlogGridPane.setHgap(10);
         backlogGridPane.setVgap(10);
-        backlogGridPane.add(big,0,0);
+        //backlogGridPane.add(big,0,0);
         
-        backlogGridsArray.add(0,big);//add the initial backlog item to the gridpane. this code might be moved elsewhere
-
+        //backlogGridsArray.add(0,big);//add the initial backlog item to the gridpane. this code might be moved elsewhere
+        //System.out.println(backlogGridsArray);
+        //redrawAllBacklogItems();
     }
    
     private void setBacklogPane(){
@@ -168,6 +172,13 @@ public class guiComponents
         }
     }
 
+    public void initBacklogItems(){
+        System.out.println(backlogGridsArray);
+        for(backlogItemGrid x : backlogGridsArray){
+            backlogGridPane.add(x,0,backlogGridsArray.indexOf(x));
+        }
+    }
+
     private void setMenu(){
 
         //keep code organized
@@ -192,6 +203,7 @@ public class guiComponents
 
         sprints.getItems().add(sprintView);
         backlog.getItems().add(backlogView);
+        burndown.getItems().add(burndownView);
         setMenuFunction();//enable the theme menu items to be clicked
 
         //functionality of the test panes
@@ -231,6 +243,14 @@ public class guiComponents
         backlogView.setOnAction(e -> {
             switchToBacklogView();
         });
+        burndownView.setOnAction(e -> {
+            switchToBurndownView();
+        });
+    }
+
+    private void switchToBurndownView(){
+        primaryBorderPane.setCenter(burndownObject.getBurndownGridPane());
+        primaryBorderPane.setBottom(null);
     }
 
     private void switchToSprintView(){

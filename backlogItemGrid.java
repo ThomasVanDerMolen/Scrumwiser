@@ -37,6 +37,16 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
     private transient ProgressBar backlogProgress = new ProgressBar(0);
     private transient popupWindow popupWindow = new popupWindow(this);
 
+    public backlogItemGrid(guiComponents inputParentGuiComponents, double inputPointsUsed, double inputTotalPoints, String inputNameFieldValue, String inputpointsFieldValue){
+        //credit to https://www.geeksforgeeks.org/constructor-chaining-java-examples/ 
+        this(inputParentGuiComponents);
+        pointsUsed = inputPointsUsed;
+        totalpoints = inputTotalPoints;
+        nameFieldValue = inputNameFieldValue;
+        pointsFieldValue = inputpointsFieldValue;
+        desc.setText(String.valueOf(inputNameFieldValue));
+        pointsLabel.setText(String.valueOf(pointsFieldValue));
+    }
 
     public backlogItemGrid(guiComponents inputParentGuiComponents){
         this.add(desc,0,0);

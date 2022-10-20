@@ -31,10 +31,18 @@ public class dataSerializer
         }
     }
     public void deserializeBacklogItems(){
+        ArrayList<backlogItemGrid> importedBacklogItems = new ArrayList<>();
         try{
             FileInputStream fileIn = new FileInputStream("./database/backlogitems.ser");
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-            System.out.println(objectIn.readObject());
+            //create a new backlog item with the values of the old one
+            //the values of the old one are deserialized and stored in inputObject
+            //create a new backlog object called tmp and get the values from the deserialized object, pass a list of these objects to the parent object
+            backlogItemGrid inputObject = (backlogItemGrid) objectIn.readObject();
+            //backlogItemGrid tmp = new backlogItemGrid(parentObject,inputObject.getPoints(),inputObject.get)
+            //---------------------------------------------------------------------------------------------this is where I left off----------
+            parentObject.setBacklogItemsArray(importedBacklogItems);
+            parentObject.initBacklogItems();
             objectIn.close();
             fileIn.close();
         }
