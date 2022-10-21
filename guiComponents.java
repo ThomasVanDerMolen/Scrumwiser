@@ -18,6 +18,9 @@ public class guiComponents
     private GridPane sprintsGP = new GridPane();//these really need to be moved to their own class somehow.
     private ScrollPane backlogScroll = new ScrollPane();
     private GridPane backlogBottomMenu = new GridPane();
+    private GridPane sprintscrollGP= new GridPane();
+    private ScrollPane sprintScroll= new ScrollPane();
+
     
     private taskboardPane tp = new taskboardPane();
     private backlogPane bap = new backlogPane();
@@ -53,7 +56,9 @@ public class guiComponents
     private Button newBacklogItemButton = new Button("New Item");
     
     //this is the initial sprint object
-    private SprintOption so = new SprintOption("test sprint");
+    private SprintOption so = new SprintOption("Sprint 1");
+    private SprintOption s1 = new SprintOption("sprint 2");
+    private SprintOption unassigned_sp= new SprintOption("Undetermined");
     private ArrayList<SprintOption> availableSprints = new ArrayList<SprintOption>();
 
     //this is the initial backlog object
@@ -96,13 +101,19 @@ public class guiComponents
         return backlogGridsArray;
     }
 
+
+    
     public void setupSprints(){
         sprintsGP.setAlignment(Pos.CENTER);
         sprintsGP.setHgap(10);
         sprintsGP.setVgap(10);
         sprintsGP.add(so,0,0);
         availableSprints.add(so);
+        
+        availableSprints.add(unassigned_sp);
+        //updateAllBacklogSprints();
     }
+
 
     //setters and getters for all the panes accessible via top menu
     public BorderPane getBorderPane(){
@@ -236,11 +247,18 @@ public class guiComponents
     private void switchToSprintView(){
         primaryBorderPane.setCenter(sprintsGP);
         primaryBorderPane.setBottom(null);
+        sprintScroll.setContent(sprintscrollGP);
+        sprintsGP.add(sprintScroll, 0, 0);
+        sprintscrollGP.add(so,0,0);//automate this
+        sprintscrollGP.add(s1,0,1);//automate this
+        sprintsGP.add(unassigned_sp, 1, 0);
     }
+
     private void switchToBacklogView(){
         primaryBorderPane.setCenter(backlogScroll);
         primaryBorderPane.setBottom(backlogBottomMenu);
     }
+    
 
     //set the scene based on the main class
     public void setScene(Scene inputScene){
