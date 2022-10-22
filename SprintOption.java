@@ -1,4 +1,7 @@
 import javafx.scene.layout.GridPane;
+
+import java.time.LocalDate;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
@@ -20,6 +23,13 @@ public class SprintOption extends GridPane{
     private TableView<backlogItemGrid> sp1_table= new TableView<backlogItemGrid>();
     private TableColumn<backlogItemGrid,String> sp1_backlog = new TableColumn<backlogItemGrid,String>("Backlog Item");
     private TableColumn<backlogItemGrid,String> sp1_points = new TableColumn<backlogItemGrid,String>("Points");
+
+    //we need to keep track of the start and end dates for each sprint, as well as the total number of points for the sprint
+    //and the points used in the spritn so far
+    private LocalDate startDate = java.time.LocalDate.now();
+    private LocalDate endDate = startDate.plusDays(14);
+    private double allocatedPoints = 20;
+    private double usedPoints = 0;
 
     public SprintOption(String inputSprintName) {
         sprintName = inputSprintName;
@@ -56,4 +66,19 @@ public class SprintOption extends GridPane{
         return sprintName;
     }
 
+    public LocalDate getStartDate(){
+        return startDate;
+    }
+
+    public LocalDate getEndDate(){
+        return endDate;
+    }
+
+    public double getAllocatedPoints(){
+        return allocatedPoints;
+    }
+    
+    public double getUsedPoints(){
+        return usedPoints;
+    }
 }

@@ -18,16 +18,21 @@ public class popupWindow extends Popup {
     private HashMap<String,SprintOption> sprintNameHashMap = new HashMap<>();
     private ArrayList<SprintOption> sprintObjects = new ArrayList<SprintOption>();
     private backlogItemGrid parentBacklogItemGrid;
-    private TextField pointsUsed = new TextField("Points");
+    private TextField pointsUsed = new TextField("");
 
     public popupWindow(backlogItemGrid callingItem){
         this.setAutoHide(true);
+        pointsUsed.setPromptText("points used");
         parentBacklogItemGrid = callingItem;
         gp.add(newlabel,0,0);
         gp.add(sprints,0,1);
         gp.add(pointsUsed,0,2);
         this.getContent().add(gp);
         setChangeInput();
+        this.setOnShowing(e -> {
+            //reset the text field value each time the menu pops up
+            pointsUsed.setText(null);
+        });
     }
 
     public void setSprints(ArrayList<SprintOption> inputSprints){
@@ -45,7 +50,11 @@ public class popupWindow extends Popup {
             if(sprints.getValue()!=null){
                 sprintNameHashMap.get(sprints.getValue()).addBacklogItem(parentBacklogItemGrid);
             }
-            parentBacklogItemGrid.addPoints(Integer.valueOf(pointsUsed.getText()));
+            //parentBacklogItemGrid.addPoints(Integer.valueOf(pointsUsed.getText()));
+            if(pointsUsed.getText()!=null){
+                parentBacklogItemGrid.addPoints(new point(Integer.valueOf(pointsUsed.getText())));
+            }
+            
         });
     }
 

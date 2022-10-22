@@ -1,3 +1,4 @@
+/*
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -5,10 +6,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-
+ 
 /*
  * Much credit is owed to https://www.tutorialspoint.com/java/java_serialization.htm
- */
+ 
 public class dataSerializer 
 {
     private guiComponents parentObject;
@@ -38,7 +39,7 @@ public class dataSerializer
             //create a new backlog item with the values of the old one
             //the values of the old one are deserialized and stored in inputObject
             //create a new backlog object called tmp and get the values from the deserialized object, pass a list of these objects to the parent object
-            backlogItemGrid inputObject = (backlogItemGrid) objectIn.readObject();
+            backlogItemGrid inputObject = (backlogItemGrid) objectIn.readObject();---------------uncomment this
             //backlogItemGrid tmp = new backlogItemGrid(parentObject,inputObject.getPoints(),inputObject.get)
             //---------------------------------------------------------------------------------------------this is where I left off----------
             parentObject.setBacklogItemsArray(importedBacklogItems);
@@ -60,3 +61,5 @@ public class dataSerializer
         System.out.println("deserializing sprints");
     }
 }
+
+*/

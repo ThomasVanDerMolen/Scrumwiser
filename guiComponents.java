@@ -44,13 +44,7 @@ public class guiComponents
     private MenuItem sprintView = new MenuItem("Sprints");
     private MenuItem backlogView = new MenuItem("backlog Items");
     private MenuItem burndownView = new MenuItem("burndown chart");
-
-    //test variables to switch between panes via upper menu
-    private MenuItem testBacklog = new MenuItem("test");
-    private MenuItem testSprint = new MenuItem("test");
-    private MenuItem testTaskboard = new MenuItem("test");
-    private MenuItem testBurndown = new MenuItem("test");
-    private MenuItem testSettings = new MenuItem("test");
+    private MenuItem taskboardView = new MenuItem("Taskboard view");
 
     private MenuBar primaryMenuBar = new MenuBar();
  
@@ -63,7 +57,7 @@ public class guiComponents
     private ArrayList<SprintOption> availableSprints = new ArrayList<SprintOption>();
 
     //this is the initial backlog object
-    private backlogItemGrid big = new backlogItemGrid(this);
+    //private backlogItemGrid big = new backlogItemGrid(this);
     private ArrayList<backlogItemGrid> backlogGridsArray = new ArrayList<backlogItemGrid>();
 
     private DatePicker datePicker = new DatePicker();
@@ -216,19 +210,7 @@ public class guiComponents
         backlog.getItems().add(backlogView);
         burndown.getItems().add(burndownView);
         setMenuFunction();//enable the theme menu items to be clicked
-
-        //functionality of the test panes
-        backlog.getItems().add(testBacklog);
-        sprints.getItems().add(testSprint);
-        taskboard.getItems().add(testTaskboard);
-        burndown.getItems().add(testBurndown);
-        settings.getItems().add(testSettings);
-
-        //switches panes when menuItem is clicked
-        testBacklog.setOnAction(( e -> setBacklogPane()) );
-        testTaskboard.setOnAction(( e -> setTaskboardPane()) );
-        testBurndown.setOnAction(( e -> setBurndownPane()) );
-        testSettings.setOnAction(( e -> setSettingsPane()) );
+        taskboard.getItems().add(taskboardView);
 
     }
 
@@ -257,9 +239,17 @@ public class guiComponents
         burndownView.setOnAction(e -> {
             switchToBurndownView();
         });
+        taskboardView.setOnAction(e ->{
+            switchToTaskboardView();
+        });
+    }
+    
+    private void switchToTaskboardView(){
+        ;//do nothing for now
     }
 
     private void switchToBurndownView(){
+        burndownObject.setSprints(availableSprints);
         primaryBorderPane.setCenter(burndownObject.getBurndownGridPane());
         primaryBorderPane.setBottom(null);
     }

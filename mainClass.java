@@ -23,10 +23,6 @@ public class mainClass extends Application{
         primaryStage.show();
         primaryStage.setTitle("Scrumwiser");
     }
-    @Override
-    public void stop(){
-        //dataStorage.serializeBacklogItems();
-        //dataStorage.serializeSprintObjects();
-    }
+    
     
 }

@@ -1,4 +1,3 @@
-import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
@@ -24,7 +23,7 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
     private String nameFieldValue;
     private String pointsFieldValue;
     private transient Label pointsLabel = new Label("");
-    private transient TextField desc = new TextField("Name");
+    private transient TextField desc = new TextField("");
     private transient TextField points = new TextField();
     private transient Button btUp = new Button("");
     private transient Button btDn = new Button("");
@@ -57,6 +56,7 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
         this.add(pointsLabel,3,0);
         points.setPrefWidth(125);
         points.setPromptText("points");
+        desc.setPromptText("name");
         parentComponentsObject = inputParentGuiComponents;
         setUpDownFunctions();
         setRightClickAction();
@@ -102,21 +102,25 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
 
     public void moveUp(GridPane inputGP, ArrayList<backlogItemGrid> inputBacklogItems,backlogItemGrid callingBacklogItem){
         int callingBacklogItemIndex = inputBacklogItems.indexOf(callingBacklogItem);
-        backlogItemGrid temporary = inputBacklogItems.get(callingBacklogItemIndex);
+        if(callingBacklogItemIndex > 0){
+            backlogItemGrid temporary = inputBacklogItems.get(callingBacklogItemIndex);
         inputBacklogItems.set(callingBacklogItemIndex,inputBacklogItems.get(callingBacklogItemIndex-1));
         inputBacklogItems.set(callingBacklogItemIndex-1,temporary);
         parentComponentsObject.setBacklogItemsArray(inputBacklogItems);
         parentComponentsObject.redrawAllBacklogItems();
+        }
         //now all that remains is the return this arraylist to the guicomponents obeject and redraw the grid accordingly
     }
 
     public void moveDown(GridPane inputGP, ArrayList<backlogItemGrid> inputBacklogItems, backlogItemGrid callingBacklogItem){
         int callingBacklogItemIndex = inputBacklogItems.indexOf(callingBacklogItem);
-        backlogItemGrid temporary = inputBacklogItems.get(callingBacklogItemIndex);
-        inputBacklogItems.set(callingBacklogItemIndex,inputBacklogItems.get(callingBacklogItemIndex+1));
-        inputBacklogItems.set(callingBacklogItemIndex+1,temporary);
-        parentComponentsObject.setBacklogItemsArray(inputBacklogItems);
-        parentComponentsObject.redrawAllBacklogItems();
+        if(callingBacklogItemIndex < inputBacklogItems.size()-1){
+            backlogItemGrid temporary = inputBacklogItems.get(callingBacklogItemIndex);
+            inputBacklogItems.set(callingBacklogItemIndex,inputBacklogItems.get(callingBacklogItemIndex+1));
+            inputBacklogItems.set(callingBacklogItemIndex+1,temporary);
+            parentComponentsObject.setBacklogItemsArray(inputBacklogItems);
+            parentComponentsObject.redrawAllBacklogItems();
+        }
     }
 
     private void setUpDownFunctions(){
@@ -139,8 +143,8 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
         return pointsFieldValue;
     }
 
-    public void addPoints(double inputPoints){
-        pointsUsed += (inputPoints/totalpoints);
+    public void addPoints(point inputPoint){
+        pointsUsed += (inputPoint.getValue()/totalpoints);
         pointsLabel.setText(String.valueOf(pointsUsed*100) + "%");
         backlogProgress.setProgress(pointsUsed);
     }
