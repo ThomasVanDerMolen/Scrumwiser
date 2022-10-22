@@ -22,6 +22,7 @@ public class burndown
     private LineChart<String,Number> linechart = new LineChart(xAxis,yAxis);
     private XYChart.Series<String,Number> series = new XYChart.Series<String,Number>();
     private ArrayList<SprintOption> sprints;
+    private ArrayList<String> dates = new ArrayList<String>();
 
     public burndown(){
         burndownGridPane.setAlignment(Pos.CENTER);
@@ -30,8 +31,8 @@ public class burndown
 
     private void setChart(){
         series.setName(sprints.get(0).getSprintName());
-        series.getData().add(new XYChart.Data("one",1));
-        series.getData().add(new XYChart.Data("test",0));
+        series.getData().add(new XYChart.Data(String.valueOf(sprints.get(0).getStartDate()),sprints.get(0).getAllocatedPoints()));
+        series.getData().add(new XYChart.Data(String.valueOf(sprints.get(0).getEndDate()),0));
         linechart.getData().add(series);
         linechart.setCreateSymbols(false);
     }
@@ -42,13 +43,16 @@ public class burndown
 
     public void setSprints(ArrayList<SprintOption> inputSprints){
         sprints = inputSprints;
-        System.out.println(sprints.get(0).getStartDate());
-        System.out.println(sprints.get(0).getStartDate().getClass());
-        String thedate = String.valueOf(sprints.get(0).getStartDate());
-        System.out.println(thedate);
-        System.out.println(thedate.getClass());
-
-        System.out.println(sprints.get(0).getEndDate());
+        LocalDate date1 = sprints.get(0).getStartDate();
+        LocalDate date2 = sprints.get(0).getEndDate();
+        LocalDate temp = date1;
+        int daysBetween = date1.until(date2).getDays();
+        dates.add(String.valueOf(date1.getMonthValue()) + "-" + String.valueOf(date1.getDayOfMonth()));
+        for(int i=0; i<daysBetween;i++){
+            temp = temp.plusDays(1);
+            dates.add(String.valueOf(temp.getMonthValue()) + "-" + String.valueOf(temp.getDayOfMonth()));
+        }
+        System.out.println(dates);
         setChart();
     }
 }
