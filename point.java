@@ -10,7 +10,6 @@ public class point {
     public point(double inputPoints){
         pointValue = inputPoints;
         date = java.time.LocalDate.now();
-        System.out.println(date);
     }
     public double getValue(){
         return pointValue;

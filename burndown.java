@@ -2,15 +2,19 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 
 /*
  * credit to https://www.tutorialspoint.com/javafx/line_chart.htm for helping setup a line chart in javafx
+ * http://www.java2s.com/ref/java/java-localdate-set-to-future-day.html
+ * https://docs.oracle.com/javafx/2/charts/line-chart.htm
  */
 
 public class burndown
@@ -21,6 +25,7 @@ public class burndown
     private GridPane burndownGridPane = new GridPane();
     private LineChart<String,Number> linechart = new LineChart(xAxis,yAxis);
     private XYChart.Series<String,Number> series = new XYChart.Series<String,Number>();
+    private XYChart.Series<String,Number> usedPointsSeries = new XYChart.Series<String,Number>();
     private ArrayList<SprintOption> sprints;
     private ArrayList<String> dates = new ArrayList<String>();
 
@@ -31,9 +36,19 @@ public class burndown
 
     private void setChart(){
         series.setName(sprints.get(0).getSprintName());
-        series.getData().add(new XYChart.Data(String.valueOf(sprints.get(0).getStartDate()),sprints.get(0).getAllocatedPoints()));
-        series.getData().add(new XYChart.Data(String.valueOf(sprints.get(0).getEndDate()),0));
+        //create the ideal burndown line
+        String startDateString = String.valueOf(sprints.get(0).getStartDate().getMonthValue()) + "-" + String.valueOf(sprints.get(0).getStartDate().getDayOfMonth());
+        String endDateString = String.valueOf(sprints.get(0).getEndDate().getMonthValue() + "-" + String.valueOf(sprints.get(0).getEndDate().getDayOfMonth()));
+        series.getData().add(new XYChart.Data(startDateString,sprints.get(0).getAllocatedPoints()));
+        series.getData().add(new XYChart.Data(endDateString,0));
+
+        usedPointsSeries.getData().add(new XYChart.Data(startDateString,10));
+        usedPointsSeries.getData().add(new XYChart.Data(endDateString,10));
+        
+        xAxis.setCategories(FXCollections.observableArrayList(dates));
+        linechart.setLegendVisible(false);
         linechart.getData().add(series);
+        linechart.getData().add(usedPointsSeries);
         linechart.setCreateSymbols(false);
     }
 
