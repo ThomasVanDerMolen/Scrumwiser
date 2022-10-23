@@ -251,7 +251,7 @@ public class guiComponents
     private void switchToBurndownView(){
         burndownObject.setSprints(availableSprints);
         primaryBorderPane.setCenter(burndownObject.getBurndownGridPane());
-        primaryBorderPane.setBottom(null);
+        primaryBorderPane.setBottom(burndownObject.getBottomMenu());
     }
 
     private void switchToSprintView(){
