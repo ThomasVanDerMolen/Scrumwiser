@@ -39,13 +39,22 @@ public class burndown
         //create the ideal burndown line
         String startDateString = String.valueOf(sprints.get(0).getStartDate().getMonthValue()) + "-" + String.valueOf(sprints.get(0).getStartDate().getDayOfMonth());
         String endDateString = String.valueOf(sprints.get(0).getEndDate().getMonthValue() + "-" + String.valueOf(sprints.get(0).getEndDate().getDayOfMonth()));
-        series.getData().add(new XYChart.Data(startDateString,sprints.get(0).getAllocatedPoints()));
-        series.getData().add(new XYChart.Data(endDateString,0));
+        LocalDate startDate = sprints.get(0).getStartDate();
+        LocalDate endDate = sprints.get(0).getEndDate();
+        int daysBetween = startDate.until(endDate).getDays();
+        double idealPointTrackerTemp = sprints.get(0).getAllocatedPoints();
+        double pointsToSubtract = idealPointTrackerTemp/daysBetween;
+
+        for(int i = 0; i < dates.size(); i++){
+            series.getData().add(new XYChart.Data(dates.get(i),idealPointTrackerTemp));
+            idealPointTrackerTemp -= pointsToSubtract;
+        }
+        
 
         usedPointsSeries.getData().add(new XYChart.Data(startDateString,10));
         usedPointsSeries.getData().add(new XYChart.Data(endDateString,10));
         
-        xAxis.setCategories(FXCollections.observableArrayList(dates));
+
         linechart.setLegendVisible(false);
         linechart.getData().add(series);
         linechart.getData().add(usedPointsSeries);
@@ -67,7 +76,6 @@ public class burndown
             temp = temp.plusDays(1);
             dates.add(String.valueOf(temp.getMonthValue()) + "-" + String.valueOf(temp.getDayOfMonth()));
         }
-        System.out.println(dates);
         setChart();
     }
 }
