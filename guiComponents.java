@@ -3,6 +3,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -10,6 +11,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 
 public class guiComponents
 {
@@ -19,8 +21,9 @@ public class guiComponents
     private ScrollPane backlogScroll = new ScrollPane();
     private GridPane backlogBottomMenu = new GridPane();
     private GridPane sprintscrollGP= new GridPane();
-    private GridPane sprintBottomMenu = new GridPane();
+    private GridPane unassignedGP= new GridPane();
     private ScrollPane sprintScroll= new ScrollPane();
+    private ScrollPane unassignedScroll= new ScrollPane();
 
     
     private taskboardPane tp = new taskboardPane();
@@ -51,6 +54,11 @@ public class guiComponents
  
     private Button newBacklogItemButton = new Button("New Item");
     private Button add_sprintButton= new Button("Add Sprint");
+
+    private Label unassigned_title= new Label("\t\t   Unassigned Backlog");
+    private Label sp1_title= new Label ("\t\t\t     Sprint 1");
+
+    private int sprint_counter= 0;
     
     //this is the initial sprint object
     private SprintOption so = new SprintOption("Sprint 1");
@@ -270,11 +278,24 @@ public class guiComponents
         primaryBorderPane.setLeft(add_sprintButton);
         primaryBorderPane.setBottom(null);
         sprintScroll.setContent(sprintscrollGP);
+        unassignedScroll.setContent(unassignedGP);
+        add_sprintButton.setOnAction(e -> {
+            sprint_counter++;
+        });
         // adds children every time, needs to be resolved
+        sp1_title.setFont(new Font("Aldhabi",15));
+        unassigned_title.setFont(new Font("Aldhabi",15));
         sprintsGP.add(sprintScroll, 0, 0);
-        sprintscrollGP.add(so,0,0);//automate this
-        sprintscrollGP.add(s1,0,1);//automate this
-        sprintsGP.add(unassigned_sp, 1, 0);
+        sprintsGP.add(unassignedScroll, 1, 0);
+        sprintscrollGP.add(so,0,1);//automate this
+        sprintscrollGP.add(s1,0,3);//automate this
+        sprintscrollGP.add(sp1_title, 0, 0);
+        unassignedGP.add(unassigned_sp, 0, 1);
+        unassignedGP.add(unassigned_title, 0, 0);
+
+
+        // figure this out later
+        // sprintscrollGP.setAlignment(Pos.CENTER);
 
         
     }
@@ -315,6 +336,10 @@ public class guiComponents
             backlogGridsArray.remove(DeletedBacklogItem);
             redrawAllBacklogItems();
         }
+    }
+
+    public void SprintButtonAction() {
+
     }
 
 }
