@@ -19,6 +19,7 @@ public class guiComponents
     private ScrollPane backlogScroll = new ScrollPane();
     private GridPane backlogBottomMenu = new GridPane();
     private GridPane sprintscrollGP= new GridPane();
+    private GridPane sprintBottomMenu = new GridPane();
     private ScrollPane sprintScroll= new ScrollPane();
 
     
@@ -49,6 +50,7 @@ public class guiComponents
     private MenuBar primaryMenuBar = new MenuBar();
  
     private Button newBacklogItemButton = new Button("New Item");
+    private Button add_sprintButton= new Button("Add Sprint");
     
     //this is the initial sprint object
     private SprintOption so = new SprintOption("Sprint 1");
@@ -140,6 +142,7 @@ public class guiComponents
         backlog.setOnAction(e -> {
             primaryBorderPane.setCenter(bap.getBacklog());
             bap.getBacklog();
+            primaryBorderPane.setLeft(null);
     
         });
         
@@ -149,6 +152,7 @@ public class guiComponents
         taskboard.setOnAction(e -> {
             primaryBorderPane.setCenter(tp.getTaskboard());
             tp.getTaskboard();
+            primaryBorderPane.setLeft(null);
     
         });
     }
@@ -156,13 +160,18 @@ public class guiComponents
         burndown.setOnAction(e -> {
             primaryBorderPane.setCenter(bup.getBurndown());
             bup.getBurndown();
+            primaryBorderPane.setLeft(null);
+    
         });
     }
     private void setSettingsPane(){
         settings.setOnAction(e -> {
             primaryBorderPane.setCenter(sp.getSettings());
             sp.getSettings();
+            primaryBorderPane.setLeft(null);
+
         });
+        
     }
     public void setBacklogItemsArray(ArrayList<backlogItemGrid> inputBacklogItems){
         backlogGridsArray = inputBacklogItems;
@@ -235,6 +244,7 @@ public class guiComponents
 
         backlogView.setOnAction(e -> {
             switchToBacklogView();
+            primaryBorderPane.setLeft(null);
         });
         burndownView.setOnAction(e -> {
             switchToBurndownView();
@@ -252,17 +262,23 @@ public class guiComponents
         burndownObject.setSprints(availableSprints);
         primaryBorderPane.setCenter(burndownObject.getBurndownGridPane());
         primaryBorderPane.setBottom(burndownObject.getBottomMenu());
+        primaryBorderPane.setLeft(null);
     }
 
     private void switchToSprintView(){
         primaryBorderPane.setCenter(sprintsGP);
+        primaryBorderPane.setLeft(add_sprintButton);
         primaryBorderPane.setBottom(null);
         sprintScroll.setContent(sprintscrollGP);
+        // adds children every time, needs to be resolved
         sprintsGP.add(sprintScroll, 0, 0);
         sprintscrollGP.add(so,0,0);//automate this
         sprintscrollGP.add(s1,0,1);//automate this
         sprintsGP.add(unassigned_sp, 1, 0);
+
+        
     }
+
 
     private void switchToBacklogView(){
         primaryBorderPane.setCenter(backlogScroll);
