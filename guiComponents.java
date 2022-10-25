@@ -58,17 +58,19 @@ public class guiComponents
     private Label unassigned_title= new Label("\t\t   Unassigned Backlog");
     private Label sp1_title= new Label ("\t\t\t     Sprint 1");
 
-    private int sprint_counter= 0;
+    private int sprint_counter= -1;
     
     //this is the initial sprint object
     private SprintOption so = new SprintOption("Sprint 1");
     private SprintOption s1 = new SprintOption("sprint 2");
     private SprintOption unassigned_sp= new SprintOption("Undetermined");
     private ArrayList<SprintOption> availableSprints = new ArrayList<SprintOption>();
+    private ArrayList<Label> sprint_titles = new ArrayList<Label>();
 
     //this is the initial backlog object
     //private backlogItemGrid big = new backlogItemGrid(this);
     private ArrayList<backlogItemGrid> backlogGridsArray = new ArrayList<backlogItemGrid>();
+    private ArrayList<SprintOption> sprintsArray= new ArrayList<SprintOption>();
 
     private DatePicker datePicker = new DatePicker();
 
@@ -280,16 +282,19 @@ public class guiComponents
         sprintScroll.setContent(sprintscrollGP);
         unassignedScroll.setContent(unassignedGP);
         add_sprintButton.setOnAction(e -> {
-            sprint_counter++;
+            sprint_counter= sprint_counter + 2;
+            SprintOption newSprint = new SprintOption("Sprint");
+            Label sprint_label= new Label("Sprint " + String.valueOf(sprintsArray.indexOf(newSprint)));
+            sprint_titles.add(sprint_label);
+            sprintsArray.add(newSprint);
+            sprintscrollGP.add(sprint_label, 0, sprint_counter-1);
+            sprintscrollGP.add(newSprint, 0, sprint_counter);
         });
         // adds children every time, needs to be resolved
         sp1_title.setFont(new Font("Aldhabi",15));
         unassigned_title.setFont(new Font("Aldhabi",15));
         sprintsGP.add(sprintScroll, 0, 0);
         sprintsGP.add(unassignedScroll, 1, 0);
-        sprintscrollGP.add(so,0,1);//automate this
-        sprintscrollGP.add(s1,0,3);//automate this
-        sprintscrollGP.add(sp1_title, 0, 0);
         unassignedGP.add(unassigned_sp, 0, 1);
         unassignedGP.add(unassigned_title, 0, 0);
 
