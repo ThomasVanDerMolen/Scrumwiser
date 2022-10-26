@@ -47,7 +47,7 @@ public class popupWindow extends Popup {
 
     private void setChangeInput(){
         this.setOnAutoHide(e -> {
-            if(sprints.getValue()!=null){
+            if(sprints.getValue()!=null && parentBacklogItemGrid.getAssignedSprint().getSprintName() != sprints.getValue()){
                 sprintNameHashMap.get(sprints.getValue()).addBacklogItem(parentBacklogItemGrid);
             }
             //parentBacklogItemGrid.addPoints(Integer.valueOf(pointsUsed.getText()));

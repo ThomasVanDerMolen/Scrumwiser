@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,21 +22,12 @@ public class guiComponents
     private ScrollPane backlogScroll = new ScrollPane();
     private GridPane backlogBottomMenu = new GridPane();
     private GridPane sprintscrollGP= new GridPane();
-    private GridPane unassignedGP= new GridPane();
+    private GridPane unassignedGP = new GridPane();
+
     private ScrollPane sprintScroll= new ScrollPane();
     private ScrollPane unassignedScroll= new ScrollPane();
 
-    
-    private taskboardPane tp = new taskboardPane();
-    private backlogPane bap = new backlogPane();
-    private burndownPane bup = new burndownPane();
-    private settingsPane sp = new settingsPane();
-
     private Menu themeMenu = new Menu("Theme");
-    private Menu backlog = new Menu("Backlog");
-    private Menu sprints = new Menu("Sprints");
-    private Menu taskboard = new Menu( "Task Board");
-    private Menu burndown = new Menu("Burndown");
     private Menu settings = new Menu("Settings");
 
     private MenuItem darkMode = new MenuItem("Dark");
@@ -45,36 +37,43 @@ public class guiComponents
     private MenuItem backlogItemNumber = new MenuItem("Show item number on backlog items");
     private MenuItem additionalBacklogItems = new MenuItem("Add additional task in backlog items in some cases");
 
-    private MenuItem sprintView = new MenuItem("Sprints");
-    private MenuItem backlogView = new MenuItem("backlog Items");
-    private MenuItem burndownView = new MenuItem("burndown chart");
-    private MenuItem taskboardView = new MenuItem("Taskboard view");
-
     private MenuBar primaryMenuBar = new MenuBar();
+    private GridPane navigationBar = new GridPane();
+    private Button sprintViewButton = new Button("Sprints");
+    private Button backlogViewButton = new Button("Backlog");
+    private Button burndownViewButton = new Button("Burndown");
+    private Button taskboardViewButton = new Button("Taskboard");
  
     private Button newBacklogItemButton = new Button("New Item");
     private Button add_sprintButton= new Button("Add Sprint");
 
-    private Label unassigned_title= new Label("\t\t   Unassigned Backlog");
-    private Label sp1_title= new Label ("\t\t\t     Sprint 1");
+    private Label unassigned_title= new Label("Unassigned Backlog");
+    private Label sp1_title= new Label ("Sprint 1");
+    private Label startDate = new Label("Sprint start");
+    private Label endDate = new Label("Sprint end");
 
     private int sprint_counter= -1;
     
     //this is the initial sprint object
-    private SprintOption so = new SprintOption("Sprint 1");
-    private SprintOption s1 = new SprintOption("sprint 2");
+    
     private SprintOption unassigned_sp= new SprintOption("Undetermined");
-    private ArrayList<SprintOption> availableSprints = new ArrayList<SprintOption>();
-    private ArrayList<Label> sprint_titles = new ArrayList<Label>();
+    private ArrayList<SprintOption> availableSprints = new ArrayList<SprintOption>(){
+        {
+            add(unassigned_sp);//this initializes the available sprints list with the unassigned sprint in it
+        }
+    };
+        private ArrayList<Label> sprint_titles = new ArrayList<Label>();
 
     //this is the initial backlog object
     //private backlogItemGrid big = new backlogItemGrid(this);
     private ArrayList<backlogItemGrid> backlogGridsArray = new ArrayList<backlogItemGrid>();
     private ArrayList<SprintOption> sprintsArray= new ArrayList<SprintOption>();
 
-    private DatePicker datePicker = new DatePicker();
+    private GridPane sprintViewLeftGrid = new GridPane();
+    private DatePicker sprintStartDatePicker = new DatePicker(java.time.LocalDate.now());
+    private DatePicker sprintEndDatePicker = new DatePicker(java.time.LocalDate.now().plusDays(14));
 
-    private burndown burndownObject = new burndown();
+    private burndown burndownObject = new burndown(this);
 
     private Scene guiComponentScene;
 
@@ -110,19 +109,34 @@ public class guiComponents
         return backlogGridsArray;
     }
 
-
-    
     public void setupSprints(){
         sprintsGP.setAlignment(Pos.CENTER);
         sprintsGP.setHgap(10);
         sprintsGP.setVgap(10);
-        sprintsGP.add(so,0,0);
-        availableSprints.add(so);
-        
-        availableSprints.add(unassigned_sp);
-        //updateAllBacklogSprints();
-    }
+        sprintScroll.setContent(sprintscrollGP);
+        sprintScroll.setHbarPolicy(ScrollBarPolicy.NEVER);
+        unassignedScroll.setHbarPolicy(ScrollBarPolicy.NEVER);
 
+        sprintStartDatePicker.setMaxWidth(120);
+        sprintEndDatePicker.setMaxWidth(120);
+        sprintViewLeftGrid.add(add_sprintButton,0,0);
+        sprintViewLeftGrid.add(startDate,0,1);
+        sprintViewLeftGrid.add(sprintStartDatePicker,0,2);
+        sprintViewLeftGrid.add(endDate,0,3);
+        sprintViewLeftGrid.add(sprintEndDatePicker,0,4);
+
+        sprintsGP.add(sprintScroll, 0, 0);
+        sprintsGP.add(unassignedScroll, 1, 0);
+        //sprintscrollGP.add(sp1_title, 0, 0);
+        //sprintscrollGP.add(so,0,1);
+        //sprintscrollGP.add(s1,0,3);
+        unassignedGP.add(unassigned_sp, 0, 1);
+        unassignedGP.add(unassigned_title, 0, 0);
+
+        GridPane.setHalignment(unassigned_title, HPos.CENTER);//not sure if this is poor code practice because it was manipulated to prevent some static/nonstatic field errors
+        GridPane.setHalignment(sp1_title, HPos.CENTER);//https://www.delftstack.com/howto/java/javafx-gridpane-alignment/
+        
+    }
 
     //setters and getters for all the panes accessible via top menu
     public BorderPane getBorderPane(){
@@ -131,9 +145,20 @@ public class guiComponents
     
     private void setBorderPane(){
         primaryBorderPane.setCenter(backlogScroll);
-        primaryBorderPane.setTop(primaryMenuBar);
+
+        navigationBar.add(primaryMenuBar,0,0);
+        navigationBar.add(backlogViewButton,1,0);
+        navigationBar.add(sprintViewButton,2,0);
+        navigationBar.add(burndownViewButton,3,0);
+        navigationBar.add(taskboardViewButton,4,0);
+
+        backlogViewButton.setStyle("-fx-background-color : transparent");
+        sprintViewButton.setStyle("-fx-background-color : transparent");
+        burndownViewButton.setStyle("-fx-background-color : transparent");
+        taskboardViewButton.setStyle("-fx-background-color : transparent");
+
+        primaryBorderPane.setTop(navigationBar);
         backlogBottomMenu.add(newBacklogItemButton,0,0);
-        backlogBottomMenu.add(datePicker,1,0);
         primaryBorderPane.setBottom(backlogBottomMenu);
     }
 
@@ -148,41 +173,7 @@ public class guiComponents
         //redrawAllBacklogItems();
     }
    
-    private void setBacklogPane(){
-        backlog.setOnAction(e -> {
-            primaryBorderPane.setCenter(bap.getBacklog());
-            bap.getBacklog();
-            primaryBorderPane.setLeft(null);
     
-        });
-        
-    }
-    
-    private void setTaskboardPane(){
-        taskboard.setOnAction(e -> {
-            primaryBorderPane.setCenter(tp.getTaskboard());
-            tp.getTaskboard();
-            primaryBorderPane.setLeft(null);
-    
-        });
-    }
-    private void setBurndownPane(){
-        burndown.setOnAction(e -> {
-            primaryBorderPane.setCenter(bup.getBurndown());
-            bup.getBurndown();
-            primaryBorderPane.setLeft(null);
-    
-        });
-    }
-    private void setSettingsPane(){
-        settings.setOnAction(e -> {
-            primaryBorderPane.setCenter(sp.getSettings());
-            sp.getSettings();
-            primaryBorderPane.setLeft(null);
-
-        });
-        
-    }
     public void setBacklogItemsArray(ArrayList<backlogItemGrid> inputBacklogItems){
         backlogGridsArray = inputBacklogItems;
     }
@@ -208,10 +199,6 @@ public class guiComponents
         //keep code organized
         themeMenu.getItems().add(darkMode);
         themeMenu.getItems().add(lightMode);    
-        backlog.getItems();
-        sprints.getItems();
-        taskboard.getItems();
-        burndown.getItems();
         
         settings.getItems().add(workAssigned);
         settings.getItems().add(teamOverlay);
@@ -219,17 +206,8 @@ public class guiComponents
         settings.getItems().add(additionalBacklogItems);
         
         primaryMenuBar.getMenus().add(themeMenu);
-        primaryMenuBar.getMenus().add(backlog);
-        primaryMenuBar.getMenus().add(sprints);
-        primaryMenuBar.getMenus().add(taskboard);
-        primaryMenuBar.getMenus().add(burndown);
         primaryMenuBar.getMenus().add(settings);
-
-        sprints.getItems().add(sprintView);
-        backlog.getItems().add(backlogView);
-        burndown.getItems().add(burndownView);
         setMenuFunction();//enable the theme menu items to be clicked
-        taskboard.getItems().add(taskboardView);
 
     }
 
@@ -248,18 +226,18 @@ public class guiComponents
             guiComponentScene.getStylesheets().remove("dark-theme.css");
         });
 
-        sprintView.setOnAction(e -> {
+        sprintViewButton.setOnAction(e -> {
             switchToSprintView();
         });
 
-        backlogView.setOnAction(e -> {
+        backlogViewButton.setOnAction(e -> {
             switchToBacklogView();
             primaryBorderPane.setLeft(null);
         });
-        burndownView.setOnAction(e -> {
+        burndownViewButton.setOnAction(e -> {
             switchToBurndownView();
         });
-        taskboardView.setOnAction(e ->{
+        taskboardViewButton.setOnAction(e ->{
             switchToTaskboardView();
         });
     }
@@ -269,7 +247,6 @@ public class guiComponents
     }
 
     private void switchToBurndownView(){
-        burndownObject.setSprints(availableSprints);
         primaryBorderPane.setCenter(burndownObject.getBurndownGridPane());
         primaryBorderPane.setBottom(burndownObject.getBottomMenu());
         primaryBorderPane.setLeft(null);
@@ -277,15 +254,17 @@ public class guiComponents
 
     private void switchToSprintView(){
         primaryBorderPane.setCenter(sprintsGP);
-        primaryBorderPane.setLeft(add_sprintButton);
+        primaryBorderPane.setLeft(sprintViewLeftGrid);
         primaryBorderPane.setBottom(null);
         sprintScroll.setContent(sprintscrollGP);
         unassignedScroll.setContent(unassignedGP);
+
         add_sprintButton.setOnAction(e -> {
             sprint_counter= sprint_counter + 2;
             SprintOption newSprint = new SprintOption("Sprint");
             sprintsArray.add(newSprint);
             Label sprint_label= new Label("Sprint " + String.valueOf(sprintsArray.indexOf(newSprint) + 1));
+            GridPane.setHalignment(sprint_label, HPos.CENTER);
             sprint_titles.add(sprint_label);
             sprintscrollGP.add(sprint_label, 0, sprint_counter-1);
             sprintscrollGP.add(newSprint, 0, sprint_counter);
@@ -293,25 +272,13 @@ public class guiComponents
         // adds children every time, needs to be resolved
         sp1_title.setFont(new Font("Aldhabi",15));
         unassigned_title.setFont(new Font("Aldhabi",15));
-        sprintsGP.add(sprintScroll, 0, 0);
-        sprintsGP.add(unassignedScroll, 1, 0);
-        unassignedGP.add(unassigned_sp, 0, 1);
-        unassignedGP.add(unassigned_title, 0, 0);
-
-
-        // figure this out later
-        // sprintscrollGP.setAlignment(Pos.CENTER);
-
-        
     }
-
 
     private void switchToBacklogView(){
         primaryBorderPane.setCenter(backlogScroll);
         primaryBorderPane.setBottom(backlogBottomMenu);
     }
     
-
     //set the scene based on the main class
     public void setScene(Scene inputScene){
         guiComponentScene = inputScene;
@@ -326,7 +293,8 @@ public class guiComponents
         {
             //create a new backlog item 
             //Order matters in this function
-            backlogItemGrid newBackLogItem = new backlogItemGrid(this);
+            backlogItemGrid newBackLogItem = new backlogItemGrid(this,unassigned_sp);
+            unassigned_sp.addBacklogItem(newBackLogItem);
             //add the new backlog item to the backlog item arraylist
             backlogGridsArray.add(newBackLogItem);
             //add the newest backlog item in the backlog array list to the grid
@@ -341,10 +309,6 @@ public class guiComponents
             backlogGridsArray.remove(DeletedBacklogItem);
             redrawAllBacklogItems();
         }
-    }
-
-    public void SprintButtonAction() {
-
     }
 
 }

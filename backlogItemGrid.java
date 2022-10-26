@@ -35,10 +35,11 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
     private transient ContextMenu rightClickMenu = new ContextMenu();
     private transient ProgressBar backlogProgress = new ProgressBar(0);
     private transient popupWindow popupWindow = new popupWindow(this);
+    private transient SprintOption assignedSprint;
 
-    public backlogItemGrid(guiComponents inputParentGuiComponents, double inputPointsUsed, double inputTotalPoints, String inputNameFieldValue, String inputpointsFieldValue){
+    public backlogItemGrid(guiComponents inputParentGuiComponents, double inputPointsUsed, double inputTotalPoints, String inputNameFieldValue, String inputpointsFieldValue, SprintOption defaultSprint){
         //credit to https://www.geeksforgeeks.org/constructor-chaining-java-examples/ 
-        this(inputParentGuiComponents);
+        this(inputParentGuiComponents,defaultSprint);
         pointsUsed = inputPointsUsed;
         totalpoints = inputTotalPoints;
         nameFieldValue = inputNameFieldValue;
@@ -47,7 +48,8 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
         pointsLabel.setText(String.valueOf(pointsFieldValue));
     }
 
-    public backlogItemGrid(guiComponents inputParentGuiComponents){
+    public backlogItemGrid(guiComponents inputParentGuiComponents, SprintOption defaultSprint){
+        assignedSprint = defaultSprint;
         this.add(desc,0,0);
         this.add(points,1,0);
         this.add(btUp,2,0);
@@ -160,6 +162,10 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
             totalpoints = Integer.valueOf(points.getText());
             recalculatePoints();
         });
+    }
+
+    public SprintOption getAssignedSprint(){
+        return assignedSprint;
     }
 
     public void prepareForSerialization(){
