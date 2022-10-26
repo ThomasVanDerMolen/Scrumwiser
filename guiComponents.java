@@ -284,9 +284,9 @@ public class guiComponents
         add_sprintButton.setOnAction(e -> {
             sprint_counter= sprint_counter + 2;
             SprintOption newSprint = new SprintOption("Sprint");
-            Label sprint_label= new Label("Sprint " + String.valueOf(sprintsArray.indexOf(newSprint)));
-            sprint_titles.add(sprint_label);
             sprintsArray.add(newSprint);
+            Label sprint_label= new Label("Sprint " + String.valueOf(sprintsArray.indexOf(newSprint) + 1));
+            sprint_titles.add(sprint_label);
             sprintscrollGP.add(sprint_label, 0, sprint_counter-1);
             sprintscrollGP.add(newSprint, 0, sprint_counter);
         });
