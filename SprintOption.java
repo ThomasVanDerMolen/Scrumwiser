@@ -1,6 +1,7 @@
 import javafx.scene.layout.GridPane;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,20 +27,39 @@ public class SprintOption extends GridPane{
 
     //we need to keep track of the start and end dates for each sprint, as well as the total number of points for the sprint
     //and the points used in the spritn so far
-    private LocalDate startDate = java.time.LocalDate.now();
-    private LocalDate endDate = startDate.plusDays(14);
+    private LocalDate startDate;
+    private LocalDate endDate;
     private double allocatedPoints = 20;
     private double usedPoints = 0;
 
-    public SprintOption(String inputSprintName) {
+    private guiComponents parentObject;
+
+    public SprintOption(String inputSprintName, guiComponents inputParent, LocalDate inputStartDate, LocalDate inputEndDate) {
+        parentObject = inputParent;
         sprintName = inputSprintName;
+        startDate = inputStartDate;
+        endDate = inputEndDate;
         //this.add(sprintLabel,0,0);
         setValueFactories();
-        this.add(sp1_table,0,0);
-        
+        //this.add(sp1_table,0,0);
+    }
+
+    public void refreshBacklogItems(){
+        ArrayList<backlogItemGrid>temp = parentObject.getBacklogItems();
+        backlogObservableList = FXCollections.observableArrayList();
+        for(backlogItemGrid x : temp){
+            if(x.getAssignedSprint() == this){
+                backlogObservableList.add(x);
+            }
+        }
+        setValueFactories();
     }
 
     private void setValueFactories(){
+        sp1_table= new TableView<backlogItemGrid>();
+        sp1_backlog = new TableColumn<backlogItemGrid,String>("Backlog Item");
+        sp1_points = new TableColumn<backlogItemGrid,String>("Points");
+
         sp1_backlog.setMinWidth(200);
         sp1_points.setMinWidth(100);
         sp1_backlog.setCellValueFactory(new PropertyValueFactory<backlogItemGrid,String>("nameFieldValue"));
@@ -48,6 +68,8 @@ public class SprintOption extends GridPane{
         sp1_table.getColumns().add(sp1_points);
         sp1_table.setColumnResizePolicy(sp1_table.CONSTRAINED_RESIZE_POLICY);
         sp1_table.getItems().addAll(backlogObservableList);
+        this.getChildren().remove(sp1_table);
+        this.add(sp1_table,0,0);
         
     }
 

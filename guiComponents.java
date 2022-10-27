@@ -56,7 +56,7 @@ public class guiComponents
     
     //this is the initial sprint object
     
-    private SprintOption unassigned_sp= new SprintOption("Undetermined");
+    private SprintOption unassigned_sp= new SprintOption("Undetermined",this,java.time.LocalDate.now(),java.time.LocalDate.now());
     private ArrayList<SprintOption> availableSprints = new ArrayList<SprintOption>(){
         {
             add(unassigned_sp);//this initializes the available sprints list with the unassigned sprint in it
@@ -67,7 +67,7 @@ public class guiComponents
     //this is the initial backlog object
     //private backlogItemGrid big = new backlogItemGrid(this);
     private ArrayList<backlogItemGrid> backlogGridsArray = new ArrayList<backlogItemGrid>();
-    private ArrayList<SprintOption> sprintsArray= new ArrayList<SprintOption>();
+    //private ArrayList<SprintOption> sprintsArray= new ArrayList<SprintOption>();
 
     private GridPane sprintViewLeftGrid = new GridPane();
     private DatePicker sprintStartDatePicker = new DatePicker(java.time.LocalDate.now());
@@ -85,6 +85,7 @@ public class guiComponents
         setGridPane();//not ideal, maybe
         setMenu();
         setNewBIGButtonAction();
+        setNewSprintButtonAction();
         //setDeleteBIGButtonAction();
         setupSprints();//not ideal
     }
@@ -173,7 +174,6 @@ public class guiComponents
         //redrawAllBacklogItems();
     }
    
-    
     public void setBacklogItemsArray(ArrayList<backlogItemGrid> inputBacklogItems){
         backlogGridsArray = inputBacklogItems;
     }
@@ -208,9 +208,7 @@ public class guiComponents
         primaryMenuBar.getMenus().add(themeMenu);
         primaryMenuBar.getMenus().add(settings);
         setMenuFunction();//enable the theme menu items to be clicked
-
     }
-
 
     //set the functions for the menu items
     //this could be changed to setThemeFucntions() in order to encapsulate code more
@@ -247,6 +245,7 @@ public class guiComponents
     }
 
     private void switchToBurndownView(){
+        burndownObject.updateSprints();
         primaryBorderPane.setCenter(burndownObject.getBurndownGridPane());
         primaryBorderPane.setBottom(burndownObject.getBottomMenu());
         primaryBorderPane.setLeft(null);
@@ -258,17 +257,7 @@ public class guiComponents
         primaryBorderPane.setBottom(null);
         sprintScroll.setContent(sprintscrollGP);
         unassignedScroll.setContent(unassignedGP);
-
-        add_sprintButton.setOnAction(e -> {
-            sprint_counter= sprint_counter + 2;
-            SprintOption newSprint = new SprintOption("Sprint");
-            sprintsArray.add(newSprint);
-            Label sprint_label= new Label("Sprint " + String.valueOf(sprintsArray.indexOf(newSprint) + 1));
-            GridPane.setHalignment(sprint_label, HPos.CENTER);
-            sprint_titles.add(sprint_label);
-            sprintscrollGP.add(sprint_label, 0, sprint_counter-1);
-            sprintscrollGP.add(newSprint, 0, sprint_counter);
-        });
+        refreshAllSprints();
         // adds children every time, needs to be resolved
         sp1_title.setFont(new Font("Aldhabi",15));
         unassigned_title.setFont(new Font("Aldhabi",15));
@@ -279,6 +268,12 @@ public class guiComponents
         primaryBorderPane.setBottom(backlogBottomMenu);
     }
     
+    private void refreshAllSprints(){
+        for(SprintOption so : availableSprints){
+            so.refreshBacklogItems();
+        }
+    }
+
     //set the scene based on the main class
     public void setScene(Scene inputScene){
         guiComponentScene = inputScene;
@@ -302,6 +297,19 @@ public class guiComponents
         });
     }
 
+    private void setNewSprintButtonAction(){
+        add_sprintButton.setOnAction(e -> {
+            sprint_counter= sprint_counter + 2;
+            SprintOption newSprint = new SprintOption("Sprint " + availableSprints.size(),this,sprintStartDatePicker.getValue(),sprintEndDatePicker.getValue());
+            availableSprints.add(newSprint);
+            Label sprint_label= new Label("Sprint " + String.valueOf(availableSprints.indexOf(newSprint) ));
+            GridPane.setHalignment(sprint_label, HPos.CENTER);
+            sprint_titles.add(sprint_label);
+            sprintscrollGP.add(sprint_label, 0, sprint_counter-1);
+            sprintscrollGP.add(newSprint, 0, sprint_counter);
+        });
+    }
+
     //this function should ideally be in the backlogitemgrid class
     public void delete(backlogItemGrid DeletedBacklogItem){
         if(backlogGridsArray.size() > 1){
@@ -310,5 +318,4 @@ public class guiComponents
             redrawAllBacklogItems();
         }
     }
-
 }

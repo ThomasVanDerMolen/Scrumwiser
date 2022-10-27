@@ -173,4 +173,8 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
         pointsFieldValue = points.getText();
     }
 
+    public void setAssignedSprint(SprintOption inputAssignedSprint){
+        assignedSprint = inputAssignedSprint;
+    }
+
 }
