@@ -1,0 +1,19 @@
+----------------------------------------------------------------
+Mon Oct 24 15:57:40 EDT 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.16.1.1 - (1901046): instance a816c00e-0184-0b92-7b0b-00000f58e690 
+on database directory C:\Users\William\Documents\GitHub\Scrumwiser\derbyDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@73d16e93 
+Loaded from file:/C:/Apache/db-derby-10.16.1.1-bin/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=19+36-2238
+user.dir=C:\Users\William\Documents\GitHub\Scrumwiser
+os.name=Windows 11
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Mon Oct 24 15:57:40 EDT 2022: Shutting down Derby engine
+----------------------------------------------------------------
+Mon Oct 24 15:57:40 EDT 2022:
+Shutting down instance a816c00e-0184-0b92-7b0b-00000f58e690 on database directory C:\Users\William\Documents\GitHub\Scrumwiser\derbyDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@73d16e93 
+----------------------------------------------------------------
