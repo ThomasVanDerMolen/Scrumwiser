@@ -53,7 +53,7 @@ public class popupWindow extends Popup {
             }
             //parentBacklogItemGrid.addPoints(Integer.valueOf(pointsUsed.getText()));
             if(pointsUsed.getText()!=null){
-                parentBacklogItemGrid.addPoints(new point(Integer.valueOf(pointsUsed.getText())));
+                parentBacklogItemGrid.addPoints(new point(Double.valueOf(pointsUsed.getText())));
             }
             
         });

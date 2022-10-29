@@ -66,7 +66,7 @@ public class SprintOption extends GridPane{
         sp1_points.setCellValueFactory(new PropertyValueFactory<backlogItemGrid,String>("pointsFieldValue"));
         sp1_table.getColumns().add(sp1_backlog);
         sp1_table.getColumns().add(sp1_points);
-        sp1_table.setColumnResizePolicy(sp1_table.CONSTRAINED_RESIZE_POLICY);
+        sp1_table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         sp1_table.getItems().addAll(backlogObservableList);
         this.getChildren().remove(sp1_table);
         this.add(sp1_table,0,0);

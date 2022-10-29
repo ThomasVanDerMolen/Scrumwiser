@@ -147,12 +147,12 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
 
     public void addPoints(point inputPoint){
         pointsUsed += (inputPoint.getValue()/totalpoints);
-        pointsLabel.setText(String.valueOf(pointsUsed*100) + "%");
+        pointsLabel.setText(String.valueOf(Math.round(pointsUsed*100)) + "%");
         backlogProgress.setProgress(pointsUsed);
     }
 
     private void recalculatePoints(){
-        pointsLabel.setText(String.valueOf(pointsUsed*100/totalpoints) + "%");
+        pointsLabel.setText(String.valueOf(Math.round(pointsUsed*100/totalpoints)) + "%");
         backlogProgress.setProgress(pointsUsed/totalpoints);
     }
 
