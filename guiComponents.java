@@ -53,22 +53,16 @@ public class guiComponents
     private Label endDate = new Label("Sprint end");
 
     private int sprint_counter= -1;
-    
-    //this is the initial sprint object
-    
-    private SprintOption unassigned_sp= new SprintOption("Undetermined");
+      
+    private SprintOption unassigned_sp= new SprintOption("Undetermined",this,java.time.LocalDate.now(),java.time.LocalDate.now());
     private ArrayList<SprintOption> availableSprints = new ArrayList<SprintOption>(){
         {
             add(unassigned_sp);//this initializes the available sprints list with the unassigned sprint in it
         }
     };
-        private ArrayList<Label> sprint_titles = new ArrayList<Label>();
-
-    //this is the initial backlog object
-    //private backlogItemGrid big = new backlogItemGrid(this);
+    private ArrayList<Label> sprint_titles = new ArrayList<Label>();
     private ArrayList<backlogItemGrid> backlogGridsArray = new ArrayList<backlogItemGrid>();
-    private ArrayList<SprintOption> sprintsArray= new ArrayList<SprintOption>();
-
+    
     private GridPane sprintViewLeftGrid = new GridPane();
     private DatePicker sprintStartDatePicker = new DatePicker(java.time.LocalDate.now());
     private DatePicker sprintEndDatePicker = new DatePicker(java.time.LocalDate.now().plusDays(14));
@@ -82,67 +76,13 @@ public class guiComponents
         //initialization functions.
         setBorderPane();
         setScrollPane();
-        setGridPane();//not ideal, maybe
+        setGridPane();
         setMenu();
         setNewBIGButtonAction();
-        //setDeleteBIGButtonAction();
-        setupSprints();//not ideal
+        setNewSprintButtonAction();
+        setupSprints();
     }
 
-    //credit to http://www.java2s.com/Tutorials/Java/JavaFX/0350__JavaFX_ScrollPane.htm for scroll pane help
-    private void setScrollPane(){
-        backlogScroll.setContent(backlogGridPane);
-        backlogScroll.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
-        backlogScroll.setHbarPolicy(ScrollBarPolicy.NEVER);
-        backlogScroll.setFitToWidth(true);
-    }
-
-    public GridPane getGP(){
-        return backlogGridPane;
-    }
-
-    public ArrayList<SprintOption> getSprints(){
-        return availableSprints;
-    }
-
-    public ArrayList<backlogItemGrid> getBacklogItems(){
-        return backlogGridsArray;
-    }
-
-    public void setupSprints(){
-        sprintsGP.setAlignment(Pos.CENTER);
-        sprintsGP.setHgap(10);
-        sprintsGP.setVgap(10);
-        sprintScroll.setContent(sprintscrollGP);
-        sprintScroll.setHbarPolicy(ScrollBarPolicy.NEVER);
-        unassignedScroll.setHbarPolicy(ScrollBarPolicy.NEVER);
-
-        sprintStartDatePicker.setMaxWidth(120);
-        sprintEndDatePicker.setMaxWidth(120);
-        sprintViewLeftGrid.add(add_sprintButton,0,0);
-        sprintViewLeftGrid.add(startDate,0,1);
-        sprintViewLeftGrid.add(sprintStartDatePicker,0,2);
-        sprintViewLeftGrid.add(endDate,0,3);
-        sprintViewLeftGrid.add(sprintEndDatePicker,0,4);
-
-        sprintsGP.add(sprintScroll, 0, 0);
-        sprintsGP.add(unassignedScroll, 1, 0);
-        //sprintscrollGP.add(sp1_title, 0, 0);
-        //sprintscrollGP.add(so,0,1);
-        //sprintscrollGP.add(s1,0,3);
-        unassignedGP.add(unassigned_sp, 0, 1);
-        unassignedGP.add(unassigned_title, 0, 0);
-
-        GridPane.setHalignment(unassigned_title, HPos.CENTER);//not sure if this is poor code practice because it was manipulated to prevent some static/nonstatic field errors
-        GridPane.setHalignment(sp1_title, HPos.CENTER);//https://www.delftstack.com/howto/java/javafx-gridpane-alignment/
-        
-    }
-
-    //setters and getters for all the panes accessible via top menu
-    public BorderPane getBorderPane(){
-        return primaryBorderPane;
-    }
-    
     private void setBorderPane(){
         primaryBorderPane.setCenter(backlogScroll);
 
@@ -162,36 +102,18 @@ public class guiComponents
         primaryBorderPane.setBottom(backlogBottomMenu);
     }
 
+    //credit to http://www.java2s.com/Tutorials/Java/JavaFX/0350__JavaFX_ScrollPane.htm for scroll pane help
+    private void setScrollPane(){
+        backlogScroll.setContent(backlogGridPane);
+        backlogScroll.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+        backlogScroll.setHbarPolicy(ScrollBarPolicy.NEVER);
+        backlogScroll.setFitToWidth(true);
+    }
+
     private void setGridPane(){
         backlogGridPane.setAlignment(Pos.CENTER);
         backlogGridPane.setHgap(10);
         backlogGridPane.setVgap(10);
-        //backlogGridPane.add(big,0,0);
-        
-        //backlogGridsArray.add(0,big);//add the initial backlog item to the gridpane. this code might be moved elsewhere
-        //System.out.println(backlogGridsArray);
-        //redrawAllBacklogItems();
-    }
-   
-    
-    public void setBacklogItemsArray(ArrayList<backlogItemGrid> inputBacklogItems){
-        backlogGridsArray = inputBacklogItems;
-    }
-
-    public void redrawAllBacklogItems(){
-        for(backlogItemGrid x : backlogGridsArray){
-            backlogGridPane.getChildren().remove(x);
-        }
-        for(backlogItemGrid x : backlogGridsArray){
-            backlogGridPane.add((x), 0, backlogGridsArray.indexOf(x));
-        }
-    }
-
-    public void initBacklogItems(){
-        System.out.println(backlogGridsArray);
-        for(backlogItemGrid x : backlogGridsArray){
-            backlogGridPane.add(x,0,backlogGridsArray.indexOf(x));
-        }
     }
 
     private void setMenu(){
@@ -208,12 +130,8 @@ public class guiComponents
         primaryMenuBar.getMenus().add(themeMenu);
         primaryMenuBar.getMenus().add(settings);
         setMenuFunction();//enable the theme menu items to be clicked
-
     }
 
-
-    //set the functions for the menu items
-    //this could be changed to setThemeFucntions() in order to encapsulate code more
     private void setMenuFunction(){
         darkMode.setOnAction(e -> {
             //this is necessary to resolve som undesired behavior
@@ -241,16 +159,6 @@ public class guiComponents
             switchToTaskboardView();
         });
     }
-    
-    private void switchToTaskboardView(){
-        ;//do nothing for now
-    }
-
-    private void switchToBurndownView(){
-        primaryBorderPane.setCenter(burndownObject.getBurndownGridPane());
-        primaryBorderPane.setBottom(burndownObject.getBottomMenu());
-        primaryBorderPane.setLeft(null);
-    }
 
     private void switchToSprintView(){
         primaryBorderPane.setCenter(sprintsGP);
@@ -258,19 +166,24 @@ public class guiComponents
         primaryBorderPane.setBottom(null);
         sprintScroll.setContent(sprintscrollGP);
         unassignedScroll.setContent(unassignedGP);
+<<<<<<< HEAD
 
         add_sprintButton.setOnAction(e -> {
             sprint_counter= sprint_counter + 2;
             SprintOption newSprint = new SprintOption("Sprint");
             sprintsArray.add(newSprint);
             Label sprint_label= new Label("Sprint " + String.valueOf(sprintsArray.indexOf(newSprint) + 1));
+            sprint_label.setFont((new Font("Aldhabi",15)));
             GridPane.setHalignment(sprint_label, HPos.CENTER);
             sprint_titles.add(sprint_label);
             sprintscrollGP.add(sprint_label, 0, sprint_counter-1);
             sprintscrollGP.add(newSprint, 0, sprint_counter);
         });
+=======
+        refreshAllSprints();
+>>>>>>> 8970bac8da17b2afe46fc393aeca07412b17687d
         // adds children every time, needs to be resolved
-        sp1_title.setFont(new Font("Aldhabi",15));
+        
         unassigned_title.setFont(new Font("Aldhabi",15));
     }
 
@@ -279,6 +192,78 @@ public class guiComponents
         primaryBorderPane.setBottom(backlogBottomMenu);
     }
     
+    private void switchToBurndownView(){
+        burndownObject.updateSprints();
+        primaryBorderPane.setCenter(burndownObject.getBurndownGridPane());
+        primaryBorderPane.setBottom(burndownObject.getBottomMenu());
+        primaryBorderPane.setLeft(null);
+    }
+
+    private void switchToTaskboardView(){
+        ;//do nothing for now
+    }
+
+    public void setupSprints(){
+        sprintsGP.setAlignment(Pos.CENTER);
+        sprintsGP.setHgap(10);
+        sprintsGP.setVgap(10);
+        sprintScroll.setContent(sprintscrollGP);
+        sprintScroll.setHbarPolicy(ScrollBarPolicy.NEVER);
+        unassignedScroll.setHbarPolicy(ScrollBarPolicy.NEVER);
+
+        sprintStartDatePicker.setMaxWidth(120);
+        sprintEndDatePicker.setMaxWidth(120);
+        sprintViewLeftGrid.add(add_sprintButton,0,0);
+        sprintViewLeftGrid.add(startDate,0,1);
+        sprintViewLeftGrid.add(sprintStartDatePicker,0,2);
+        sprintViewLeftGrid.add(endDate,0,3);
+        sprintViewLeftGrid.add(sprintEndDatePicker,0,4);
+
+        sprintsGP.add(sprintScroll, 0, 0);
+        sprintsGP.add(unassignedScroll, 1, 0);
+        unassignedGP.add(unassigned_sp, 0, 1);
+        unassignedGP.add(unassigned_title, 0, 0);
+
+        GridPane.setHalignment(unassigned_title, HPos.CENTER);//not sure if this is poor code practice because it was manipulated to prevent some static/nonstatic field errors
+        GridPane.setHalignment(sp1_title, HPos.CENTER);//https://www.delftstack.com/howto/java/javafx-gridpane-alignment/
+    }
+
+    public GridPane getGP(){
+        return backlogGridPane;
+    }
+
+    public ArrayList<SprintOption> getSprints(){
+        return availableSprints;
+    }
+
+    public ArrayList<backlogItemGrid> getBacklogItems(){
+        return backlogGridsArray;
+    }
+
+    //setters and getters for all the panes accessible via top menu
+    public BorderPane getBorderPane(){
+        return primaryBorderPane;
+    }
+   
+    public void setBacklogItemsArray(ArrayList<backlogItemGrid> inputBacklogItems){
+        backlogGridsArray = inputBacklogItems;
+    }
+
+    public void redrawAllBacklogItems(){
+        for(backlogItemGrid x : backlogGridsArray){
+            backlogGridPane.getChildren().remove(x);
+        }
+        for(backlogItemGrid x : backlogGridsArray){
+            backlogGridPane.add((x), 0, backlogGridsArray.indexOf(x));
+        }
+    }
+    
+    private void refreshAllSprints(){
+        for(SprintOption so : availableSprints){
+            so.refreshBacklogItems();
+        }
+    }
+
     //set the scene based on the main class
     public void setScene(Scene inputScene){
         guiComponentScene = inputScene;
@@ -302,6 +287,19 @@ public class guiComponents
         });
     }
 
+    private void setNewSprintButtonAction(){
+        add_sprintButton.setOnAction(e -> {
+            sprint_counter= sprint_counter + 2;
+            SprintOption newSprint = new SprintOption("Sprint " + availableSprints.size(),this,sprintStartDatePicker.getValue(),sprintEndDatePicker.getValue());
+            availableSprints.add(newSprint);
+            Label sprint_label= new Label("Sprint " + String.valueOf(availableSprints.indexOf(newSprint) ));
+            GridPane.setHalignment(sprint_label, HPos.CENTER);
+            sprint_titles.add(sprint_label);
+            sprintscrollGP.add(sprint_label, 0, sprint_counter-1);
+            sprintscrollGP.add(newSprint, 0, sprint_counter);
+        });
+    }
+
     //this function should ideally be in the backlogitemgrid class
     public void delete(backlogItemGrid DeletedBacklogItem){
         if(backlogGridsArray.size() > 1){
@@ -310,5 +308,13 @@ public class guiComponents
             redrawAllBacklogItems();
         }
     }
+<<<<<<< HEAD
 
+    public void deleteSprint(SprintOption DeletedSprint) {
+        
+
+    }
+
+=======
+>>>>>>> 8970bac8da17b2afe46fc393aeca07412b17687d
 }

@@ -57,8 +57,8 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
         this.add(backlogProgress,3,0);
         this.add(pointsLabel,3,0);
         points.setPrefWidth(125);
-        points.setPromptText("points");
-        desc.setPromptText("name");
+        points.setPromptText("Points");
+        desc.setPromptText("Name");
         parentComponentsObject = inputParentGuiComponents;
         setUpDownFunctions();
         setRightClickAction();
@@ -147,12 +147,12 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
 
     public void addPoints(point inputPoint){
         pointsUsed += (inputPoint.getValue()/totalpoints);
-        pointsLabel.setText(String.valueOf(pointsUsed*100) + "%");
+        pointsLabel.setText(String.valueOf(Math.round(pointsUsed*100)) + "%");
         backlogProgress.setProgress(pointsUsed);
     }
 
     private void recalculatePoints(){
-        pointsLabel.setText(String.valueOf(pointsUsed*100/totalpoints) + "%");
+        pointsLabel.setText(String.valueOf(Math.round(pointsUsed*100/totalpoints)) + "%");
         backlogProgress.setProgress(pointsUsed/totalpoints);
     }
 
@@ -171,6 +171,10 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
     public void prepareForSerialization(){
         nameFieldValue = desc.getText();
         pointsFieldValue = points.getText();
+    }
+
+    public void setAssignedSprint(SprintOption inputAssignedSprint){
+        assignedSprint = inputAssignedSprint;
     }
 
 }

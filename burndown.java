@@ -47,6 +47,7 @@ public class burndown
         burndownGridPane.setAlignment(Pos.CENTER);
         burndownGridPane.add(linechart,0,0);
         setSprints();
+        setChart();
         setBottomMenu();
     }
 
@@ -64,7 +65,6 @@ public class burndown
             temp = temp.plusDays(1);
             dates.add(String.valueOf(temp.getMonthValue()) + "-" + String.valueOf(temp.getDayOfMonth()));
         }
-        setChart();
     }
 
     private void setChart(){
@@ -99,6 +99,11 @@ public class burndown
         fiveDayCycle.setToggleGroup(toggleGroup);
         sevenDayCycle.setSelected(true);
         sevenDayCycle.setToggleGroup(toggleGroup);
+    }
+
+    public void updateSprints(){
+        sprints = parentObject.getSprints();
+        setSprints();
     }
 
     public GridPane getBurndownGridPane(){
