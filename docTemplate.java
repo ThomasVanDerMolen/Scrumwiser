@@ -15,7 +15,7 @@ public class docTemplate {
     TextField userInput = new TextField ();
     Rectangle rectangle = new Rectangle();
    
-    userInput.setPrefColumnCount(10);
+    
     
 
 

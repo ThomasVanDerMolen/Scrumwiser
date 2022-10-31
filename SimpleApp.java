@@ -47,7 +47,7 @@ public class SimpleApp extends Application
    
 
     private guiComponents guiComponents = new guiComponents();
-    private dataSerializer dataStorage = new dataSerializer(guiComponents);
+    //private dataSerializer dataStorage = new dataSerializer(guiComponents);
 
     /**
      * <p>
@@ -89,8 +89,8 @@ public class SimpleApp extends Application
     public void start(Stage primaryStage){
         Scene scene = new Scene(guiComponents.getBorderPane(),1000,400);
         guiComponents.setScene(scene);    
-        dataStorage.deserializeBacklogItems();
-        dataStorage.deserializeSprintObjects();    
+       // dataStorage.deserializeBacklogItems();
+       // dataStorage.deserializeSprintObjects();    
         //guiComponents.setBacklogObjects(dataSerializer.deserializeBacklogItems)
         //guiComponents.setSprintObjects(dataSErializer.deserializesprintObjects)
         primaryStage.setScene(scene);
@@ -99,8 +99,8 @@ public class SimpleApp extends Application
     }
     @Override
     public void stop(){
-        dataStorage.serializeBacklogItems();
-        dataStorage.serializeSprintObjects();
+        //dataStorage.serializeBacklogItems();
+        //dataStorage.serializeSprintObjects();
     }
 
     /**
