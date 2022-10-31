@@ -46,11 +46,6 @@ public class SprintOption extends GridPane{
         endDate = inputEndDate;
         //this.add(sprintLabel,0,0);
         setValueFactories();
-<<<<<<< HEAD
-        setRightClickAction();
-        this.add(sp1_table,0,0);
-        
-=======
         //this.add(sp1_table,0,0);
     }
 
@@ -63,7 +58,6 @@ public class SprintOption extends GridPane{
             }
         }
         setValueFactories();
->>>>>>> 8970bac8da17b2afe46fc393aeca07412b17687d
     }
 
     private void setValueFactories(){

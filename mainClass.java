@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 public class mainClass extends Application{
     
     private guiComponents guiComponents = new guiComponents();
+    private docTemplate docTemplate = new docTemplate();
     //private dataSerializer dataStorage = new dataSerializer(guiComponents);
 
     public static void main(String[] args)
@@ -18,7 +19,7 @@ public class mainClass extends Application{
         //dataStorage.deserializeBacklogItems();
         //dataStorage.deserializeSprintObjects();    
         //guiComponents.setBacklogObjects(dataSerializer.deserializeBacklogItems)
-        //guiComponents.setSprintObjects(dataSErializer.deserializesprintObjects)
+        //guiComponents.setSprintObjects(dataSerializer.deserializesprintObjects)
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setTitle("Scrumwiser");
