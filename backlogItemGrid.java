@@ -22,6 +22,7 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
     private double totalpoints = 0;
     private String nameFieldValue;
     private String pointsFieldValue;
+    private String rempointsFieldValue;
     private transient Label pointsLabel = new Label("");
     private transient TextField desc = new TextField("");
     private transient TextField points = new TextField();

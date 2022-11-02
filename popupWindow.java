@@ -13,12 +13,15 @@ import javafx.stage.Popup;
 
 public class popupWindow extends Popup {
     private GridPane gp = new GridPane();
+    private GridPane sprintgp= new GridPane();
     private Label newlabel = new Label("Select Sprint");
     private ComboBox<String> sprints = new ComboBox<>();
     private HashMap<String,SprintOption> sprintNameHashMap = new HashMap<>();
     private ArrayList<SprintOption> sprintObjects = new ArrayList<SprintOption>();
     private backlogItemGrid parentBacklogItemGrid;
+    private SprintOption parentSprintOption;
     private TextField pointsUsed = new TextField("");
+    public TextField pointsAlloted= new TextField("");
 
     public popupWindow(backlogItemGrid callingItem){
         this.setAutoHide(true);
@@ -32,6 +35,18 @@ public class popupWindow extends Popup {
         this.setOnShowing(e -> {
             //reset the text field value each time the menu pops up
             pointsUsed.setText(null);
+        });
+    }
+
+    public popupWindow(SprintOption callingItem) {
+        parentSprintOption= callingItem;
+        this.setAutoHide(true);
+        pointsAlloted.setPromptText("Alloted Points");
+        sprintgp.add(pointsAlloted, 0, 0);
+        this.getContent().add(sprintgp);
+        setChangePointsInput();
+        this.setOnShowing(e -> {
+            pointsAlloted.setText(null);
         });
     }
 
@@ -56,6 +71,13 @@ public class popupWindow extends Popup {
                 parentBacklogItemGrid.addPoints(new point(Double.valueOf(pointsUsed.getText())));
             }
             
+        });
+    }
+
+    private void setChangePointsInput() {
+        this.setOnAutoHide(e -> {
+            parentSprintOption.sprintpointcapacity.setText("Points Alloted: " + "/" + pointsAlloted.getText());
+            parentSprintOption.setAllocatedPoints(Double.valueOf(pointsAlloted.getText()));
         });
     }
 

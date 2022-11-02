@@ -18,17 +18,23 @@ import javafx.scene.input.MouseButton;
  * Some credit is owed to https://www.youtube.com/watch?v=vego72w5kPU for the table feature.(as it is currently implemented)
  */
 
+ 
+
 public class SprintOption extends GridPane{
-    Label sprintLabel= new Label("Sprint");
+    Label sprint_label= new Label("");
+    Label sprintpointcapacity= new Label("");
     private ContextMenu rightClickMenu = new ContextMenu();
     private MenuItem MIDeleteSprint = new MenuItem("Delete Sprint");
+    private MenuItem SetSprintValue= new MenuItem("Set Available Points");
+    private popupWindow popupWindow= new popupWindow(this);
 
     private String sprintName;
     //private ArrayList<backlogItemGrid> backlogItems = new ArrayList<backlogItemGrid>();
     private ObservableList<backlogItemGrid> backlogObservableList = FXCollections.observableArrayList();
     private TableView<backlogItemGrid> sp1_table= new TableView<backlogItemGrid>();
     private TableColumn<backlogItemGrid,String> sp1_backlog = new TableColumn<backlogItemGrid,String>("Backlog Item");
-    private TableColumn<backlogItemGrid,String> sp1_points = new TableColumn<backlogItemGrid,String>("Points");
+    public TableColumn<backlogItemGrid,String> sp1_points = new TableColumn<backlogItemGrid,String>("Points");
+   // private TableColumn<backlogItemGrid,String> sp1_rempoints = new TableColumn<backlogItemGrid,String>("Remaining Points");
 
     //we need to keep track of the start and end dates for each sprint, as well as the total number of points for the sprint
     //and the points used in the spritn so far
@@ -47,6 +53,7 @@ public class SprintOption extends GridPane{
         //this.add(sprintLabel,0,0);
         setValueFactories();
         //this.add(sp1_table,0,0);
+        setRightClickAction();
     }
 
     public void refreshBacklogItems(){
@@ -63,14 +70,18 @@ public class SprintOption extends GridPane{
     private void setValueFactories(){
         sp1_table= new TableView<backlogItemGrid>();
         sp1_backlog = new TableColumn<backlogItemGrid,String>("Backlog Item");
-        sp1_points = new TableColumn<backlogItemGrid,String>("Points");
+        //sp1_points = new TableColumn<backlogItemGrid,String>("Points Remaining");
+       // sp1_rempoints = new TableColumn<backlogItemGrid, String>("Remaining Points");
 
         sp1_backlog.setMinWidth(200);
-        sp1_points.setMinWidth(100);
+        sp1_points.setMinWidth(130);
+     //   sp1_rempoints.setMinWidth(100);
         sp1_backlog.setCellValueFactory(new PropertyValueFactory<backlogItemGrid,String>("nameFieldValue"));
         sp1_points.setCellValueFactory(new PropertyValueFactory<backlogItemGrid,String>("pointsFieldValue"));
+       // sp1_rempoints.setCellValueFactory(new PropertyValueFactory<backlogItemGrid,String>("rempointsFieldValue"));
         sp1_table.getColumns().add(sp1_backlog);
         sp1_table.getColumns().add(sp1_points);
+       // sp1_table.getColumns().add(sp1_rempoints);
         sp1_table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         sp1_table.getItems().addAll(backlogObservableList);
         this.getChildren().remove(sp1_table);
@@ -95,13 +106,25 @@ public class SprintOption extends GridPane{
                 sp1_table.setContextMenu(rightClickMenu);
             }
         });
+        sprint_label.setOnMouseClicked(e -> {
+            if(e.getButton() == MouseButton.SECONDARY){
+                sprint_label.setContextMenu(rightClickMenu);
+            }
+        });
     }
 
     public void RightClickMenu() {
         rightClickMenu.getItems().add(MIDeleteSprint);
+        rightClickMenu.getItems().add(SetSprintValue);
+        //find a way to set menu so it is always on top of other objects
         MIDeleteSprint.setOnAction(e -> {
+            parentObject.deleteSprint(this);
+        });
+        SetSprintValue.setOnAction(e -> {
+            popupWindow.show(this, 500, 400);
             
         });
+        
     }
 
     //this method is used exclusively by other classes
@@ -124,4 +147,10 @@ public class SprintOption extends GridPane{
     public double getUsedPoints(){
         return usedPoints;
     }
+
+    public void setAllocatedPoints(double inputPoints){
+        allocatedPoints= inputPoints;
+    }
+
+  
 }

@@ -65,6 +65,7 @@ public class guiComponents
     };
     private ArrayList<Label> sprint_titles = new ArrayList<Label>();
     private ArrayList<backlogItemGrid> backlogGridsArray = new ArrayList<backlogItemGrid>();
+    private ArrayList<Label> point_capacities= new ArrayList<Label>();
     
     private GridPane sprintViewLeftGrid = new GridPane();
     private DatePicker sprintStartDatePicker = new DatePicker(java.time.LocalDate.now());
@@ -212,7 +213,7 @@ public class guiComponents
         sprintViewLeftGrid.add(sprintStartDatePicker,0,2);
         sprintViewLeftGrid.add(endDate,0,3);
         sprintViewLeftGrid.add(sprintEndDatePicker,0,4);
-
+        unassigned_sp.sp1_points.setText("Points");
         sprintsGP.add(sprintScroll, 0, 0);
         sprintsGP.add(unassignedScroll, 1, 0);
         unassignedGP.add(unassigned_sp, 0, 1);
@@ -283,14 +284,19 @@ public class guiComponents
 
     private void setNewSprintButtonAction(){
         add_sprintButton.setOnAction(e -> {
-            sprint_counter= sprint_counter + 2;
+            sprint_counter= sprint_counter + 3;
             SprintOption newSprint = new SprintOption("Sprint " + availableSprints.size(),this,sprintStartDatePicker.getValue(),sprintEndDatePicker.getValue());
             availableSprints.add(newSprint);
-            Label sprint_label= new Label("Sprint " + String.valueOf(availableSprints.indexOf(newSprint) ));
-            GridPane.setHalignment(sprint_label, HPos.CENTER);
-            sprint_titles.add(sprint_label);
-            sprintscrollGP.add(sprint_label, 0, sprint_counter-1);
-            sprintscrollGP.add(newSprint, 0, sprint_counter);
+            //Label sprint_label= new Label("Sprint " + String.valueOf(availableSprints.indexOf(newSprint) ));
+            newSprint.sp1_points.setText("Remaining Points");
+            newSprint.sprint_label.setText("Sprint " + String.valueOf(availableSprints.indexOf(newSprint)));
+            newSprint.sprint_label.setFont(new Font("Aldhabi",15));
+            GridPane.setHalignment(newSprint.sprint_label, HPos.CENTER);
+            GridPane.setHalignment(newSprint.sprintpointcapacity, HPos.CENTER);
+            sprint_titles.add(newSprint.sprint_label);
+            sprintscrollGP.add(newSprint.sprint_label, 0, sprint_counter-1);
+            sprintscrollGP.add(newSprint.sprintpointcapacity, 0, sprint_counter);
+            sprintscrollGP.add(newSprint, 0, sprint_counter+1);
         });
     }
 
@@ -301,5 +307,17 @@ public class guiComponents
             backlogGridsArray.remove(DeletedBacklogItem);
             redrawAllBacklogItems();
         }
+    }
+
+    public void deleteSprint(SprintOption deletedSprintOption) {
+        availableSprints.remove(deletedSprintOption);
+        sprintscrollGP.getChildren().remove(deletedSprintOption);
+        sprintscrollGP.getChildren().remove(deletedSprintOption.sprint_label);
+        sprintscrollGP.getChildren().remove(deletedSprintOption.sprintpointcapacity);
+        for(SprintOption x : availableSprints){
+            x.sprint_label.setText("Sprint " + (String.valueOf(availableSprints.indexOf(x))));
+
+        }
+
     }
 }
