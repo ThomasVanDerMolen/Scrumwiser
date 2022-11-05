@@ -16,7 +16,28 @@ public class docTemplate extends Object {
     {
         //Desktop.getDesktop().open(new File("C:\\folder"));
         
-        System.out.println("test");
+        System.out.println("write");
+    try {
+        File myObj = new File("filename.txt");
+        if (myObj.createNewFile()) {
+          System.out.println("File created: " + myObj.getName());
+        } else {
+          System.out.println("File already exists.");
+        }
+      } catch (IOException e) {
+        System.out.println("An error occurred.");
+        e.printStackTrace();
+      }
+
+      try {
+        FileWriter myWriter = new FileWriter("filename.txt");
+        myWriter.write("Files in Java might be tricky, but it is fun enough!");
+        myWriter.close();
+        System.out.println("Successfully wrote to the file.");
+      } catch (IOException e) {
+        System.out.println("An error occurred.");
+        e.printStackTrace();
+      }
         boolean result;  
 
 try   
@@ -42,12 +63,14 @@ e.printStackTrace();    //prints exception if any
         return null;
     }
 public void write(){
+    System.out.println("write");
     try {
-        System.out.println("Begin");
-        FileWriter fileTest = new FileWriter("test2.txt");
-        fileTest.write("gsdfghjkhgfdsdfghj");
-        fileTest.close();
-        System.out.println("Successfully wrote to the file.");
+        File myObj = new File("filename.txt");
+        if (myObj.createNewFile()) {
+          System.out.println("File created: " + myObj.getName());
+        } else {
+          System.out.println("File already exists.");
+        }
       } catch (IOException e) {
         System.out.println("An error occurred.");
         e.printStackTrace();
