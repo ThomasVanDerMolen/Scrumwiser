@@ -85,12 +85,9 @@ public class guiComponents
         setNewBIGButtonAction();
         setNewSprintButtonAction();
         setupSprints();
-        try {
-            docTemplate.open();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        
+        //docTemplate.open(null);
+       
     }
 
     private void setBorderPane(){

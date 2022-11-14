@@ -8,6 +8,24 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 
+import javafx.scene.shape.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.IOException;
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.KeyEvent;
+
 /*
  * Credit owed to https://www.geeksforgeeks.org/javafx-progressbar/#:~:text=ProgressBar%20is%20a%20part%20of,of%20completion%20of%20a%20task%20.
  * 
@@ -20,6 +38,7 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
 {
     private double pointsUsed = 0;
     private double totalpoints = 0;
+    //private String nameUsed;
     private String nameFieldValue;
     private String pointsFieldValue;
     private String rempointsFieldValue;
@@ -38,6 +57,7 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
     private transient popupWindow popupWindow = new popupWindow(this);
     private transient SprintOption assignedSprint;
 
+    docTemplate dc = new docTemplate();
     public backlogItemGrid(guiComponents inputParentGuiComponents, double inputPointsUsed, double inputTotalPoints, String inputNameFieldValue, String inputpointsFieldValue, SprintOption defaultSprint){
         //credit to https://www.geeksforgeeks.org/constructor-chaining-java-examples/ 
         this(inputParentGuiComponents,defaultSprint);
@@ -47,6 +67,7 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
         pointsFieldValue = inputpointsFieldValue;
         desc.setText(String.valueOf(inputNameFieldValue));
         pointsLabel.setText(String.valueOf(pointsFieldValue));
+        
     }
 
     public backlogItemGrid(guiComponents inputParentGuiComponents, SprintOption defaultSprint){
@@ -64,8 +85,10 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
         setUpDownFunctions();
         setRightClickAction();
         setTotalPoints();
+        dc.open(Double.toString(totalpoints));
+        
     }
-
+    
     public void setRightClickAction(){
         buildContextmenu();
         desc.setOnMouseClicked(e -> {
@@ -136,6 +159,9 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
         });
     }
 
+
+   
+
     public String getNameFieldValue(){
         nameFieldValue = desc.getText();
         return nameFieldValue;
@@ -155,6 +181,34 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
     private void recalculatePoints(){
         pointsLabel.setText(String.valueOf(Math.round(pointsUsed*100/totalpoints)) + "%");
         backlogProgress.setProgress(pointsUsed/totalpoints);
+        System.out.println("spacer");
+        System.out.println(pointsUsed);
+        System.out.println(totalpoints);
+
+        //not great place for this, but works for now.
+        try {
+            File myObj = new File("filename.txt");
+            if (myObj.createNewFile()) {
+              System.out.println("File created: " + myObj.getName());
+            } else {
+              System.out.println("File already exists.");
+            }
+          } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+          }
+         
+          try {
+            FileWriter myWriter = new FileWriter("filename.txt", true);
+            PrintWriter out = new  PrintWriter(myWriter);
+            //out.write(nameFieldValue);
+            out.write(Double.toString(totalpoints)+ "," /*+ "\n"*/);
+            out.close();
+            System.out.println("Successfully wrote to the file.");
+          } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+          }
     }
 
     private void setTotalPoints(){
@@ -162,7 +216,8 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
         points.textProperty().addListener(e -> {
             totalpoints = Integer.valueOf(points.getText());
             recalculatePoints();
-        });
+        });       
+        
     }
 
     public SprintOption getAssignedSprint(){
@@ -172,10 +227,10 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
     public void prepareForSerialization(){
         nameFieldValue = desc.getText();
         pointsFieldValue = points.getText();
+        
     }
 
     public void setAssignedSprint(SprintOption inputAssignedSprint){
         assignedSprint = inputAssignedSprint;
     }
-
 }

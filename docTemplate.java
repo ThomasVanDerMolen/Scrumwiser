@@ -1,45 +1,58 @@
 import javafx.scene.shape.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 
 public class docTemplate extends Object {
-
-    private backlogItemGrid item = new backlogItemGrid(null, 0, 0, null, null, null);
+    //public backlogItemGrid points = new backlogItemGrid(null, 0, 0, null, null, null);
+    //public backlogItemGrid backlogItemGrid = new backlogItemGrid(null, 0, 0, null, null, null);
     File fileTest = new File("test2.txt");
-
-    public void open() throws IOException
+    //backlogItemGrid bg = new backlogItemGrid(null, 0, 0, null, null, null);
+    
+    public void open(String value) 
     {
+      //value = bg.getPointsFieldValue();
+      //System.out.println(backlogItemGrid.getPointsFieldValue());
+        docTemplate open = new docTemplate();
         //Desktop.getDesktop().open(new File("C:\\folder"));
         
-        System.out.println("write");
     try {
         File myObj = new File("filename.txt");
         if (myObj.createNewFile()) {
           System.out.println("File created: " + myObj.getName());
         } else {
-          System.out.println("File already exists.");
+          //System.out.println("File already exists.");
         }
       } catch (IOException e) {
         System.out.println("An error occurred.");
         e.printStackTrace();
       }
-
-      try {
+     
+      /*try {
         FileWriter myWriter = new FileWriter("filename.txt");
-        myWriter.write("Files in Java might be tricky, but it is fun enough!");
+        myWriter.append(value + ",");
         myWriter.close();
         System.out.println("Successfully wrote to the file.");
       } catch (IOException e) {
         System.out.println("An error occurred.");
         e.printStackTrace();
-      }
-        boolean result;  
+      }*/
+      //System.out.println(value);
+       // boolean result;  
+    }
 
+    
+
+/* 
 try   
 {  
 result = fileTest.createNewFile();  //creates a new file  
@@ -75,10 +88,9 @@ public void write(){
         System.out.println("An error occurred.");
         e.printStackTrace();
       }
-}  
+}*/  
 }  
 
-    
    
 
 
