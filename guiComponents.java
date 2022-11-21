@@ -23,6 +23,8 @@ public class guiComponents
     private GridPane backlogBottomMenu = new GridPane();
     private GridPane sprintscrollGP= new GridPane();
     private GridPane unassignedGP = new GridPane();
+    
+    private GridPane userGP = new GridPane();
 
     private ScrollPane sprintScroll= new ScrollPane();
     private ScrollPane unassignedScroll= new ScrollPane();
@@ -317,5 +319,10 @@ public class guiComponents
             backlogGridsArray.remove(DeletedBacklogItem);
             redrawAllBacklogItems();
         }
+    }
+
+    public void login()
+    {
+        
     }
 }

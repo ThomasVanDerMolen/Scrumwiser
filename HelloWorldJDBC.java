@@ -144,13 +144,13 @@ public class HelloWorldJDBC
 
         try {
             fr.read(a);
-            System.out.println(a[0] + " test");
+            //System.out.println(a[0] + " test");
             //System.out.println(a[1] + " test2");
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.println(a);
+        //System.out.println(a);
         try {
             fr.close();
         } catch (IOException e) {
@@ -230,15 +230,15 @@ public class HelloWorldJDBC
             psInsert.executeUpdate();
             System.out.println("Inserted " + b0);
 
-            psInsert.setInt(1, 1922);
+            /*psInsert.setInt(1, 1922);
             psInsert.setString(2, "Union St.");
             psInsert.executeUpdate();
             System.out.println("Inserted" + 1922);
-
+            */
             // Let's update some rows as well...
 
             // parameter 1 and 3 are num (int), parameter 2 is addr (varchar)
-            psUpdate = conn.prepareStatement(
+            /*psUpdate = conn.prepareStatement(
                         "update location set num=?, addr=? where num=?");
             statements.add(psUpdate);
 
@@ -253,7 +253,7 @@ public class HelloWorldJDBC
             psUpdate.setInt(3, 180);
             psUpdate.executeUpdate();
             System.out.println("Updated 180 Grand to 300 Lakeshore");
-
+            */
 
             /*
                We select the rows and verify the results.
@@ -274,7 +274,7 @@ public class HelloWorldJDBC
              * comprehend, so we use a different pattern.
              */
 
-            int number; // street number retrieved from the database
+            /*int number; // street number retrieved from the database
             boolean failure = false;
             if (!rs.next())
             {
@@ -311,7 +311,7 @@ public class HelloWorldJDBC
             if (!failure) {
                 System.out.println("Verified the rows");
             }
-
+            */
             // delete the table
             s.execute("drop table location");
             System.out.println("Dropped table location");
