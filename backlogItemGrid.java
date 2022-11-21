@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
@@ -154,7 +158,40 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
     private void recalculatePoints(){
         pointsLabel.setText(String.valueOf(pointsUsed*100/totalpoints) + "%");
         backlogProgress.setProgress(pointsUsed/totalpoints);
+
+        
+
+        //not great place for this, but works for now.
+        try {
+            File myObj = new File("filename.txt");
+            if (myObj.createNewFile()) {
+              System.out.println("File created: " + myObj.getName());
+            } else {
+              System.out.println("File already exists.");
+            }
+          } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+          }
+
+          try {
+            FileWriter myWriter = new FileWriter("filename.txt", true);
+            PrintWriter out = new  PrintWriter(myWriter);
+            //out.write(nameFieldValue);
+            out.write(Double.toString(totalpoints)+ "," /*+ "\n"*/);
+            out.close();
+            System.out.println("Successfully wrote to the file.");
+          } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+          }
     }
+
+    private void harvestRecalculate()
+    {
+        
+    }
+    
 
     private void setTotalPoints(){
         //credit to https://stackoverflow.com/questions/30160899/value-change-listener-for-javafxs-textfield

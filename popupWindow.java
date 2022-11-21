@@ -56,6 +56,7 @@ public class popupWindow extends Popup {
                 parentBacklogItemGrid.addPoints(new point(Integer.valueOf(pointsUsed.getText())));
             }
             
+            
         });
     }
 
