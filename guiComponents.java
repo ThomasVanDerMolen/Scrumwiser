@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -14,6 +15,8 @@ import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
+import java.net.URL;
+import java.awt.*;
 
 public class guiComponents
 {
@@ -31,21 +34,15 @@ public class guiComponents
     private ScrollPane unassignedScroll= new ScrollPane();
 
     private Menu themeMenu = new Menu("Theme");
-    private Menu settings = new Menu("Settings");
 
     private MenuItem darkMode = new MenuItem("Dark");
     private MenuItem lightMode = new MenuItem("Light");
-    private MenuItem workAssigned = new MenuItem("Show amount of work assigned to each person");
-    private MenuItem teamOverlay = new MenuItem("Show overlay over teams that are left behind");
-    private MenuItem backlogItemNumber = new MenuItem("Show item number on backlog items");
-    private MenuItem additionalBacklogItems = new MenuItem("Add additional task in backlog items in some cases");
 
     private MenuBar primaryMenuBar = new MenuBar();
     private GridPane navigationBar = new GridPane();
     private Button sprintViewButton = new Button("Sprints");
     private Button backlogViewButton = new Button("Backlog");
     private Button burndownViewButton = new Button("Burndown");
-    private Button taskboardViewButton = new Button("Taskboard");
  
     private Button newBacklogItemButton = new Button("New Item");
     private Button add_sprintButton= new Button("Add Sprint");
@@ -54,6 +51,9 @@ public class guiComponents
     private Label sp1_title= new Label ("Sprint 1");
     private Label startDate = new Label("Sprint start");
     private Label endDate = new Label("Sprint end");
+
+    private Hyperlink link = new Hyperlink("FAQ Website");
+    private Hyperlink emailAddress = new Hyperlink("Customer Support Email");
 
     private int sprint_counter= -1;
       
@@ -97,12 +97,14 @@ public class guiComponents
         navigationBar.add(backlogViewButton,1,0);
         navigationBar.add(sprintViewButton,2,0);
         navigationBar.add(burndownViewButton,3,0);
-        navigationBar.add(taskboardViewButton,4,0);
+        navigationBar.add(link, 4, 0);
+        navigationBar.add(emailAddress, 5, 0);
 
         backlogViewButton.setStyle("-fx-background-color : transparent");
         sprintViewButton.setStyle("-fx-background-color : transparent");
         burndownViewButton.setStyle("-fx-background-color : transparent");
-        taskboardViewButton.setStyle("-fx-background-color : transparent");
+        link.setStyle("-fx-background-color : transparent");
+        emailAddress.setStyle("-fx-background-color : transparent");
 
         primaryBorderPane.setTop(navigationBar);
         backlogBottomMenu.add(newBacklogItemButton,0,0);
@@ -129,13 +131,8 @@ public class guiComponents
         themeMenu.getItems().add(darkMode);
         themeMenu.getItems().add(lightMode);    
         
-        settings.getItems().add(workAssigned);
-        settings.getItems().add(teamOverlay);
-        settings.getItems().add(backlogItemNumber);
-        settings.getItems().add(additionalBacklogItems);
         
         primaryMenuBar.getMenus().add(themeMenu);
-        primaryMenuBar.getMenus().add(settings);
         setMenuFunction();//enable the theme menu items to be clicked
     }
 
@@ -162,9 +159,20 @@ public class guiComponents
         burndownViewButton.setOnAction(e -> {
             switchToBurndownView();
         });
-        taskboardViewButton.setOnAction(e ->{
-            switchToTaskboardView();
+        link.setOnAction(e -> {
+            openWebPage("https://scrumwisercustomer.wixsite.com/scrumwiser-faq");
         });
+        emailAddress.setOnAction(e -> {
+            openWebPage("https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSBptGjCGqNqwjVBNwlTKMdhKLCFNxFWcTSsBPpflfJPNFckzMRNQdTwjLnxZdPgRfDfrcXz");
+        });
+    }
+
+    private void openWebPage(String url) {
+        try {
+            Desktop.getDesktop().browse(new URL(url).toURI());
+        }catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void switchToSprintView(){
@@ -189,10 +197,6 @@ public class guiComponents
         primaryBorderPane.setCenter(burndownObject.getBurndownGridPane());
         primaryBorderPane.setBottom(burndownObject.getBottomMenu());
         primaryBorderPane.setLeft(null);
-    }
-
-    private void switchToTaskboardView(){
-        ;//do nothing for now
     }
 
     public void setupSprints(){

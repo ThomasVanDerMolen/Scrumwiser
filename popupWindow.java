@@ -22,6 +22,7 @@ public class popupWindow extends Popup {
     private SprintOption parentSprintOption;
     private TextField pointsUsed = new TextField("");
     public TextField pointsAlloted= new TextField("");
+    private double pointsRemaining;
 
     public popupWindow(backlogItemGrid callingItem){
         this.setAutoHide(true);
@@ -76,7 +77,7 @@ public class popupWindow extends Popup {
 
     private void setChangePointsInput() {
         this.setOnAutoHide(e -> {
-            parentSprintOption.sprintpointcapacity.setText("Points Alloted: " + "/" + pointsAlloted.getText());
+            parentSprintOption.sprintpointcapacity.setText("Points Remaining: "  + "/" + pointsAlloted.getText());
             parentSprintOption.setAllocatedPoints(Double.valueOf(pointsAlloted.getText()));
         });
     }
