@@ -2,7 +2,6 @@ import javafx.scene.layout.GridPane;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ContextMenu;
@@ -29,7 +28,6 @@ public class SprintOption extends GridPane{
     private popupWindow popupWindow= new popupWindow(this);
 
     private String sprintName;
-    //private ArrayList<backlogItemGrid> backlogItems = new ArrayList<backlogItemGrid>();
     private ObservableList<backlogItemGrid> backlogObservableList = FXCollections.observableArrayList();
     private TableView<backlogItemGrid> sp1_table= new TableView<backlogItemGrid>();
     private TableColumn<backlogItemGrid,String> sp1_backlog = new TableColumn<backlogItemGrid,String>("Backlog Item");
@@ -50,7 +48,6 @@ public class SprintOption extends GridPane{
         sprintName = inputSprintName;
         startDate = inputStartDate;
         endDate = inputEndDate;
-        //this.add(sprintLabel,0,0);
         setValueFactories();
         //this.add(sp1_table,0,0);
         setRightClickAction();
@@ -86,16 +83,12 @@ public class SprintOption extends GridPane{
         sp1_table.getItems().addAll(backlogObservableList);
         this.getChildren().remove(sp1_table);
         this.add(sp1_table,0,0);
-        
     }
-
 
     //this method is used exclusively by other classes
     public void addBacklogItem(backlogItemGrid inputBacklogItem){
         //basically, we need to add the backlog items to the list but not show them on the screen until the view is switched
         backlogObservableList.add(inputBacklogItem);
-        //this.add(inputBacklogItem,0,backlogItems.size());//important but not now
-        //System.out.println(backlogItems);
         sp1_table.getItems().add(inputBacklogItem);
     }
 
@@ -148,9 +141,20 @@ public class SprintOption extends GridPane{
         return usedPoints;
     }
 
+    public void setUsedPoints(double input){
+        usedPoints=input;
+    }
+
+    public void addUsedPoints(double input){
+        usedPoints += input;
+    }
+
     public void setAllocatedPoints(double inputPoints){
         allocatedPoints= inputPoints;
     }
 
+    public ObservableList<backlogItemGrid> getSprintBacklogs(){
+        return backlogObservableList;
+    }
   
 }

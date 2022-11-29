@@ -20,9 +20,10 @@ public class popupWindow extends Popup {
     private ArrayList<SprintOption> sprintObjects = new ArrayList<SprintOption>();
     private backlogItemGrid parentBacklogItemGrid;
     private SprintOption parentSprintOption;
+    private guiComponents parentGuiComponents;
     private TextField pointsUsed = new TextField("");
     public TextField pointsAlloted= new TextField("");
-    private double pointsRemaining;
+
 
     public popupWindow(backlogItemGrid callingItem){
         this.setAutoHide(true);
@@ -37,6 +38,10 @@ public class popupWindow extends Popup {
             //reset the text field value each time the menu pops up
             pointsUsed.setText(null);
         });
+    }
+
+    public void setParentComponent(guiComponents inputComponent){
+        parentGuiComponents = inputComponent;
     }
 
     public popupWindow(SprintOption callingItem) {
@@ -71,13 +76,12 @@ public class popupWindow extends Popup {
             if(pointsUsed.getText()!=null){
                 parentBacklogItemGrid.addPoints(new point(Double.valueOf(pointsUsed.getText())));
             }
-            
         });
     }
 
     private void setChangePointsInput() {
         this.setOnAutoHide(e -> {
-            parentSprintOption.sprintpointcapacity.setText("Points Remaining: "  + "/" + pointsAlloted.getText());
+            parentSprintOption.sprintpointcapacity.setText("Points Remaining: "  + " of " + pointsAlloted.getText());
             parentSprintOption.setAllocatedPoints(Double.valueOf(pointsAlloted.getText()));
         });
     }

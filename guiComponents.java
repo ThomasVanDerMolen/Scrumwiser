@@ -46,6 +46,7 @@ public class guiComponents
  
     private Button newBacklogItemButton = new Button("New Item");
     private Button add_sprintButton= new Button("Add Sprint");
+    private Button umlViewButton = new Button("UML view");
 
     private Label unassigned_title= new Label("Unassigned Backlog");
     private Label sp1_title= new Label ("Sprint 1");
@@ -65,13 +66,14 @@ public class guiComponents
     };
     private ArrayList<Label> sprint_titles = new ArrayList<Label>();
     private ArrayList<backlogItemGrid> backlogGridsArray = new ArrayList<backlogItemGrid>();
-    private ArrayList<Label> point_capacities= new ArrayList<Label>();
+    //private ArrayList<Label> point_capacities= new ArrayList<Label>();
     
     private GridPane sprintViewLeftGrid = new GridPane();
     private DatePicker sprintStartDatePicker = new DatePicker(java.time.LocalDate.now());
     private DatePicker sprintEndDatePicker = new DatePicker(java.time.LocalDate.now().plusDays(14));
 
     private burndown burndownObject = new burndown(this);
+    private umlViewer umlViewerObject = new umlViewer();
 
     private Scene guiComponentScene;
 
@@ -99,12 +101,14 @@ public class guiComponents
         navigationBar.add(burndownViewButton,3,0);
         navigationBar.add(link, 4, 0);
         navigationBar.add(emailAddress, 5, 0);
+        navigationBar.add(umlViewButton,7,0);
 
         backlogViewButton.setStyle("-fx-background-color : transparent");
         sprintViewButton.setStyle("-fx-background-color : transparent");
         burndownViewButton.setStyle("-fx-background-color : transparent");
         link.setStyle("-fx-background-color : transparent");
         emailAddress.setStyle("-fx-background-color : transparent");
+        umlViewButton.setStyle("-fx-background-color: transparent");
 
         primaryBorderPane.setTop(navigationBar);
         backlogBottomMenu.add(newBacklogItemButton,0,0);
@@ -165,6 +169,15 @@ public class guiComponents
         emailAddress.setOnAction(e -> {
             openWebPage("https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSBptGjCGqNqwjVBNwlTKMdhKLCFNxFWcTSsBPpflfJPNFckzMRNQdTwjLnxZdPgRfDfrcXz");
         });
+        umlViewButton.setOnAction(e -> {
+            switchToUmlView();
+        });
+    }
+
+    private void switchToUmlView(){
+        primaryBorderPane.setCenter(umlViewerObject.getGrid());
+        primaryBorderPane.setLeft(null);
+        primaryBorderPane.setBottom(null);
     }
 
     private void openWebPage(String url) {
@@ -183,8 +196,21 @@ public class guiComponents
         unassignedScroll.setContent(unassignedGP);
         refreshAllSprints();
         // adds children every time, needs to be resolved
-        
+        setSprintsLabel();
         unassigned_title.setFont(new Font("Aldhabi",15));
+    }
+
+    public void setSprintsLabel(){
+        //refreshAllSprints();
+        for(SprintOption so: availableSprints){
+            so.setUsedPoints(0);
+        }
+        for(backlogItemGrid bli: backlogGridsArray){
+            bli.getAssignedSprint().addUsedPoints(bli.getRemainingPoints());
+        }
+        for(SprintOption so: availableSprints){
+            so.sprintpointcapacity.setText(so.getUsedPoints() +" of " + so.getAllocatedPoints());
+        }
     }
 
     private void switchToBacklogView(){
@@ -257,6 +283,7 @@ public class guiComponents
     private void refreshAllSprints(){
         for(SprintOption so : availableSprints){
             so.refreshBacklogItems();
+            //so.settablelabel();
         }
     }
 

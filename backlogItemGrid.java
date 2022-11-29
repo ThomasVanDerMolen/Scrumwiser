@@ -38,10 +38,11 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
 {
     private double pointsUsed = 0;
     private double totalpoints = 0;
+    private double remainingPoints = 0;
     //private String nameUsed;
     private String nameFieldValue;
     private String pointsFieldValue;
-    private String rempointsFieldValue;
+    //private String rempointsFieldValue;
     private transient Label pointsLabel = new Label("");
     private transient TextField desc = new TextField("");
     private transient TextField points = new TextField();
@@ -63,6 +64,7 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
         this(inputParentGuiComponents,defaultSprint);
         pointsUsed = inputPointsUsed;
         totalpoints = inputTotalPoints;
+        remainingPoints = inputTotalPoints;
         nameFieldValue = inputNameFieldValue;
         pointsFieldValue = inputpointsFieldValue;
         desc.setText(String.valueOf(inputNameFieldValue));
@@ -86,7 +88,16 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
         setRightClickAction();
         setTotalPoints();
         dc.open(Double.toString(totalpoints));
+        setPointChangeListener();
         
+    }
+
+    private void setPointChangeListener(){
+        //credit to : https://stackoverflow.com/questions/30160899/value-change-listener-for-javafxs-textfield
+        points.textProperty().addListener(e -> {
+            System.out.println("points changed to "+points.getText());
+            remainingPoints = Double.valueOf(points.getText());
+        });
     }
     
     public void setRightClickAction(){
@@ -174,8 +185,15 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
 
     public void addPoints(point inputPoint){
         pointsUsed += (inputPoint.getValue()/totalpoints);
+        remainingPoints -= inputPoint.getValue();
+        remainingPoints = totalpoints-inputPoint.getValue();
         pointsLabel.setText(String.valueOf(Math.round(pointsUsed*100)) + "%");
         backlogProgress.setProgress(pointsUsed);
+    }
+
+    public double getRemainingPoints(){
+        //remainingPoints = totalpoints-pointsUsed;
+        return remainingPoints;
     }
 
     private void recalculatePoints(){
@@ -232,5 +250,13 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
 
     public void setAssignedSprint(SprintOption inputAssignedSprint){
         assignedSprint = inputAssignedSprint;
+    }
+
+    public double getTotalPoints(){
+        return totalpoints;
+    }
+
+    public double getUsedPoints(){
+        return pointsUsed;
     }
 }

@@ -1,8 +1,7 @@
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.Random;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.chart.CategoryAxis;
@@ -56,8 +55,8 @@ public class burndown
             sprintNames.put(x.getSprintName(),x);
         }
         sprintSelection.setItems(FXCollections.observableArrayList(sprintNames.keySet()));
-        LocalDate date1 = sprints.get(0).getStartDate();
-        LocalDate date2 = sprints.get(0).getEndDate();
+        LocalDate date1 = java.time.LocalDate.now();
+        LocalDate date2 = date1.plusDays(14);
         LocalDate temp = date1;
         int daysBetween = date1.until(date2).getDays();
         dates.add(String.valueOf(date1.getMonthValue()) + "-" + String.valueOf(date1.getDayOfMonth()));
@@ -68,29 +67,46 @@ public class burndown
     }
 
     private void setChart(){
+        //linechart = new LineChart<String,Number>(xAxis,yAxis);
+        series = new XYChart.Series<String,Number>();
+        usedPointsSeries = new XYChart.Series<String,Number>();
         series.setName(sprints.get(0).getSprintName());
         //create the ideal burndown line
-        String startDateString = String.valueOf(sprints.get(0).getStartDate().getMonthValue()) + "-" + String.valueOf(sprints.get(0).getStartDate().getDayOfMonth());
-        String endDateString = String.valueOf(sprints.get(0).getEndDate().getMonthValue() + "-" + String.valueOf(sprints.get(0).getEndDate().getDayOfMonth()));
-        LocalDate startDate = sprints.get(0).getStartDate();
-        LocalDate endDate = sprints.get(0).getEndDate();
+        //String startDateString = String.valueOf(sprints.get(0).getStartDate().getMonthValue()) + "-" + String.valueOf(sprints.get(0).getStartDate().getDayOfMonth());
+        //String endDateString = String.valueOf(sprints.get(0).getEndDate().getMonthValue() + "-" + String.valueOf(sprints.get(0).getEndDate().getDayOfMonth()));
+        //LocalDate startDate = sprints.get(0).getStartDate();
+        //LocalDate endDate = sprints.get(0).getEndDate();
+        LocalDate startDate = java.time.LocalDate.now();
+        LocalDate endDate = startDate.plusDays(14);
+        
         int daysBetween = startDate.until(endDate).getDays();
-        double idealPointTrackerTemp = sprints.get(0).getAllocatedPoints();
+        //double idealPointTrackerTemp = sprints.get(0).getAllocatedPoints();
+        double idealPointTrackerTemp = 25;
         double pointsToSubtract = idealPointTrackerTemp/daysBetween;
+        double pointsRemaining = 25;
+        Random rand = new Random();
 
         for(int i = 0; i < dates.size(); i++){
             series.getData().add(new XYChart.Data<String,Number>(dates.get(i),idealPointTrackerTemp));
             idealPointTrackerTemp -= pointsToSubtract;
         }
 
-        usedPointsSeries.getData().add(new XYChart.Data<String,Number>(startDateString,10));
-        usedPointsSeries.getData().add(new XYChart.Data<String,Number>(endDateString,10));
+        for(int i=0; i < dates.size(); i++){
+            usedPointsSeries.getData().add(new XYChart.Data<String,Number>(dates.get(i),pointsRemaining));
+            pointsRemaining -= rand.nextDouble()*(4);
+            if(pointsRemaining < 0){
+                pointsRemaining = 0;
+            }
+        }
+        //usedPointsSeries.getData().add(new XYChart.Data<String,Number>(dates.get(0),10));
+        //usedPointsSeries.getData().add(new XYChart.Data<String,Number>(dates.get(dates.size()-1),10));
 
         linechart.setLegendVisible(false);
         linechart.getData().add(series);
         linechart.getData().add(usedPointsSeries);
         linechart.setCreateSymbols(false);
     }
+
 
     private void setBottomMenu(){
         bottomMenu.add(sprintSelection,0,0);
@@ -99,6 +115,16 @@ public class burndown
         fiveDayCycle.setToggleGroup(toggleGroup);
         sevenDayCycle.setSelected(true);
         sevenDayCycle.setToggleGroup(toggleGroup);
+
+        fiveDayCycle.setOnAction(e -> {
+            ;
+            //setChart();
+        });
+        sevenDayCycle.setOnAction(e -> {
+            ;
+            //setChart();
+        });
+
     }
 
     public void updateSprints(){
