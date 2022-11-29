@@ -1,3 +1,4 @@
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -158,9 +159,8 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
     private void recalculatePoints(){
         pointsLabel.setText(String.valueOf(pointsUsed*100/totalpoints) + "%");
         backlogProgress.setProgress(pointsUsed/totalpoints);
-
-        
-
+        //System.out.println(getNameFieldValue());
+        BufferedWriter bw = null;
         //not great place for this, but works for now.
         try {
             File myObj = new File("filename.txt");
@@ -177,8 +177,10 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
           try {
             FileWriter myWriter = new FileWriter("filename.txt", true);
             PrintWriter out = new  PrintWriter(myWriter);
+            bw = new BufferedWriter(myWriter);
             //out.write(nameFieldValue);
-            out.write(Double.toString(totalpoints)+ "," /*+ "\n"*/);
+            myWriter.write(getNameFieldValue() + "\n");
+            myWriter.write(Double.toString(totalpoints) + "\n");
             out.close();
             System.out.println("Successfully wrote to the file.");
           } catch (IOException e) {

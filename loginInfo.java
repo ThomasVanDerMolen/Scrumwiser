@@ -5,11 +5,10 @@ import java.util.List;
 
 public class loginInfo {
 
-    private int valid = 1;
+    private int valid = 0;
     public void userPass() throws IOException
     {
         //valid = inputValid;
-        String greeting = "Hello";
         String username;
         String password;
 
@@ -28,12 +27,8 @@ public class loginInfo {
         BufferedReader br = new BufferedReader(
             new InputStreamReader(System.in));
 
-        System.out.println("*** Welcome to the program ***\n");
-        System.out.println(greeting);
-
-        System.out.println("Please type your username :");
         username = br.readLine();   
-        System.out.println("Please type your password :");
+    
         password = br.readLine();
 
         // Iterate through list of users to see if we have a match
@@ -54,13 +49,11 @@ public class loginInfo {
         // if loggedInUser was changed from null, it was successful
         if (loggedInUser != null)
         {
-            System.out.println("User successfully logged in: "+loggedInUser.getUsername());
             valid = 1;
             
         }
         else
         {
-            System.out.println("Invalid username/password combination");
             valid = 0;
             
         }

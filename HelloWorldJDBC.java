@@ -140,10 +140,16 @@ public class HelloWorldJDBC
 
         
         FileReader fr = new FileReader("filename.txt"); 
-        char [] a = new char[1];
+        
+        char [] pointVal = new char[1];
+        char[] nameVal = new char[5];
 
         try {
-            fr.read(a);
+            fr.read(pointVal);
+            fr.read(nameVal);
+            //scanner.nextLine();
+            System.out.println(nameVal);
+            System.out.println(pointVal);
             //System.out.println(a[0] + " test");
             //System.out.println(a[1] + " test2");
         } catch (IOException e) {
@@ -157,7 +163,9 @@ public class HelloWorldJDBC
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        int b0 = Integer.parseInt(String.valueOf(a[0]));
+        int val0 = Integer.parseInt(String.valueOf(pointVal));
+        String name0 = String.valueOf(nameVal);
+
         //int b1 = Integer.parseInt(String.valueOf(a[1]));
         //int b2 = Integer.parseInt(String.valueOf(a[2]));
         //int b3 = Integer.parseInt(String.valueOf(a[3]));
@@ -167,9 +175,9 @@ public class HelloWorldJDBC
             Properties props = new Properties(); // connection properties
             // providing a user name and password is optional in the embedded
             // and derbyclient frameworks
-            props.put("derby.connection.requireAuthentication", "true");
-            props.put("user", "user1");
-            props.put("password", "user1");
+            //props.put("derby.connection.requireAuthentication", "true");
+            //props.put("user", "user1");
+            //props.put("password", "user1");
 
             /* By default, the schema APP will be used when no username is
              * provided.
@@ -225,10 +233,11 @@ public class HelloWorldJDBC
             psInsert = conn.prepareStatement(
                         "insert into location values (?,?)");
             statements.add(psInsert);
-            psInsert.setInt(1, b0);
-            psInsert.setString(2, "Webster St.");
+            psInsert.setInt(1, val0);
+            psInsert.setString(2, name0);
             psInsert.executeUpdate();
-            System.out.println("Inserted " + b0);
+            System.out.println("Inserted " + val0);
+            System.out.println("Inserted " + name0);
 
             /*psInsert.setInt(1, 1922);
             psInsert.setString(2, "Union St.");
