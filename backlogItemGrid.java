@@ -1,9 +1,13 @@
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -23,12 +27,18 @@ import javafx.scene.layout.GridPane;
 //there, is would be added as a backlog item grid pane to the main gridpane 
 public class backlogItemGrid extends GridPane implements java.io.Serializable
 {
+    private int value = 0;
+
+    private String loadName = null;
     private double pointsUsed = 0;
     private double totalpoints = 0;
     private String nameFieldValue;
     private String pointsFieldValue;
     private transient Label pointsLabel = new Label("");
     private transient TextField desc = new TextField("");
+
+    private transient TextField loadDesc = new TextField(loadName);
+
     private transient TextField points = new TextField();
     private transient Button btUp = new Button("");
     private transient Button btDn = new Button("");
@@ -63,7 +73,28 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
         this.add(pointsLabel,3,0);
         points.setPrefWidth(125);
         points.setPromptText("points");
+        
+        try (BufferedReader br = new BufferedReader(new FileReader("filename.txt"))) {
+            String line;
+            line = br.readLine();
+            desc.setText(line);
+            while ( line != null) {
+
+                points.setText(line);
+                line = br.readLine();  
+                
+            }
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+          
+                
+                
+       
         desc.setPromptText("name");
+        
         parentComponentsObject = inputParentGuiComponents;
         setUpDownFunctions();
         setRightClickAction();
@@ -187,13 +218,7 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
             System.out.println("An error occurred.");
             e.printStackTrace();
           }
-    }
-
-    private void harvestRecalculate()
-    {
-        
-    }
-    
+    }   
 
     private void setTotalPoints(){
         //credit to https://stackoverflow.com/questions/30160899/value-change-listener-for-javafxs-textfield
@@ -201,6 +226,12 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
             totalpoints = Integer.valueOf(points.getText());
             recalculatePoints();
         });
+    }
+
+    
+    public static int checker(int value)
+    {   
+        return value;
     }
 
     public SprintOption getAssignedSprint(){
@@ -215,5 +246,28 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
     public void setAssignedSprint(SprintOption inputAssignedSprint){
         assignedSprint = inputAssignedSprint;
     }
+
+    public String loadNameValues()
+    {
+       
+        String line = null;
+        try {
+            FileReader file = new FileReader("filename.txt");
+            BufferedReader buffer = new BufferedReader(file);
+            //read the 1st line
+            //line = buffer.readLine();
+            //for(String line; (line = buffer.readLine()) != null; ) {
+            //    System.out.println(line);
+           buffer.close();
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        
+        
+        return line;
+    }
+
+    
 
 }

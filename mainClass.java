@@ -1,8 +1,4 @@
-
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,12 +24,15 @@ public class mainClass extends Application{
     private TextField tfPassword = new TextField();
     private Button btLogin = new Button("Login");
     private Button btClear = new Button("Clear");
+
+    private Button btSave = new Button("Save");
+    private Button btLoad = new Button("Load");
+
     
     private static guiComponents guiComponents = new guiComponents();
     private docTemplate docTemplate = new docTemplate();
     private static backlogItemGrid big = new backlogItemGrid(guiComponents, null);
     private static loginPane login = new loginPane();
-    //private static userAuthenticationAction login = new userAuthenticationAction(user,password);
     //private dataSerializer dataStorage = new dataSerializer(guiComponents);
 
     public static void main(String[] args) throws IOException
@@ -63,11 +62,6 @@ public class mainClass extends Application{
         GridPane.setHalignment(btLogin, HPos.LEFT);
         GridPane.setHalignment(btClear, HPos.RIGHT);
 
-        //String username;
-        //String password;
-
-        // Used to hold the instance of a user who successfully logged in
-        User loggedInUser = null;
 
         // Create an empty list to hold users
         List<User> listOfUsers = new ArrayList<>();
@@ -103,6 +97,7 @@ public class mainClass extends Application{
             tfUsername.clear();
             tfPassword.clear();
         });   
+
 
         // Create a scene and place it in the stage
         Scene scene = new Scene(gridPane, 300, 150);
