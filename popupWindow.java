@@ -20,7 +20,6 @@ public class popupWindow extends Popup {
     private ArrayList<SprintOption> sprintObjects = new ArrayList<SprintOption>();
     private backlogItemGrid parentBacklogItemGrid;
     private SprintOption parentSprintOption;
-    private guiComponents parentGuiComponents;
     private TextField pointsUsed = new TextField("");
     public TextField pointsAlloted= new TextField("");
 
@@ -38,10 +37,6 @@ public class popupWindow extends Popup {
             //reset the text field value each time the menu pops up
             pointsUsed.setText(null);
         });
-    }
-
-    public void setParentComponent(guiComponents inputComponent){
-        parentGuiComponents = inputComponent;
     }
 
     public popupWindow(SprintOption callingItem) {
