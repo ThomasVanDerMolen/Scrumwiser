@@ -1,5 +1,4 @@
 import javafx.scene.layout.GridPane;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;

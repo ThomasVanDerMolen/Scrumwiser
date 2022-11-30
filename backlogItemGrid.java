@@ -42,6 +42,7 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
     //private String nameUsed;
     private String nameFieldValue;
     private String pointsFieldValue;
+    private String finalPointsFieldValue;
     //private String rempointsFieldValue;
     private transient Label pointsLabel = new Label("");
     private transient TextField desc = new TextField("");
@@ -180,7 +181,13 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
 
     public String getPointsFieldValue(){
         pointsFieldValue = points.getText();
-        return pointsFieldValue;
+        //return pointsFieldValue;
+        return String.valueOf(remainingPoints);
+    }
+
+    public String getfinalPointsFieldValue(){
+        finalPointsFieldValue = String.valueOf(remainingPoints);
+        return finalPointsFieldValue;
     }
 
     public void addPoints(point inputPoint){
