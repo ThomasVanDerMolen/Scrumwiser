@@ -32,7 +32,7 @@ public class mainClass extends Application{
     private static guiComponents guiComponents = new guiComponents();
     private docTemplate docTemplate = new docTemplate();
     private static backlogItemGrid big = new backlogItemGrid(guiComponents, null);
-    private static loginPane login = new loginPane();
+    //private static loginPane login = new loginPane();
     //private dataSerializer dataStorage = new dataSerializer(guiComponents);
 
     public static void main(String[] args) throws IOException
