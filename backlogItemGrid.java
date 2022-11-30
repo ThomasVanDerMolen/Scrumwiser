@@ -13,7 +13,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import java.awt.Desktop;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.IOException;
@@ -82,6 +85,28 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
         this.add(pointsLabel,3,0);
         points.setPrefWidth(125);
         points.setPromptText("Points");
+
+        //added
+        try (BufferedReader br = new BufferedReader(new FileReader("filename.txt"))) {
+            String line;
+            line = br.readLine();
+            desc.setText(line);
+            while ( line != null) {
+
+                points.setText(line);
+                line = br.readLine();  
+
+            }
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
+
+
+
         desc.setPromptText("Name");
         parentComponentsObject = inputParentGuiComponents;
         setUpDownFunctions();
@@ -202,7 +227,7 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
         System.out.println("spacer");
         System.out.println(pointsUsed);
         System.out.println(totalpoints);
-
+        BufferedWriter bw = null;
         //not great place for this, but works for now.
         try {
             File myObj = new File("filename.txt");
@@ -219,8 +244,9 @@ public class backlogItemGrid extends GridPane implements java.io.Serializable
           try {
             FileWriter myWriter = new FileWriter("filename.txt", true);
             PrintWriter out = new  PrintWriter(myWriter);
-            //out.write(nameFieldValue);
-            out.write(Double.toString(totalpoints)+ "," /*+ "\n"*/);
+            out.write(getNameFieldValue() + "\n");
+            
+            out.write("\n" + Double.toString(totalpoints) /*+ "\n"*/);
             out.close();
             System.out.println("Successfully wrote to the file.");
           } catch (IOException e) {

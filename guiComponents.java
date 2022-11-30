@@ -1,4 +1,8 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -45,6 +49,8 @@ public class guiComponents
     private Button burndownViewButton = new Button("Burndown");
  
     private Button newBacklogItemButton = new Button("New Item");
+    private Button loadBacklogItemButton = new Button("Load Backlog");
+    private Button clearBacklogItemButton = new Button("Delete Previous Save");
     private Button add_sprintButton= new Button("Add Sprint");
     private Button umlViewButton = new Button("UML view");
 
@@ -112,6 +118,8 @@ public class guiComponents
 
         primaryBorderPane.setTop(navigationBar);
         backlogBottomMenu.add(newBacklogItemButton,0,0);
+        backlogBottomMenu.add(loadBacklogItemButton,1,0);
+        backlogBottomMenu.add(clearBacklogItemButton,2,0);
         primaryBorderPane.setBottom(backlogBottomMenu);
     }
 
@@ -167,7 +175,7 @@ public class guiComponents
             openWebPage("https://scrumwisercustomer.wixsite.com/scrumwiser-faq");
         });
         emailAddress.setOnAction(e -> {
-            openWebPage("https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSBptGjCGqNqwjVBNwlTKMdhKLCFNxFWcTSsBPpflfJPNFckzMRNQdTwjLnxZdPgRfDfrcXz");
+            openWebPage("https://mail.google.com/mail/u/0/#inbox?compose=CllgCJZWzBTXqFnBZmbDDHPXrSbmKXsxXMthzqNjXfMPcLjXffvClgKwklDrfXSPjlknvktVpPg");
         });
         umlViewButton.setOnAction(e -> {
             switchToUmlView();
@@ -308,7 +316,55 @@ public class guiComponents
             //add the newest backlog item in the backlog array list to the grid
             backlogGridPane.add(backlogGridsArray.get(backlogGridsArray.size()-1),0,backlogGridsArray.size()-1);
         });
+
+
+        loadBacklogItemButton.setOnAction(e ->
+        {
+            try {
+                int val = 1;
+                FileReader file = new FileReader("filename.txt");
+                BufferedReader buffer = new BufferedReader(file);
+                //read the 1st line
+                String line = buffer.readLine();
+                //line = backlogItemGrid.getNameFieldValue();
+                backlogItemGrid newBackLogItem = new backlogItemGrid(this,unassigned_sp);
+                //backlogItemGrid.checker(val);
+                //System.out.println(backlogItemGrid.checker(val));
+                unassigned_sp.addBacklogItem(newBackLogItem);
+
+            //add the new backlog item to the backlog item arraylist
+            backlogGridsArray.add(newBackLogItem);
+            //add the newest backlog item in the backlog array list to the grid
+            backlogGridPane.add(backlogGridsArray.get(backlogGridsArray.size()-1),0,backlogGridsArray.size()-1);
+            file.close();
+                //for(String line; (line = buffer.readLine()) != null; ) {
+                 //   System.out.println(line);
+               // }
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+             //create a new backlog item 
+            //Order matters in this function
+
+
+        });
+
+        clearBacklogItemButton.setOnAction(e ->
+        {
+                    try (//FileReader file = new FileReader("filename.txt");
+                    PrintWriter writer = new PrintWriter("filename.txt")) {
+                        writer.print("");
+                        writer.close();
+                    } catch (FileNotFoundException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+
+
+        });
     }
+    
 
     private void setNewSprintButtonAction(){
         add_sprintButton.setOnAction(e -> {
